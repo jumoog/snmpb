@@ -4,3 +4,14 @@ make INSTALL_PREFIX=/usr install
 
 default is /usr
 
+You can define the BIN_PREFIX directory.
+BIN_PREFIX is relative to INSTALL_PREFIX ($INSTALL_PREFIX/$BIN_PREFIX)
+By default, BIN_PREFIX is bin.
+
+make INSTALL_PREFIX=/usr BIN_PREFIX=bin install
+
+You can install SNMPB without root privileges, by adding NO_ROOT option.
+By default, you need root privileges to install SNMPB.
+
+make NO_ROOT=1 install
+

@@ -4,7 +4,20 @@ To compile:
 # gmake (*BSD)
 > make (Windows/MSYS2)
 
+To configure the qmake directory, use QTBIN option (make QTBIN=<qmake directory>).
+
+
 To install in places other than /usr, add INSTALL_PREFIX=<prefix> to the make command.
+
+You can define the BIN_PREFIX directory.
+BIN_PREFIX is relative to INSTALL_PREFIX ($INSTALL_PREFIX/$BIN_PREFIX)
+By default, BIN_PREFIX is bin.
+
+You can install SNMPB without root privileges, by adding NO_ROOT option.
+By default, you need root privileges to install SNMPB.
+
+make NO_ROOT=1 install
+
 
 Tested & compiles on MSYS2/Windows, Linux, MacOSX (Leopard) and NetBSD
 
