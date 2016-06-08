@@ -126,7 +126,7 @@ endif
 	-$(MAKE) -C qwt clean
 	-$(MAKE) -C app clean
 
-distclean:
+distclean: clean
 ifneq ($(findstring MINGW,${os}),)
 	-$(MAKE) -C libsmi/win -f Makefile.mingw distclean
 else
