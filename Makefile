@@ -134,6 +134,14 @@ else
 endif
 	-$(MAKE) -C qwt distclean
 
+maintainer-clean: clean
+ifneq ($(findstring MINGW,${os}),)
+	-$(MAKE) -C libsmi/win -f Makefile.mingw maintainer-clean
+else
+	-$(MAKE) -C libsmi maintainer-clean
+endif
+	-$(MAKE) -C qwt distclean
+
 install:
 	$(INSTALL) -d ${INSTALL_PREFIX}/${BIN_PREFIX} ${INSTALL_PREFIX}/${SHARE}/snmpb/mibs ${INSTALL_PREFIX}/${SHARE}/snmpb/pibs
 	$(INSTALL) -m 4755 -D -s ${ROOT_OWNER} app/snmpb ${INSTALL_PREFIX}/${BIN_PREFIX}
