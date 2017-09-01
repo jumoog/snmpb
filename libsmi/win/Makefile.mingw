@@ -169,32 +169,10 @@ smidiff.exe:	$(TOOLSOBJS) $(SMILIB)
 smixlate.exe:	$(TOOLSOBJS) $(SMILIB)
 	$(CC) $(CFLAGS) -o smixlate.exe smixlate.o shhopt.o dstring.o $(SMILIB)
 
-parser-smi.c parser-smi.tab.h: parser-smi.y scanner-smi.h parser-smi.h error.h
-	$(BISON) --defines=parser-smi.tab.h -t -psmi -o parser-smi.c parser-smi.y
-
-parser-sming.c: parser-sming.y scanner-sming.h parser-sming.h error.h
-	$(BISON) --defines=parser-sming.tab.h -t -psming -o parser-sming.c parser-sming.y
-
-parser-yang.c: parser-yang.y scanner-yang.h parser-yang.h error.h
-	$(BISON) --defines=parser-yang.tab.h -t -pyang -o parser-yang.c parser-yang.y
-
-scanner-smi.c: scanner-smi.l scanner-smi.h parser-smi.tab.h
-	$(FLEX) -Cfe -Psmi -t -o scanner-smi.c scanner-smi.l > scanner-smi.c
-
-scanner-sming.c: scanner-sming.l scanner-sming.h parser-sming.tab.h
-	$(FLEX) -Cfe -Psming -t -o scanner-sming.c scanner-sming.l > scanner-sming.c
-
-scanner-yang.c: scanner-yang.l scanner-yang.h parser-yang.tab.h
-	$(FLEX) -Cfe -Pyang -t -o scanner-yang.c scanner-yang.l > scanner-yang.c
-
 clean:
 	$(RM) *.o
 	$(RM) *.a
 	$(RM) *.exe
-	$(RM) parser-smi.*
-	$(RM) parser-sming.c
-	$(RM) scanner-smi.c
-	$(RM) scanner-sming.c
 
 install:	all install-doc install-bin install-mibs install-pibs
 

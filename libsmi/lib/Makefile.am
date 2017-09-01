@@ -67,7 +67,7 @@ common.c smi.c smi-data.c yang.c yang-data.c: common.h
 
 parser-smi.c: parser-smi.tab.h
 parser-sming.c: parser-sming.tab.h
-parser-yang.tab.h: parser-yang.tab.h
+parser-yang.c: parser-yang.tab.h
 
 common.h: util.h error.h
 

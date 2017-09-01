@@ -66,6 +66,7 @@ Version: 0.5.0
 Modified file(s):
 win/Makefile.mingw
 win/config.h
+lib/Makefile.am
 Makefile.am     "Removed compilation of all subdirs except lib"
 lib/Makefile.am "Fixed file generation rules: broke parallel build"
 lib/util.c      "smiIsPath(): removed condition for "." in filename"
