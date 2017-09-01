@@ -38,6 +38,9 @@ LIBDIR = $(INSTROOT)/lib
 # AR	= ar
 # MKDIR	= -mkdir
 
+# MART Disable implicit yacc rule
+%.c : %.y
+
 ##
 ## Debian Linux mingw cross-compiler version:
 ##
