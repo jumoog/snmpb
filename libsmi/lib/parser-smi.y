@@ -1094,6 +1094,11 @@ adjustDefval(Parser *parserPtr, SmiValue *valuePtr, Type *typePtr, int line)
 	    p = nextPtr;
 	}
     } else if (valuePtr->basetype == SMI_BASETYPE_ENUM) {
+
+	/* Example: defval=false on an Unsigned32 type object: would crash */
+	if (typePtr->export.basetype != valuePtr->basetype)
+		return;
+
 	/* a len of -1 indicates an unresolved enum label in ptr */
 	if (valuePtr->len == -1) {
 	    for (listPtr = typePtr->listPtr; listPtr;
