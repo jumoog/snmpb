@@ -77,6 +77,7 @@ lib/smi.c       "Fixed display for non-printable octet-strings -tracker 3096221"
 lib/smi.c       "Allows OCTET STRING to be printable with \v, \t , \r, \n, \f"
 lib/parser-smi.y "Fixed crash when defval mismatches with object type"
 lib/parser-smi.y "Fixed crash when row name is NULL (JETDIRECT3-MIB)"
+lib/parser-smi.y "Fixed crash on compliance statement group"
 
 Deleted mibs/ietf/IANA-ITU-ALARM-TC-MIB: redundant with one in iana folder 
 (prevented proper copy in win32 installer)

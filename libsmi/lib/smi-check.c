@@ -1774,7 +1774,7 @@ smiCheckComplianceStatus(Parser *parser, Object *compliance)
 	     groupListPtr; groupListPtr = groupListPtr->nextPtr) {
 	    
 	    group = (Object *) groupListPtr->ptr;
-	    if (strcmp(group->export.name, memberPtr->export.name) == 0) {
+	    if (group && strcmp(group->export.name, memberPtr->export.name) == 0) {
 		smiPrintErrorAtLine(parser, ERR_COMPLIANCE_GROUP_INVALID,
 				    ((Option *) listPtr->ptr)->line,
 				    group->export.name,
@@ -1807,12 +1807,11 @@ smiCheckComplianceStatus(Parser *parser, Object *compliance)
 	    }
 	}
 
-	if (! groupListPtr) {
+	if (group && ! groupListPtr) {
 	    smiPrintErrorAtLine(parser, ERR_REFINEMENT_NOT_LISTED,
 				((Refinement *) listPtr->ptr)->line,
 				memberPtr->export.name);
 	}
-		
 	addObjectFlags(memberPtr, FLAG_INCOMPLIANCE);
 	if (memberPtr->export.status > compliance->export.status) {
 	    smiPrintErrorAtLine(parser, ERR_COMPLIANCE_OBJECT_STATUS,
