@@ -404,6 +404,11 @@ checkObjects(Parser *parserPtr, Module *modulePtr)
 		    smiPrintErrorAtLine(parserPtr, ERR_ROW_PARENT_TYPE,
 					objectPtr->line, objectPtr->export.name);
 		}
+
+		/* Example: crashing in JETDIRECT3-MIB where name is NULL */
+		if (objectPtr->typePtr && !objectPtr->typePtr->export.name)
+			return;
+
 		if (parentPtr->typePtr && parentPtr->typePtr->parentPtr &&
 		    strcmp(parentPtr->typePtr->parentPtr->export.name,
 			   objectPtr->typePtr->export.name)) {
