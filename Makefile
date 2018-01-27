@@ -77,7 +77,7 @@ ifneq ($(findstring MINGW,${os}),)
 else
 ifneq ($(findstring Darwin,${os}),)
 	# MacOSX
-	cd qwt; qmake -spec macx-g++ qwt.pro
+	cd qwt; qmake qwt.pro
 else
 	# Linux/BSD
 	cd qwt; qmake qwt.pro
@@ -90,7 +90,7 @@ ifneq ($(findstring MINGW,${os}),)
 else
 ifneq ($(findstring Darwin,${os}),)
     # MacOSX
-	cd app; qmake -spec macx-g++ -o makefile.snmpb snmpb.pro
+	cd app; qmake -o makefile.snmpb snmpb.pro
 else
 	# Linux/BSD
 	cd app; qmake -o makefile.snmpb snmpb.pro
