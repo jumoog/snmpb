@@ -23,6 +23,7 @@
 #include <qdir.h>
 #include <qmessagebox.h> 
 #include <qtextstream.h>
+#include <QStringBuilder>
 
 #include "mibmodule.h"
 #include "agent.h"
@@ -220,6 +221,8 @@ void MibModule::RebuildTotalList(int restart)
     smipath = strdup(smiGetPath());
    
     Total.clear();
+
+    QStringList errored_files;
     
     for (dir = mystrtok_r(smipath, sep, &svptr); dir; 
          dir = mystrtok_r(NULL, sep, &svptr))
@@ -261,11 +264,7 @@ void MibModule::RebuildTotalList(int restart)
                 SmiModule *smiModule = mod?smiGetModule(mod):NULL;
                 if (ErrorWhileLoading == true)
                 {
-                    QMessageBox::warning (s->MainUI()->MIBTree, "SnmpB error", 
-                                          QString(
-"Fatal error(s) found in MIB file %1. Check log tab.")
-                                          .arg( fi->toLatin1().data()), 
-                                          QMessageBox::Ok, Qt::NoButton);
+                    errored_files << *fi;
                     continue;
                 }
 
@@ -289,6 +288,20 @@ void MibModule::RebuildTotalList(int restart)
                 Total.append(module);
             }
         }
+    }
+
+    /* warn if there're MIBs which failed to load */
+    if (!errored_files.empty())
+    {
+        qSort(errored_files.begin(), errored_files.end());
+        QString msg
+            = QString("<p>The following MIB files failed to load. Check the log tab.</p>")
+            % "<code>\n"
+            % errored_files.join('\n')
+            % "\n</code>";
+
+        QMessageBox::warning (s->MainUI()->MIBTree, "MIB loading errors", msg,
+                              QMessageBox::Ok, Qt::NoButton);
     }
 
     qSort(Total.begin(), Total.end(), compareModule);
