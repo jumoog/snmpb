@@ -224,8 +224,7 @@ void MibModule::RebuildTotalList(int restart)
     for (dir = mystrtok_r(smipath, sep, &svptr); dir; 
          dir = mystrtok_r(NULL, sep, &svptr))
     {
-        QDir d(dir, QString::null, QDir::Unsorted, 
-               QDir::Files | QDir::Readable | QDir::NoSymLinks);
+        QDir d(dir, QString::null, QDir::Unsorted, QDir::Files | QDir::Readable);
         QStringList list = d.entryList();
         if (list.isEmpty()) continue;
         QStringListIterator it( list );
