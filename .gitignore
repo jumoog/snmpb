@@ -14,3 +14,5 @@ libsmi/config.h
 
 **/Makefile.in
 **/.qmake.stash
+**/*.pro.user
+build-*

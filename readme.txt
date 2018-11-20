@@ -1,8 +1,9 @@
 SnmpB is a desktop SNMP browser and MIB editor written with Qt.
 
 Supported features:
- + custom MIB loading
+ + custom MIB loading & editing
  + trap reception
+ + agent discovery
  + SNMPv3 USM (authentication & encryption)
 
 
