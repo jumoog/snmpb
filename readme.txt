@@ -12,7 +12,11 @@ Supported features:
 # gmake (*BSD)
 > make (Windows/MSYS2)
 
-To install in places other than /usr/local, add INSTALL_PREFIX=<prefix> to the make command.
+Make variables to tune:
+ - QTBIN sets the Qt bin path (used to locate qmake)
+ - INSTALL_PREFIX sets the installation directory (/usr/local by default)
+ - BIN_PREFIX is "bin" by default, sets binary install path suffix
+ - NO_ROOT enables non-root install (off by default)
 
 Tested & compiles on MSYS2/Windows, Linux, MacOSX (Leopard) and NetBSD
 

@@ -36,28 +36,40 @@ ifndef INSTALL_PREFIX
 INSTALL_PREFIX=/usr/local
 endif
 
+ifndef BIN_PREFIX
+BIN_PREFIX=bin
+endif
+
+ifndef NO_ROOT
+ROOT_OWNER="--owner=root"
+endif
+
+ifdef QTBIN
+QMAKE=${QTBIN}/qmake
+else
+QMAKE=qmake
+endif
+
+all: snmpb
+
+snmpb: libtomcrypt/libtomcrypt.a \
+       $(LIBSMI) \
+       qwt/lib/libqwt.a \
+       app/snmpb
+
 ifneq ($(findstring MINGW,${os}),)
 LIBSMI=libsmi/win/libsmi.a
 else
 LIBSMI=libsmi/lib/.libs/libsmi.a
 endif
 
-all:app/makefile.snmpb \
-	libtomcrypt/libtomcrypt.a \
-	qwt/lib/libqwt.a \
-	$(LIBSMI)
-	$(MAKE) -C app
-
 libtomcrypt/libtomcrypt.a:
 	$(MAKE) -C libtomcrypt 
 
-ifneq ($(findstring MINGW,${os}),)
-$(LIBSMI):
+libsmi/win/libsmi.a:
 	$(MAKE) -C libsmi/win -f Makefile.mingw libs
-else
-$(LIBSMI): libsmi/Makefile
+libsmi/lib/.libs/libsmi.a: libsmi/Makefile
 	$(MAKE) -C libsmi
-endif
 
 libsmi/Makefile:
 ifneq ($(findstring Darwin,${os}),)
@@ -73,29 +85,32 @@ qwt/lib/libqwt.a: qwt/Makefile
 
 qwt/Makefile:
 ifneq ($(findstring MINGW,${os}),)
-	cd qwt; ${WINQT_PREFIX}qmake  qwt.pro
+	cd qwt; ${WINQT_PREFIX}${QMAKE}  qwt.pro
 else
 ifneq ($(findstring Darwin,${os}),)
 	# MacOSX
-	cd qwt; qmake qwt.pro
+	cd qwt; ${QMAKE} -spec macx-g++ qwt.pro
 else
 	# Linux/BSD
-	cd qwt; qmake qwt.pro
+	cd qwt; ${QMAKE} qwt.pro
 endif
 endif
 
 app/makefile.snmpb:
 ifneq ($(findstring MINGW,${os}),)
-	cd app; ${WINQT_PREFIX}qmake -o makefile.snmpb snmpb.pro
+	cd app; ${WINQT_PREFIX}${QMAKE} -o makefile.snmpb snmpb.pro
 else
 ifneq ($(findstring Darwin,${os}),)
-    # MacOSX
-	cd app; qmake -o makefile.snmpb snmpb.pro
+	# MacOSX
+	cd app; ${QMAKE} -spec macx-g++ -o makefile.snmpb snmpb.pro
 else
 	# Linux/BSD
-	cd app; qmake -o makefile.snmpb snmpb.pro
+	cd app; ${QMAKE} -o makefile.snmpb snmpb.pro
 endif
 endif
+
+app/snmpb: app/makefile.snmpb
+	$(MAKE) -C app
 
 clean:
 	-$(MAKE) -C libtomcrypt clean
@@ -103,25 +118,40 @@ ifneq ($(findstring MINGW,${os}),)
 	-$(MAKE) -C libsmi/win -f Makefile.mingw clean
 else
 	-$(MAKE) -C libsmi clean
-	rm libsmi/Makefile
 endif
 	-$(MAKE) -C qwt clean
 	-$(MAKE) -C app clean
 
+distclean: clean
+ifneq ($(findstring MINGW,${os}),)
+	-$(MAKE) -C libsmi/win -f Makefile.mingw distclean
+else
+	-$(MAKE) -C libsmi distclean
+endif
+	-$(MAKE) -C qwt distclean
+
+maintainer-clean: clean
+ifneq ($(findstring MINGW,${os}),)
+	-$(MAKE) -C libsmi/win -f Makefile.mingw maintainer-clean
+else
+	-$(MAKE) -C libsmi maintainer-clean
+endif
+	-$(MAKE) -C qwt distclean
+
 install:
-	$(INSTALL) -d ${INSTALL_PREFIX}/bin ${INSTALL_PREFIX}/${SHARE}/snmpb/mibs ${INSTALL_PREFIX}/${SHARE}/snmpb/pibs
-	$(INSTALL) -m 4755 -D -s -o root app/snmpb ${INSTALL_PREFIX}/bin
-	$(INSTALL) -m 444 -o root libsmi/mibs/iana/* ${INSTALL_PREFIX}/${SHARE}/snmpb/mibs
-	$(INSTALL) -m 444 -o root libsmi/mibs/ietf/* ${INSTALL_PREFIX}/${SHARE}/snmpb/mibs
-	$(INSTALL) -m 444 -o root libsmi/mibs/tubs/* ${INSTALL_PREFIX}/${SHARE}/snmpb/mibs
-	$(INSTALL) -m 444 -o root libsmi/pibs/ietf/* ${INSTALL_PREFIX}/${SHARE}/snmpb/pibs
-	$(INSTALL) -m 444 -o root libsmi/pibs/tubs/* ${INSTALL_PREFIX}/${SHARE}/snmpb/pibs
+	$(INSTALL) -d ${INSTALL_PREFIX}/${BIN_PREFIX} ${INSTALL_PREFIX}/${SHARE}/snmpb/mibs ${INSTALL_PREFIX}/${SHARE}/snmpb/pibs
+	$(INSTALL) -m 4755 -D -s ${ROOT_OWNER} app/snmpb ${INSTALL_PREFIX}/${BIN_PREFIX}
+	$(INSTALL) -m 444 ${ROOT_OWNER} libsmi/mibs/iana/* ${INSTALL_PREFIX}/${SHARE}/snmpb/mibs
+	$(INSTALL) -m 444 ${ROOT_OWNER} libsmi/mibs/ietf/* ${INSTALL_PREFIX}/${SHARE}/snmpb/mibs
+	$(INSTALL) -m 444 ${ROOT_OWNER} libsmi/mibs/tubs/* ${INSTALL_PREFIX}/${SHARE}/snmpb/mibs
+	$(INSTALL) -m 444 ${ROOT_OWNER} libsmi/pibs/ietf/* ${INSTALL_PREFIX}/${SHARE}/snmpb/pibs
+	$(INSTALL) -m 444 ${ROOT_OWNER} libsmi/pibs/tubs/* ${INSTALL_PREFIX}/${SHARE}/snmpb/pibs
 	rm -f ${INSTALL_PREFIX}/${SHARE}/snmpb/mibs/Makefile* ${INSTALL_PREFIX}/${SHARE}/snmpb/pibs/Makefile*
 	$(INSTALL) -d ${INSTALL_PREFIX}/share/applications ${INSTALL_PREFIX}/share/mime/packages
-	$(INSTALL) -m 444 -o root app/snmpb.desktop ${INSTALL_PREFIX}/share/applications
-	$(INSTALL) -m 444 -o root app/snmpb.xml ${INSTALL_PREFIX}/share/mime/packages
+	$(INSTALL) -m 444 ${ROOT_OWNER} app/snmpb.desktop ${INSTALL_PREFIX}/share/applications
+	$(INSTALL) -m 444 ${ROOT_OWNER} app/snmpb.xml ${INSTALL_PREFIX}/share/mime/packages
 	$(INSTALL) -d ${INSTALL_PREFIX}/share/icons/hicolor/128x128/apps ${INSTALL_PREFIX}/share/pixmaps ${INSTALL_PREFIX}/share/icons/hicolor/scalable/apps
-	$(INSTALL) -m 444 -o root app/images/snmpb.png ${INSTALL_PREFIX}/share/icons/hicolor/128x128/apps
-	$(INSTALL) -m 444 -o root app/images/snmpb.png ${INSTALL_PREFIX}/share/pixmaps
-	$(INSTALL) -m 444 -o root app/images/snmpb.svg ${INSTALL_PREFIX}/share/icons/hicolor/scalable/apps
+	$(INSTALL) -m 444 ${ROOT_OWNER} app/images/snmpb.png ${INSTALL_PREFIX}/share/icons/hicolor/128x128/apps
+	$(INSTALL) -m 444 ${ROOT_OWNER} app/images/snmpb.png ${INSTALL_PREFIX}/share/pixmaps
+	$(INSTALL) -m 444 ${ROOT_OWNER} app/images/snmpb.svg ${INSTALL_PREFIX}/share/icons/hicolor/scalable/apps
 

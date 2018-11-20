@@ -831,13 +831,13 @@ void smiSetSeverity(char *pattern, int severity)
 int smiReadConfig(const char *filename, const char *tag)
 {
     FILE *file;
-    char buf[201];
+    char buf[10001];
     char *cmd, *arg, *s;
     
     file = fopen(filename, "r");
     if (file) {
 	while (!feof(file)) {
-	    if (!fgets(buf, 200, file)) continue;
+	    if (!fgets(buf, 10000, file)) continue;
 	    if ((!strlen(buf)) || (buf[0] == '#')) continue;
 	    cmd = strtok(buf, " \t\n\r");
 	    if (!cmd) continue;
