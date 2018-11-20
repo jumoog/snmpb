@@ -33,7 +33,7 @@ SHARE=share/apps
 endif
 
 ifndef INSTALL_PREFIX
-INSTALL_PREFIX=/usr
+INSTALL_PREFIX=/usr/local
 endif
 
 ifneq ($(findstring MINGW,${os}),)

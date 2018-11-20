@@ -1,6 +1,7 @@
 To install snmpb, type make install (as root) with the install prefix in argument:
 
-make INSTALL_PREFIX=/usr install
+make INSTALL_PREFIX=/usr/local install
 
-default is /usr
+Beware: there's no "uninstall" target.
 
+For a better way to install, build a .deb or .rpm package. See installer/ directory.
