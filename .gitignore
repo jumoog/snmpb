@@ -11,3 +11,6 @@ libsmi/config.h
 .cproject
 .project
 .settings/
+
+**/Makefile.in
+**/.qmake.stash

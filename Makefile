@@ -120,9 +120,6 @@ install:
 	$(INSTALL) -d ${INSTALL_PREFIX}/share/applications ${INSTALL_PREFIX}/share/mime/packages
 	$(INSTALL) -m 444 -o root app/snmpb.desktop ${INSTALL_PREFIX}/share/applications
 	$(INSTALL) -m 444 -o root app/snmpb.xml ${INSTALL_PREFIX}/share/mime/packages
-ifeq ($(findstring BSD,${os}),)
-	update-mime-database ${INSTALL_PREFIX}/share/mime
-endif
 	$(INSTALL) -d ${INSTALL_PREFIX}/share/icons/hicolor/128x128/apps ${INSTALL_PREFIX}/share/pixmaps ${INSTALL_PREFIX}/share/icons/hicolor/scalable/apps
 	$(INSTALL) -m 444 -o root app/images/snmpb.png ${INSTALL_PREFIX}/share/icons/hicolor/128x128/apps
 	$(INSTALL) -m 444 -o root app/images/snmpb.png ${INSTALL_PREFIX}/share/pixmaps
