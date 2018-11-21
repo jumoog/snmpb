@@ -202,9 +202,44 @@ static void NormalErrorHdlr(char *path, int line, int severity,
                                           .arg(severity).arg(path).arg(msg));
 }
 
+static bool MibFilenameFilter(const QString& filename)
+{
+    // This is all futile. FIXME
+    // To machine code, file extension says literally nothing about its content.
+    // To a human, it *might* vaguely identify the content-type, possibly fooling the human.
+    // But code like this function should not exist.
+    // Instead, try to load every readable file as MIB, and back off gracefully.
+
+    if (filename.endsWith("-MIB") ||
+        filename.endsWith("-SMI") ||
+        filename.endsWith("-PIB") ||
+        filename.endsWith("-TC")  ||
+        filename.endsWith("-TYPES")
+        )
+        return true;
+
+    /* skip git merge conflict artifacts */
+    if (filename.endsWith("-orig"))
+        return false;
+
+    QString extension = QFileInfo(filename).suffix();
+    if (extension == "mib" || extension == "pib" || extension == "smi" ||
+        extension == "MIB" || extension == "PIB" || extension == "SMI" ||
+        /* net-snmp distribution */
+        extension == "txt" ||
+        /* many of taishin/vendor_mibs */
+        extension == "my"  ||
+        /* mimic libsmi; see smi_config(3) manpage */
+        extension == "smiv2" || extension == "sming"
+        )
+        return true;
+
+    return extension.isEmpty();
+}
+
 void MibModule::RebuildTotalList(int restart)
 {
-    char    *dir, *smipath, *str, *svptr = NULL;
+    char    *dir, *smipath, *svptr = NULL;
     char    sep[2] = {PATH_SEPARATOR, 0};
 
     if (!restart) 
@@ -229,30 +264,10 @@ void MibModule::RebuildTotalList(int restart)
     {
         QDir d(dir, QString::null, QDir::Unsorted, QDir::Files | QDir::Readable);
         QStringList list = d.entryList();
-        if (list.isEmpty()) continue;
-        QStringListIterator it( list );
-        const QString *fi;
-        
-        while ( it.hasNext() ) {
-            fi = &it.next();
-            // Exclude -orig files
-            // Accept only .smi, mib, .pib (and variants)
-            QString ext = QFileInfo(fi->toLatin1()).suffix();
-            if (!(((str = strstr(fi->toLatin1().data(), "-orig")) != NULL) 
-                && (strlen(str) == 5)) &&
-                ((ext.isEmpty() && 
-                ((((str = strstr(fi->toLatin1().data(), "-MIB")) != NULL)
-                && (strlen(str) == 4)) || 
-                (((str = strstr(fi->toLatin1().data(), "-SMI")) != NULL)
-                && (strlen(str) == 4)) || 
-                (((str = strstr(fi->toLatin1().data(), "-TC")) != NULL)
-                && (strlen(str) == 3)) || 
-                (((str = strstr(fi->toLatin1().data(), "-TYPES")) != NULL)
-                && (strlen(str) == 6)) || 
-                (((str = strstr(fi->toLatin1().data(), "-PIB")) != NULL)
-                && (strlen(str) == 4)))) || 
-                (ext == "smi") || (ext == "mib") || (ext == "pib") || 
-                (ext == "SMI") || (ext == "MIB") || (ext == "PIB")))
+        for (QStringListIterator it(list); it.hasNext(); )
+        {
+            const QString& fn = it.next();
+            if (MibFilenameFilter(fn))
             {
                 // Load each module and build a list of possible root oids
                 // This is used for module auto-loading on mib walk
@@ -260,15 +275,15 @@ void MibModule::RebuildTotalList(int restart)
 
                 // If a module has a fatal error, ignore it
                 ErrorWhileLoading = false;
-                char *mod = smiLoadModule(fi->toLatin1());
+                char *mod = smiLoadModule(fn.toLatin1());
                 SmiModule *smiModule = mod?smiGetModule(mod):NULL;
                 if (ErrorWhileLoading == true)
                 {
-                    errored_files << *fi;
+                    errored_files << fn;
                     continue;
                 }
 
-                module += QFileInfo(fi->toLatin1()).fileName();
+                module += QFileInfo(fn.toLatin1()).fileName();
 
                 if (smiModule)
                 {
