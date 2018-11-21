@@ -50,16 +50,16 @@ public:
 
     void SetPixmap(bool isOpened);
     void PrintProperties(QString& text);
-    char *GetOid();
+    const char *GetOid();
     enum MibNode::MibType GetKind(void) { return Type; }
     
 protected:
-    char *GetAccess(void);
-    char *GetStatus(void);
-    char *GetTypeName(void);
-    char *GetBaseTypeName(void);
-    char *GetKindName(void);
-    char *GetSmiTypeName(void);
+    const char *GetAccess(void);
+    const char *GetStatus(void);
+    const char *GetTypeName(void);
+    const char *GetBaseTypeName(void);
+    const char *GetKindName(void);
+    const char *GetSmiTypeName(void);
     QString GetRowIndex(SmiNode *smiNode);
     QString GetSizeRange(void);
     QString GetValueList(void);

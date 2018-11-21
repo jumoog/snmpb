@@ -20,20 +20,22 @@
 #include "mibnode.h"
 #include <qtextedit.h>
 
-MibNode::MibNode(enum MibType mibtype, SmiNode *node, MibNode * parent, MibNode * sibling) : QTreeWidgetItem(parent, sibling)
+MibNode::MibNode(enum MibType mibtype, SmiNode *node, MibNode * parent, MibNode * sibling)
+    : QTreeWidgetItem(parent, sibling)
+    , Type(mibtype)
+    , Node(node)
 {    
-    Type = mibtype;
-    Node = node;
     setText(0, node->name); 
     SetPixmap(false);
 }
 
-MibNode::MibNode(QString label, QTreeWidget* parent) : QTreeWidgetItem(parent)
+MibNode::MibNode(QString label, QTreeWidget* parent)
+    : QTreeWidgetItem(parent)
+    , Type(MIBNODE_NODE)
+    , Node(nullptr)
 {
     setText (0, label);
-    Type = MIBNODE_NODE;
-    Node = NULL;
-    SetPixmap(false);    
+    SetPixmap(false);
 }
 
 void MibNode::SetPixmap(bool isOpened)
@@ -79,134 +81,135 @@ void MibNode::SetPixmap(bool isOpened)
     }
 }
 
-char *MibNode::GetAccess(void)
+const char *MibNode::GetAccess(void)
 {
     switch (Node->access)
     {
     case SMI_ACCESS_NOT_ACCESSIBLE:
-        return (char*)"not-accessible";
+        return "not-accessible";
     case SMI_ACCESS_NOTIFY:
-        return (char*)"notify";
+        return "notify";
     case SMI_ACCESS_READ_ONLY:
-        return (char*)"read-only";
+        return "read-only";
     case SMI_ACCESS_READ_WRITE:
         if (Node->nodekind == SMI_NODEKIND_COLUMN)
         {
             SmiNode *p = smiGetParentNode(Node);
-            if (p && p->create) return (char*)"read-create";
+            if (p && p->create)
+                return "read-create";
         }
-        return (char*)"read-write";
+        return "read-write";
     case SMI_ACCESS_INSTALL:
-        return (char*)"install";
+        return "install";
     case SMI_ACCESS_INSTALL_NOTIFY:
-        return (char*)"install-notify";
+        return "install-notify";
     case SMI_ACCESS_REPORT_ONLY:
-        return (char*)"report-only";
+        return "report-only";
     case SMI_ACCESS_UNKNOWN:
     case SMI_ACCESS_EVENT_ONLY:
     case SMI_ACCESS_NOT_IMPLEMENTED:
         break;
     }
 	
-    return (char*)"";
+    return "";
 }
 
-char *MibNode::GetStatus(void)
+const char *MibNode::GetStatus(void)
 {
     switch (Node->status)
     {
     case SMI_STATUS_CURRENT:
-        return (char*)"current";
+        return "current";
     case SMI_STATUS_DEPRECATED:
-        return (char*)"<font color=red>deprecated</font>";
+        return "<font color=red>deprecated</font>";
     case SMI_STATUS_MANDATORY:
-        return (char*)"mandatory";
+        return "mandatory";
     case SMI_STATUS_OPTIONAL:
-        return (char*)"optional";
+        return "optional";
     case SMI_STATUS_OBSOLETE:
-        return (char*)"<font color=red>obsolete</font>";
+        return "<font color=red>obsolete</font>";
     case SMI_STATUS_UNKNOWN:
         break;
     }
 
-    return (char*)"";
+    return "";
 }
 
-char *MibNode::GetKindName(void)
+const char *MibNode::GetKindName(void)
 {
     switch(Node->nodekind)
     {
     case SMI_NODEKIND_NODE:
-        return (char*)"Node";
+        return "Node";
     case SMI_NODEKIND_SCALAR:
-        return (char*)"Scalar";
+        return "Scalar";
     case SMI_NODEKIND_TABLE:
-        return (char*)"Table";
+        return "Table";
     case SMI_NODEKIND_ROW:
-        return (char*)"Row";
+        return "Row";
     case SMI_NODEKIND_COLUMN:
-        return (char*)"Column";
+        return "Column";
     case SMI_NODEKIND_NOTIFICATION:
-        return (char*)"Notification";
+        return "Notification";
     case SMI_NODEKIND_GROUP:
-        return (char*)"Group";
+        return "Group";
     case SMI_NODEKIND_COMPLIANCE:
-        return (char*)"Compliance";
+        return "Compliance";
     case SMI_NODEKIND_CAPABILITIES:
-        return (char*)"Capabilities";
+        return "Capabilities";
     case SMI_NODEKIND_UNKNOWN:
     case SMI_NODEKIND_ANY:
     default:
         break;
     }
     
-    return (char*)"";
+    return "";
 }
 
-char *MibNode::GetSmiTypeName(void)
+const char *MibNode::GetSmiTypeName(void)
 {
     switch(Node->decl)
     {    
     /* SMIv1/v2 ASN.1 statements and macros */    
     case SMI_DECL_OBJECTTYPE:
-        return (char*)"OBJECT-TYPE";
+        return "OBJECT-TYPE";
     case SMI_DECL_OBJECTIDENTITY:
-        return (char*)"OBJECT-IDENTITY";
+        return "OBJECT-IDENTITY";
     case SMI_DECL_MODULEIDENTITY:
-        return (char*)"MODULE-IDENTITY";
+        return "MODULE-IDENTITY";
     case SMI_DECL_NOTIFICATIONTYPE:
-        return (char*)"NOTIFICATION-TYPE";
+        return "NOTIFICATION-TYPE";
     case SMI_DECL_TRAPTYPE:
-        return (char*)"TRAP-TYPE";
+        return "TRAP-TYPE";
     case SMI_DECL_OBJECTGROUP:
-        return (char*)"OBJECT-GROUP";
+        return "OBJECT-GROUP";
     case SMI_DECL_NOTIFICATIONGROUP:
-        return (char*)"NOTIFICATION-GROUP";
+        return "NOTIFICATION-GROUP";
     case SMI_DECL_MODULECOMPLIANCE:
-        return (char*)"MODULE-COMPLIANCE";
+        return "MODULE-COMPLIANCE";
     case SMI_DECL_AGENTCAPABILITIES:
-        return (char*)"AGENT-CAPABILITIES";
+        return "AGENT-CAPABILITIES";
     case SMI_DECL_VALUEASSIGNMENT:
-        return (char*)"OBJECT-IDENTIFIER";
+        return "OBJECT-IDENTIFIER";
     /* SMIng statements */
     case SMI_DECL_MODULE:
-        return (char*)"module";
+        return "module";
     case SMI_DECL_NODE:
-        return (char*)"node";
+        return "node";
     case SMI_DECL_SCALAR:
-        return (char*)"scalar";
+        return "scalar";
     case SMI_DECL_TABLE:
-        return (char*)"table";
+        return "table";
     case SMI_DECL_ROW:
-        return (char*)"row";
+        return "row";
     case SMI_DECL_COLUMN:
-        return (char*)"column";
+        return "column";
     case SMI_DECL_NOTIFICATION:
-        return (char*)"notification";
+        return "notification";
     case SMI_DECL_GROUP:
-        return (char*)"group";
+        return "group";
     case SMI_DECL_COMPLIANCE:
-        return (char*)"compliance";
+        return "compliance";
         
     case SMI_DECL_IMPLICIT_TYPE:
     case SMI_DECL_TYPEASSIGNMENT:
@@ -222,10 +225,10 @@ char *MibNode::GetSmiTypeName(void)
         break;
     }
     
-    return (char*)"";
+    return "";
 }
                                   
-char *MibNode::GetTypeName(void)
+const char *MibNode::GetTypeName(void)
 {
     SmiType *smiType, *parentType;
     
@@ -246,44 +249,43 @@ char *MibNode::GetTypeName(void)
     return (smiType->name);
 }
 
-char *MibNode::GetBaseTypeName(void)
+const char *MibNode::GetBaseTypeName(void)
 {
     SmiType *smiType;
     
     smiType = smiGetNodeType(Node);
 
     if (!smiType || Node->nodekind == SMI_NODEKIND_TABLE)
-        return (char*)"" ;
+        return "" ;
 
     switch (smiType->basetype)
     {
     case SMI_BASETYPE_UNSIGNED32:
-        return (char*)"UNSIGNED32";
+        return "UNSIGNED32";
     case SMI_BASETYPE_INTEGER32:
-        return (char*)"INTEGER";
+        return "INTEGER";
     case SMI_BASETYPE_ENUM:
-        return (char*)"ENUM";
+        return "ENUM";
     case SMI_BASETYPE_OBJECTIDENTIFIER:
-        return (char*)"OBJECT IDENTIFIER";
+        return "OBJECT IDENTIFIER";
     case SMI_BASETYPE_OCTETSTRING:
-        return (char*)"OCTET STRING";
+        return "OCTET STRING";
     case SMI_BASETYPE_BITS:
-        return (char*)"BITS";
+        return "BITS";
     case SMI_BASETYPE_UNSIGNED64:
-        return (char*)"UNSIGNED64";
+        return "UNSIGNED64";
     case SMI_BASETYPE_UNKNOWN:
     default:
         break;
     }
 
-    return (char*)"";
+    return "";
 }
 
-char *MibNode::GetOid(void)
+const char *MibNode::GetOid(void)
 {
-    // If the Node is NULL, this is the MIBTree node, return the iso OID ...
-    return (Node?smiRenderOID(Node->oidlen, Node->oid, 
-                             SMI_RENDER_NUMERIC):(char*)"1");
+    // If the Node is NULL, this is the root node, return the iso OID ...
+    return (Node?smiRenderOID(Node->oidlen, Node->oid, SMI_RENDER_NUMERIC):"1");
 }
 
 // Generate indexes for table rows
