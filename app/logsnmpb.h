@@ -55,20 +55,20 @@ public:
     {
         connect(this, SIGNAL ( SendLog(QString) ), 
                 out, SLOT ( append (QString) ));
-    };
+    }
 
-    ~SnmpbAgentLog() {};
+    ~SnmpbAgentLog() {}
 
     LogEntry* create_log_entry(const char * const name, unsigned char t) const
     {
         return new LogEntryImpl(name, t);
-    };
+    }
 
     AgentLog& operator+=(const LogEntry *log)
     {
         emit SendLog(log->get_value());
         return *this;
-    };
+    }
 
 signals:
     void SendLog(QString str);

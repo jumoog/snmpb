@@ -53,7 +53,7 @@ public:
     // Used by graph update timer
     unsigned long GetSyncValue(const QString& oid);
 
-    inline USM *GetUSMObj(void) { return v3mp->get_usm(); };
+    inline USM *GetUSMObj(void) { return v3mp->get_usm(); }
 
     int SelectTableInstance(const QString& oid, QString& outinstance);
 

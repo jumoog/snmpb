@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Plot</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QGridLayout">
    <item row="1" column="2" colspan="2">
     <widget class="QPushButton" name="PlotBrowseOID">
      <property name="sizePolicy">
@@ -222,7 +222,6 @@
   <tabstop>PlotColor</tabstop>
   <tabstop>PlotWidth</tabstop>
   <tabstop>PlotShape</tabstop>
-  <tabstop>PlotDisplayName</tabstop>
   <tabstop>PlotBrowseOID</tabstop>
   <tabstop>OKCancel</tabstop>
  </tabstops>

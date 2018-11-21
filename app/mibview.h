@@ -87,7 +87,7 @@ class MibView : public BasicMibView
 public:
     MibView ( QWidget * parent = 0 );
 
-    void SetCurrentAgentIsV1(bool is_v1) { agentisv1 = is_v1; };
+    void SetCurrentAgentIsV1(bool is_v1) { agentisv1 = is_v1; }
 
 protected slots:
     void SelectedNode( QTreeWidgetItem * item, QTreeWidgetItem * old);
@@ -105,7 +105,7 @@ protected slots:
     void StopNode(void);
     void TableViewFromNode(void);
     void VarbindsFromNode(void);
-    void SetWalkInProgress(bool value) { walkinprogress = value; };
+    void SetWalkInProgress(bool value) { walkinprogress = value; }
     
 signals:
     void NodeProperties(const QString& text);

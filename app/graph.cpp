@@ -402,7 +402,6 @@ void GraphManager::SelectAgentProfile(QString *prefprofile, int prefproto)
     if (ap)
     {
         bool v1,v2,v3;
-        int selectedproto = -1;
         ap->GetSupportedProtocol(&v1, &v2, &v3);
 
         p.PlotAgentProtoV1->setEnabled(v1);
@@ -412,37 +411,31 @@ void GraphManager::SelectAgentProfile(QString *prefprofile, int prefproto)
         if ((prefproto == 0) && v1)
         {
             p.PlotAgentProtoV1->setChecked(true);
-            selectedproto = 0;
         }
         else 
         if ((prefproto == 1) && v2)
         {
             p.PlotAgentProtoV2->setChecked(true);
-            selectedproto = 1;
         }
         else
         if ((prefproto == 2) && v3)
         {
             p.PlotAgentProtoV3->setChecked(true);
-            selectedproto = 2;
         }
         else
         if (v1)
         {
             p.PlotAgentProtoV1->setChecked(true);
-            selectedproto = 0;
         }
         else
         if (v2)
         {
             p.PlotAgentProtoV2->setChecked(true);
-            selectedproto = 1;
         }
         else
         if (v3)
         {
             p.PlotAgentProtoV3->setChecked(true);
-            selectedproto = 2;
         }
 
         if (prefprofile)
