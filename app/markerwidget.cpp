@@ -26,7 +26,7 @@ MarkerWidget::MarkerWidget(QWidget* parent ):QWidget( parent )
 {
     setAttribute(Qt::WA_StaticContents);
 
-    m_pixmap = QPixmap( ":/images/marker.png" );
+    m_pixmap = QPixmap(":/icon/line-marker");
 
     setFixedWidth( 15 );
 }

@@ -189,7 +189,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="snmpb.qrc">
-                    <normaloff>:/images/agentsettings.png</normaloff>:/images/agentsettings.png</iconset>
+                    <normaloff>:/icon/cog</normaloff>:/icon/cog</iconset>
                   </property>
                  </widget>
                 </item>
@@ -972,7 +972,7 @@
              </property>
              <property name="icon">
               <iconset resource="snmpb.qrc">
-               <normaloff>:/images/agentsettings.png</normaloff>:/images/agentsettings.png</iconset>
+               <normaloff>:/icon/cog</normaloff>:/icon/cog</iconset>
              </property>
             </widget>
            </item>
@@ -1826,8 +1826,8 @@
   </widget>
   <action name="fileNewAction">
    <property name="icon">
-    <iconset resource="snmpb.qrc">
-     <normaloff>:/images/filenew.png</normaloff>:/images/filenew.png</iconset>
+    <iconset theme="document-new">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;New MIB</string>
@@ -1841,8 +1841,8 @@
   </action>
   <action name="fileOpenAction">
    <property name="icon">
-    <iconset resource="snmpb.qrc">
-     <normaloff>:/images/fileopen.png</normaloff>:/images/fileopen.png</iconset>
+    <iconset theme="document-open">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Open MIB...</string>
@@ -1856,8 +1856,8 @@
   </action>
   <action name="fileSaveAction">
    <property name="icon">
-    <iconset resource="snmpb.qrc">
-     <normaloff>:/images/filesave.png</normaloff>:/images/filesave.png</iconset>
+    <iconset theme="document-save">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Save MIB</string>
@@ -1871,8 +1871,8 @@
   </action>
   <action name="fileSaveAsAction">
    <property name="icon">
-    <iconset resource="snmpb.qrc">
-     <normaloff>:/images/filesave.png</normaloff>:/images/filesave.png</iconset>
+    <iconset theme="document-save-as">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Save MIB &amp;As...</string>
@@ -1885,6 +1885,10 @@
    </property>
   </action>
   <action name="fileExitAction">
+   <property name="icon">
+    <iconset theme="application-exit">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>E&amp;xit</string>
    </property>
@@ -1911,11 +1915,15 @@
    </property>
   </action>
   <action name="actionVerifyMIB">
+   <property name="icon">
+    <iconset resource="snmpb.qrc">
+     <normaloff>:/icon/verify</normaloff>:/icon/verify</iconset>
+   </property>
    <property name="text">
     <string>&amp;Verify MIB syntax</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+M</string>
+    <string>Ctrl+R</string>
    </property>
   </action>
   <action name="actionExtractMIBfromRFC">
@@ -1947,6 +1955,10 @@
    </property>
   </action>
   <action name="actionFind">
+   <property name="icon">
+    <iconset theme="edit-find">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Find...</string>
    </property>
@@ -1955,6 +1967,10 @@
    </property>
   </action>
   <action name="actionReplace">
+   <property name="icon">
+    <iconset theme="edit-find-replace">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Replace...</string>
    </property>
