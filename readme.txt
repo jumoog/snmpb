@@ -27,34 +27,20 @@ Tested & compiles on MSYS2/Windows, Linux, MacOSX (Leopard) and NetBSD
 - bison & flex
 - autoconf and automake
 - GNU make
-- Qt5 headers (development package)
 - GNU install
 - gcc and g++
+- Qt5 headers (development package)
 
 
 ### Windows build ###
 
-SnmpB builds on windows using MSYS2.
-
-1. Download and install MSYS2 from https://sourceforge.net/projects/msys2
-2. Start the 'MINGW64' flavor of MSYS2 by executing the script
-   'mingw64_shell.bat' from the root of the MSYS2 installation folder
-3. Install packages for Qt build on MSYS2 (taken from https://wiki.qt.io/MSYS2), specifically:
-   pacman -Suy
-   pacman --needed -S pacman pacman-mirrors msys2-runtime
-   (restart shell)
-   pacman -S base-devel git mingw-w64-x86_64-toolchain mingw-w64-x86_64-qt5-static mingw-w64-x86_64-qt-creator
-4. Download SnmpB source and compile with "make"
-5. Download and install the NSIS installer from http://nsis.sourceforge.net/ (3.0 works)
-6. Using windows explorer, go in snmpb/installer/win32 and right-click on the .nsi,
-   then "Compile NSIS Script"
-7. Voila, you have the full SnmpB windows installer .exe
+See separate guide in installer/win32/building-on-windows.md
 
 
-External packages
-------------------
+---------------------
+# External packages #
 
-Snmp++ is taken from http://www.agentpp.com
+## Snmp++ http://www.agentpp.com ##
 Version: 3.3.9
 
 Modified file(s):
@@ -68,7 +54,7 @@ IPv6Utility.cpp IPv6Utility.h "Re-enabled local inet_pton unavailable on MSYS2/M
 uxsnmp.h "Redefined INVALID_SOCKET to get rid of compiler warnings"
 
 
-Libtomcrypt is taken from http://libtom.org
+## Libtomcrypt http://libtom.org ##
 Version: 1.17
 
 Modified file(s):
@@ -78,7 +64,7 @@ src/headers/tomcrypt_custom.h "Defined LTC_NO_ROLC for MacOSX using LLVM"
 src/headers/tomcrypt_macros.h "Disabled ROL64/ROR64 assembly routines on Windows 64 bits"
 
 
-Libsmi is taken from http://www.ibr.cs.tu-bs.de/projects/libsmi
+## Libsmi http://www.ibr.cs.tu-bs.de/projects/libsmi ##
 Version: 0.5.0
 
 Modified file(s):
@@ -101,7 +87,7 @@ Deleted mibs/ietf/IANA-ITU-ALARM-TC-MIB: redundant with one in iana folder
 (prevented proper copy in win32 installer)
 Ran 'autoreconf -i' to generate Makefiles for 1.15 libtools
 
-QWT is taken from http://qwt.sourceforge.net
+## QWT http://qwt.sourceforge.net ##
 Version: 6.1.2
 
 Modified file(s):

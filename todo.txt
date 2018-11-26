@@ -29,6 +29,7 @@ Maintenance:
 - rework the build system, allow shared/static linking choice & keep windows build easy
 - out-of-tree build
 - meson build
+- windows "portable" build
 - add CI builds/releases
 - investigate forks (3 on SF, a few on GitHub)
 - use XDG_CONFIG_DIR where appropriate
