@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>images/agentcap.png</file>
-        <file>images/agentsettings.png</file>
         <file>images/collapse.png</file>
         <file>images/column_item.png</file>
         <file>images/compliance.png</file>
