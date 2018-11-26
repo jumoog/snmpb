@@ -54,11 +54,9 @@ public:
 
     void CheckForConfigFiles(void);
     QString GetBootCounterConfigFile(void);
-    QString GetMibConfigFile(void);
-    QString GetPathConfigFile(void);
+    QString GetSmiConfigFile(void);
     QString GetUsmUsersConfigFile(void);
     QString GetAgentsConfigFile(void);
-    QString GetPrefsConfigFile(void);
     QString GetLogConfigFile(void);
     QString GetGraphsConfigFile(void);
 

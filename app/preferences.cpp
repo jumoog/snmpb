@@ -17,12 +17,11 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include <memory>
 #include <qmessagebox.h> 
 #include <qfileinfo.h>
 #include <qtextstream.h>
 
-#include "preferences.h"
-#include "mibmodule.h"
 // For DEFAULT_SMIPATH
 #ifdef WIN32
 #include "../libsmi/win/config.h"
@@ -30,16 +29,38 @@
 #include "../libsmi/config.h"
 #endif
 
+#include "mibmodule.h"
+#include "preferences.h"
+
+const char default_mib_config[] = R"(
+IF-MIB
+RFC1213-MIB
+SNMP-FRAMEWORK-MIB
+SNMP-NOTIFICATION-MIB
+SNMPv2-MIB
+SNMPv2-TM
+SNMP-VIEW-BASED-ACM-MIB
+)";
+
+#define STANDARD_TRAP_PORT       162
+
+
 Preferences::Preferences(Snmpb *snmpb)
 {
     s = snmpb;
 
-    settings = new QSettings(s->GetPrefsConfigFile(), QSettings::IniFormat, this);
+    // setup defaults for the default constructor of QSettings
+    QSettings::setDefaultFormat(QSettings::IniFormat);
+    QCoreApplication::setOrganizationDomain("snmpb.sourceforge.net");
+    QCoreApplication::setApplicationName("SnmpB");
 
-    enableipv4 = settings->value("enableipv4", true).toBool();
-    trapport = settings->value("trapport", 162).toInt();
-    enableipv6 = settings->value("enableipv6", true).toBool();
-    trapport6 = settings->value("trapport6", 162).toInt();
+    // read early settings necessary to decide when to drop root
+    QSettings settings;
+    settings.beginGroup("network");
+    enableipv4 = settings.value("enableipv4", true).toBool();
+    trapport4 = settings.value("trapport4", 162).toInt();
+    enableipv6 = settings.value("enableipv6", true).toBool();
+    trapport6 = settings.value("trapport6", 162).toInt();
 }
 
 void Preferences::Init(void)
@@ -91,153 +112,126 @@ void Preferences::Init(void)
     connect( p->ShowAgentName, SIGNAL( toggled(bool) ),
              this, SLOT( SetShowAgentName(bool) ) );
     connect( p->ModulePathsReset, 
-             SIGNAL( clicked() ), this, SLOT( ModuleReset() ));
+             SIGNAL( clicked() ), this, SLOT( MibPathReset() ));
     connect( p->ModulePathsAdd, 
-             SIGNAL( clicked() ), this, SLOT( ModuleAdd() ));
+             SIGNAL( clicked() ), this, SLOT( MibPathAdd() ));
     connect( p->ModulePathsDelete, 
-             SIGNAL( clicked() ), this, SLOT( ModuleDelete() ));
+             SIGNAL( clicked() ), this, SLOT( MibPathDelete() ));
 
-    // Load preferences from file
-    horizontalsplit = settings->value("horizontalsplit", false).toBool();
-    p->HorizontalSplit->setCheckState((horizontalsplit == true)?
-                                     Qt::Checked:Qt::Unchecked);
+    // Load preferences from the user-scope INI file
+    QSettings settings;
+    horizontalsplit = settings.value("ui/horizontalsplit", false).toBool();
+    p->HorizontalSplit->setChecked(horizontalsplit);
 
-    p->EnableIPv4->setCheckState((enableipv4 == true)?
-                                 Qt::Checked:Qt::Unchecked);
-    p->EnableIPv6->setCheckState((enableipv6 == true)?
-                                 Qt::Checked:Qt::Unchecked);
+    p->EnableIPv4->setChecked(enableipv4);
+    p->EnableIPv6->setChecked(enableipv6);
 
-    expandtrapbinding = settings->value("expandtrapbinding", true).toBool();
-    p->ExpandTrapBinding->setCheckState((expandtrapbinding == true)?
-                                       Qt::Checked:Qt::Unchecked);
+    expandtrapbinding = settings.value("ui/expandtrapbinding", true).toBool();
+    p->ExpandTrapBinding->setChecked(expandtrapbinding);
 
-    showagentname = settings->value("showagentname", false).toBool();
-    p->ShowAgentName->setCheckState((showagentname == true)?
-                                    Qt::Checked:Qt::Unchecked);
+    showagentname = settings.value("misc/showagentname", false).toBool();
+    p->ShowAgentName->setChecked(showagentname);
 
-    automaticloading = settings->value("automaticloading", 2).toInt();
+    automaticloading = settings.value("misc/automaticloading", 2).toInt();
     if (automaticloading == 1) p->MibLoadingEnable->setChecked(true);
     else if (automaticloading == 2) p->MibLoadingEnablePrompt->setChecked(true);
     else if (automaticloading == 3) p->MibLoadingDisable->setChecked(true);
 
-    char    *dir, *smipath;
-    char    sep[2] = {PATH_SEPARATOR, 0};
-    smipath = strdup(smiGetPath());
-    mibpaths.clear();
-    
-    for (dir = strtok(smipath, sep); dir; dir = strtok(NULL, sep))
-        mibpaths << dir; 
-   
-    free(smipath);
+    curprofile = settings.value("ui/selectedprofile", "localhost").toString();
+    curproto = settings.value("ui/selectedproto", 0).toInt();
 
-    pathschanged = false;
+    // reset to default MIB paths if needed
+    if (settings.value("mibpaths/size", 0) == 0) {
+        MibPathReset();
+    }
+
+    MibPathRefresh();
+
+    // reset to default MIB preload list if needed
+    if (settings.value("mibpreloads/size", 0) == 0) {
+        MibPreloadsReset();
+    }
 
     p->PreferencesTree->setCurrentItem(p->PreferencesTree->topLevelItem(0));
-
-    curprofile = settings->value("curprofile", "localhost").toString();
-    curproto = settings->value("curproto", 0).toInt();
 }
 
 void Preferences::Execute (void)
 {
-    if(pw->exec() == QDialog::Accepted)
+    if(pw->exec() != QDialog::Accepted)
     {
-        // Warn if trap port or transport changed ...
-        if((trapport != settings->value("trapport", 162).toInt()) ||
-           (trapport6 != settings->value("trapport6", 162).toInt()) ||
-           (enableipv4 != settings->value("enableipv4", true).toBool()) ||
-           (enableipv6 != settings->value("enableipv6", true).toBool()))
-            QMessageBox::information(NULL, "SnmpB transport protocol or trap port changed", 
-                                     "Please restart SnmpB for the change to take effect.", 
-                                     QMessageBox::Ok, Qt::NoButton);
-
-        // Save preferences
-        settings->setValue("horizontalsplit", horizontalsplit);
-        settings->setValue("trapport", trapport);
-        settings->setValue("trapport6", trapport6);
-        settings->setValue("enableipv4", enableipv4);
-        settings->setValue("enableipv6", enableipv6);
-        settings->setValue("expandtrapbinding", expandtrapbinding);
-        settings->setValue("showagentname", showagentname);
-        settings->setValue("automaticloading", automaticloading);
-
-        if (pathschanged == true)
-        {
-            // Store modules in local list
-            mibpaths.clear();
-            QList<QListWidgetItem *> l = p->ModulePaths->findItems("*", Qt::MatchWildcard);
-            for (int i = 0; i < l.size(); i++)
-                mibpaths << l[i]->text(); 
-
-            // Then create the paths in the file
-            QFile paths(s->GetPathConfigFile());
-            paths.remove();
-            if (!paths.open(QIODevice::WriteOnly | QIODevice::Text))
-            {
-                QString err = QString("Unable to save paths in file %1 !\n")
-                    .arg(paths.fileName());
-                QMessageBox::critical ( NULL, "SnmpB error", err, 
-                        QMessageBox::Ok, Qt::NoButton);
-                return;
-            }
-            QTextStream out(&paths);
-            out << "path ";
-            for (int j = 0; j < mibpaths.size(); j++)
-            {
-                out << mibpaths[j];
-                if (j == mibpaths.size()-1)
-                    out << endl; 
-                else
-                    out << PATH_SEPARATOR;
-            }
-            paths.close();
-
-            // and finally refresh the list of loaded MIBS ...
-            s->MibModuleObj()->RefreshPathChange();
-            s->TabSelected();
-        }
-
-        pathschanged = false;
+        MibPathRefresh();
+        return;
     }
-    else
-    {
-        ModuleRefresh();
-        pathschanged = false;
-    }
+
+    QSettings settings;
+    // Warn if trap port or transport changed ...
+    if (trapport4 != settings.value("trapport", 162).toInt() ||
+        trapport6 != settings.value("trapport6", 162).toInt() ||
+        enableipv4 != settings.value("enableipv4", true).toBool() ||
+        enableipv6 != settings.value("enableipv6", true).toBool() )
+        QMessageBox::information(NULL,
+                                 tr("SnmpB transport protocol or trap port changed"),
+                                 tr("Please restart SnmpB for the change to take effect."),
+                                 QMessageBox::Ok);
+
+    Save();
 }
 
-void Preferences::ModuleReset(void)
+void Preferences::Save()
 {
-    char    *dir, *smipath;
-    char    sep[2] = {PATH_SEPARATOR, 0};
-    smipath = strdup(DEFAULT_SMIPATH);
+    QSettings settings;
 
-    p->ModulePaths->clear();
+    // Save preferences
+    settings.setValue("network/trapport4", trapport4);
+    settings.setValue("network/trapport6", trapport6);
+    settings.setValue("network/enableipv4", enableipv4);
+    settings.setValue("network/enableipv6", enableipv6);
 
-    for (dir = strtok(smipath, sep); dir; dir = strtok(NULL, sep))
-    {
-        QListWidgetItem *item = new QListWidgetItem(dir, p->ModulePaths);
-        item->setFlags(item->flags() | Qt::ItemIsEditable);
-        p->ModulePaths->addItem(item);
+    settings.setValue("ui/horizontalsplit", horizontalsplit);
+    settings.setValue("ui/expandtrapbinding", expandtrapbinding);
+    settings.setValue("misc/showagentname", showagentname);
+    settings.setValue("misc/automaticloading", automaticloading);
+
+    // Store MIB paths in local list
+    QStringList mibpaths;
+    QList<QListWidgetItem *> l = p->ModulePaths->findItems("*", Qt::MatchWildcard);
+    for (int i = 0; i < l.size(); i++)
+        mibpaths << l[i]->text();
+
+    // Then save MIB paths to config
+    settings.beginWriteArray("mibpaths");
+    for (int i = 0; i < mibpaths.size(); ++i) {
+        settings.setArrayIndex(i);
+        settings.setValue("dir", mibpaths[i]);
     }
+    settings.endArray();
 
-    free(smipath);
+    // Save MIB preload list
+    QStringList preloads = s->MibModuleObj()->GetWantedModules();
+    settings.beginWriteArray("mibpreloads");
+    for (int i = 0; i < preloads.size(); ++i) {
+        settings.setArrayIndex(i);
+        settings.setValue("mib", preloads[i]);
+    }
+    settings.endArray();
 
-    pathschanged = true;
+    // Refresh the MIB lists
+    s->MibModuleObj()->Refresh();
+
+    // Refresh UI
+    s->TabSelected();
 }
 
-void Preferences::ModuleAdd(void)
+void Preferences::MibPathAdd()
 {
     QListWidgetItem *item = new QListWidgetItem("type new path here", p->ModulePaths);
     item->setFlags(item->flags() | Qt::ItemIsEditable);
 
     p->ModulePaths->addItem(item);
     p->ModulePaths->editItem(item);
-
-    pathschanged = true;
 }
 
-void Preferences::ModuleDelete(void)
+void Preferences::MibPathDelete()
 {
     QList<QListWidgetItem *> todel  = p->ModulePaths->selectedItems();
     QList<QListWidgetItem *> total = p->ModulePaths->findItems("*", Qt::MatchWildcard);
@@ -245,41 +239,89 @@ void Preferences::ModuleDelete(void)
     // Protection
     if (todel.size() >= total.size())
     {
-        QMessageBox::warning(NULL, "SnmpB warning", 
-                             "Must have at least one defined path. Delete failed.", 
-                             QMessageBox::Ok, Qt::NoButton);
+        QMessageBox::warning(NULL, tr("SnmpB warning"),
+                             tr("Must have at least one defined path. Delete failed."),
+                             QMessageBox::Ok);
         return;
     }
 
     for (int i = 0; i < todel.size(); i++)
         delete p->ModulePaths->takeItem(p->ModulePaths->row(todel[i]));
+}
 
-    pathschanged = true;
+void Preferences::MibPathRefresh()
+{
+    // discard widget contents and refill it with mib preloads from settings
+    p->ModulePaths->clear();
+    QSettings settings;
+    int size = settings.beginReadArray("mibpaths");
+    for (int i = 0; i < size; ++i) {
+        settings.setArrayIndex(i);
+        p->ModulePaths->addItem(settings.value("dir").toString());
+    }
+
+    // set all editable
+    QList<QListWidgetItem *> l = p->ModulePaths->findItems("*", Qt::MatchWildcard);
+    for (int i = 0; i < l.size(); i++)
+        l[i]->setFlags(l[i]->flags() | Qt::ItemIsEditable);
+}
+
+void Preferences::MibPathReset()
+{
+    // "Reset to default" for MIB paths
+    QStringList defaultpaths = QString(DEFAULT_SMIPATH).split(SMI_PATH_SEPARATOR);
+
+    QSettings settings;
+    settings.beginWriteArray("mibpaths");
+    for (int i = 0; i < defaultpaths.size(); ++i) {
+        settings.setArrayIndex(i);
+        settings.setValue("dir", defaultpaths[i]);
+    }
+    settings.endArray();
+
+    s->MibModuleObj()->RescanPath();
+}
+
+void Preferences::MibPreloadsReset()
+{
+    // "Reset to default" for Wanted MIB list
+    QStringList preloaddefaults = QString(default_mib_config).split('\n');
+    preloaddefaults.removeAll("");
+
+    QSettings settings;
+    settings.beginWriteArray("mibpreloads");
+    for (int i = 0; i < preloaddefaults.size(); ++i) {
+        settings.setArrayIndex(i);
+        settings.setValue("mib", preloaddefaults[i]);
+    }
+    settings.endArray();
+
+    s->MibModuleObj()->Refresh();
 }
 
 void Preferences::SetHorizontalSplit(bool checked)
 {
     horizontalsplit = checked;
-    s->MainUI()->QuerySplitter->setOrientation(checked==true?Qt::Vertical:Qt::Horizontal);
+    s->MainUI()->QuerySplitter->setOrientation(checked ? Qt::Vertical : Qt::Horizontal);
 }
 
-void Preferences::SetTrapPort(void)
+void Preferences::SetTrapPort()
 {
-    trapport = p->TrapPort->value();
+    trapport4 = p->TrapPort->value();
 }
 
-void Preferences::SetTrapPort6(void)
+void Preferences::SetTrapPort6()
 {
     trapport6 = p->TrapPort6->value();
 }
 
 void Preferences::SetEnableIPv4(bool checked)
 {
-    if ((checked == false) && (enableipv6 == false))
+    if (!checked && !enableipv6)
     {
-        QMessageBox::critical(NULL, "SnmpB error", 
-                              "Must enable at least one transport protocol.", 
-                              QMessageBox::Ok, Qt::NoButton);
+        QMessageBox::critical(NULL, tr("SnmpB error"),
+                              tr("Must enable at least one transport protocol."),
+                              QMessageBox::Ok);
         p->EnableIPv4->setCheckState(Qt::Checked);
         return;
     }
@@ -289,11 +331,11 @@ void Preferences::SetEnableIPv4(bool checked)
 
 void Preferences::SetEnableIPv6(bool checked)
 {
-    if ((checked == false) && (enableipv4 == false))
+    if (!checked && !enableipv4)
     {
-        QMessageBox::critical(NULL, "SnmpB error", 
-                              "Must enable at least one transport protocol.", 
-                              QMessageBox::Ok, Qt::NoButton);
+        QMessageBox::critical(NULL, tr("SnmpB error"),
+                              tr("Must enable at least one transport protocol."),
+                              QMessageBox::Ok);
         p->EnableIPv6->setCheckState(Qt::Checked);
         return;
     }
@@ -311,7 +353,7 @@ void Preferences::SetShowAgentName(bool checked)
     showagentname = checked;
 }
 
-void Preferences::SelectAutomaticLoading(void)
+void Preferences::SelectAutomaticLoading()
 {
     if (p->MibLoadingEnable->isChecked()) automaticloading = 1;
     else if (p->MibLoadingEnablePrompt->isChecked()) automaticloading = 2;
@@ -328,12 +370,12 @@ bool Preferences::GetShowAgentName(void)
     return showagentname;
 }
 
-bool Preferences::GetEnableIPv4(void)
+bool Preferences::GetEnableIPv4()
 {
     return enableipv4;
 }
 
-bool Preferences::GetEnableIPv6(void)
+bool Preferences::GetEnableIPv6()
 {
     return enableipv6;
 }
@@ -343,9 +385,9 @@ int Preferences::GetAutomaticLoading(void)
     return automaticloading;
 }
 
-int Preferences::GetTrapPort(void)
+int Preferences::GetTrapPort4(void)
 {
-    return trapport;
+    return trapport4;
 }
 
 int Preferences::GetTrapPort6(void)
@@ -353,29 +395,29 @@ int Preferences::GetTrapPort6(void)
     return trapport6;
 }
 
+bool Preferences::ShouldListenStdTrapPort4()
+{
+    return enableipv4 && trapport4 == STANDARD_TRAP_PORT;
+}
+
+bool Preferences::ShouldListenStdTrapPort6()
+{
+    return enableipv6 && trapport6 == STANDARD_TRAP_PORT;
+}
+
 void Preferences::SaveCurrentProfile(QString &name, int proto)
 {
     curprofile = name;
     curproto = proto;
-    settings->setValue("curprofile", curprofile);
-    settings->setValue("curproto", curproto);
+    QSettings settings;
+    settings.setValue("ui/selectedprofile", curprofile);
+    settings.setValue("ui/selectedproto", curproto);
 }
 
 int Preferences::GetCurrentProfile(QString &name)
 {
     name = curprofile;
     return curproto;
-}
-
-void Preferences::ModuleRefresh(void)
-{
-    p->ModulePaths->clear();
-    p->ModulePaths->addItems(mibpaths);
-
-    QList<QListWidgetItem *> l = p->ModulePaths->findItems("*", Qt::MatchWildcard);
-
-    for (int i = 0; i < l.size(); i++)
-        l[i]->setFlags(l[i]->flags() | Qt::ItemIsEditable);
 }
 
 void Preferences::SelectedPreferences(QTreeWidgetItem * item, QTreeWidgetItem *)
@@ -402,14 +444,14 @@ void Preferences::SelectedPreferences(QTreeWidgetItem * item, QTreeWidgetItem *)
     {
         p->PreferencesProps->setCurrentIndex(2);
 
-        ModuleRefresh();
+        MibPathRefresh();
     }
     else
     if (item == traps)
     {
         p->PreferencesProps->setCurrentIndex(3);
 
-        p->TrapPort->setValue(trapport);
+        p->TrapPort->setValue(trapport4);
         p->TrapPort6->setValue(trapport6);
         p->ExpandTrapBinding->setCheckState(expandtrapbinding==true?Qt::Checked:Qt::Unchecked);
         p->ShowAgentName->setCheckState(showagentname==true?Qt::Checked:Qt::Unchecked);

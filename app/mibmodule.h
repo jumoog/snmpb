@@ -24,7 +24,8 @@
 #include "mibview.h"
 #include "smi.h"
 
-#define PATH_SEPARATOR ';'
+#define SMI_PATH_SEPARATOR ';'
+
 
 class LoadedMibModule
 {
@@ -46,28 +47,33 @@ public:
     enum AutomaticLoadingPolicy {MIBLOAD_ALL, MIBLOAD_DEFAULT, MIBLOAD_NONE};
 
     MibModule(Snmpb *snmpb);
-    void Refresh(void);
-    void RefreshPathChange(void);
     void SendLogError(const QString& text){ErrorWhileLoading=true; emit LogError(text);}
     QString LoadBestModule(QString oid);
     void SetLoadingPolicy(enum AutomaticLoadingPolicy p) {Policy = p;}
 
+    void RegenerateSmiConf();
+    void ReadMibPaths();
+    void ReadMibPreloads();
+    QStringList GetWantedModules() { return Wanted; }
+
 public slots:
-    void AddModule(void);
-    void RemoveModule(void);
-    void ShowModuleInfo(void);
+    void Refresh();
+    void RescanPath();
+
+    void AddModule();
+    void RemoveModule();
+    void ShowModuleInfo();
 
 signals:
     void ModuleProperties(const QString& text);
     void LogError(const QString& text);
-    void StopAgentTimer(void);
+    void StopAgentTimer();
 
 private:
     void InitLib(int restart);
-    void RebuildTotalList(int restart);
-    void RebuildLoadedList(void);
-    void RebuildUnloadedList(void);
-    void SaveWantedModules(void);
+    void RebuildTotalList();
+    void RebuildLoadedList();
+    void RebuildUnloadedList();
 
 private:
     Snmpb *s;

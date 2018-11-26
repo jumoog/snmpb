@@ -5,6 +5,7 @@ Supported features:
  + trap reception
  + agent discovery
  + SNMPv3 USM (authentication & encryption)
+ + IPv6
 
 
 ### Compiling ###

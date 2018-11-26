@@ -87,7 +87,7 @@ Agent::Agent(Snmpb *snmpb)
 
     bool v4 = s->PreferencesObj()->GetEnableIPv4();
     bool v6 = s->PreferencesObj()->GetEnableIPv6();
-    int port4 = s->PreferencesObj()->GetTrapPort();
+    int port4 = s->PreferencesObj()->GetTrapPort4();
     int port6 = s->PreferencesObj()->GetTrapPort6();
 
     start_err = ""; 

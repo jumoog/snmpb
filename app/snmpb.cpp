@@ -40,31 +40,13 @@
 #include "qwt.h"
 #include "snmp_pp/config_snmp_pp.h"
 
-#define SNMPB_CONFIG_DIR         ".snmpb"
-#define MIB_CONFIG_FILE          "mib.conf"
-#define PATH_CONFIG_FILE         "path.conf"
+#define SMI_CONFIG_FILE          "smi.conf"
 #define BOOT_COUNTER_CONFIG_FILE "boot_counter.conf"
 #define USM_USERS_CONFIG_FILE    "usm_users.conf"
 #define AGENTS_CONFIG_FILE       "agents.conf"
-#define PREFS_CONFIG_FILE        "preferences.conf"
 #define LOG_CONFIG_FILE          "log.conf"
 #define GRAPHS_CONFIG_FILE       "graphs.conf"
 
-#define STANDARD_TRAP_PORT       162 
-
-char default_mib_config[] = {
-"load IF-MIB\n\
-load RFC1213-MIB\n\
-load SNMP-FRAMEWORK-MIB\n\
-load SNMP-NOTIFICATION-MIB\n\
-load SNMPv2-CONF\n\
-load SNMPv2-SMI\n\
-load SNMPv2-TC\n\
-load SNMPv2-TM\n\
-load SNMP-VIEW-BASED-ACM-MIB"
-};
-
-static QDir SnmpbDir = QDir::homePath() + "/" + SNMPB_CONFIG_DIR;
 
 Snmpb::Snmpb(void)
 {
@@ -74,11 +56,10 @@ Snmpb::Snmpb(void)
     prefs = new Preferences(this);
 #ifndef WIN32 
     // Allows to bind on privileged ports only if it is the standard trap port...
-    if (! (((prefs->GetEnableIPv4() == true) && 
-            (prefs->GetTrapPort() == STANDARD_TRAP_PORT)) ||
-           ((prefs->GetEnableIPv6() == true) && 
-            (prefs->GetTrapPort6() == STANDARD_TRAP_PORT))))
+    if (! (prefs->ShouldListenStdTrapPort4() || prefs->ShouldListenStdTrapPort6()))
+    {
         setuid(getuid());
+    }
 #endif
     agent = new Agent(this);
     start_issuccess = agent->GetStartupResult(start_msg);    
@@ -103,8 +84,8 @@ void Snmpb::BindToGUI(QMainWindow* mw)
 
         // Desperate measures: delete the preferences file so 
         // at the next startup, the app might have a chance to start
-        QFile prefs(GetPrefsConfigFile());
-        prefs.remove();
+        QFile(GetSmiConfigFile()).remove();
+        QFile(QSettings().fileName()).remove(); // this one is probably overkill
         exit (-1);
     }
     else
@@ -199,73 +180,58 @@ Preferences* Snmpb::PreferencesObj(void)
 
 void Snmpb::CheckForConfigFiles(void)
 {
-    if (!SnmpbDir.exists())
+    QSettings settings;
+
+    if (!settings.isWritable())
     {
-        if(!SnmpbDir.mkdir(SnmpbDir.absolutePath()))
-        {
-            QString err = QString("Cannot create configuration directory : %1\n")
-                          .arg(SnmpbDir.absolutePath().toLatin1().data());
-            QMessageBox::warning ( NULL, "SnmpB", err, 
-                                   QMessageBox::Ok, Qt::NoButton);
-        }
-        else
-        {
-            // Create default mib.conf file.
-            QFile file(GetMibConfigFile());
-            if (!file.open(QIODevice::ReadWrite))
-            {
-                QString err = QString("Cannot create configuration file : %1\n")
-                                     .arg(file.fileName());
-                QMessageBox::warning ( NULL, "SnmpB", err, 
-                                       QMessageBox::Ok, Qt::NoButton);
-            }
-            else
-            {
-                file.write(default_mib_config, strlen(default_mib_config));
-                file.close();
-            }
-        }
+        QMessageBox::warning(nullptr, "SnmpB",
+                             tr("SnmpB config file is not writable:\n%1\n"
+                                "If it continues to be, changes in preferences will not be saved!")
+                             .arg(settings.fileName()),
+                             QMessageBox::Ok);
     }
 }
 
 QString Snmpb::GetBootCounterConfigFile(void)
 {
-    return (SnmpbDir.filePath(BOOT_COUNTER_CONFIG_FILE));
+    QSettings settings;
+    QDir cfgdir = QFileInfo(settings.fileName()).dir();
+    return cfgdir.filePath(BOOT_COUNTER_CONFIG_FILE);
 }
 
-QString Snmpb::GetMibConfigFile(void)
+QString Snmpb::GetSmiConfigFile(void)
 {
-    return (SnmpbDir.filePath(MIB_CONFIG_FILE));
-}
-
-QString Snmpb::GetPathConfigFile(void)
-{
-    return (SnmpbDir.filePath(PATH_CONFIG_FILE));
+    QSettings settings;
+    QDir cfgdir = QFileInfo(settings.fileName()).dir();
+    return cfgdir.filePath(SMI_CONFIG_FILE);
 }
 
 QString Snmpb::GetUsmUsersConfigFile(void)
 {
-    return (SnmpbDir.filePath(USM_USERS_CONFIG_FILE));
+    QSettings settings;
+    QDir cfgdir = QFileInfo(settings.fileName()).dir();
+    return cfgdir.filePath(USM_USERS_CONFIG_FILE);
 }
 
 QString Snmpb::GetAgentsConfigFile(void)
 {
-    return (SnmpbDir.filePath(AGENTS_CONFIG_FILE));
-}
-
-QString Snmpb::GetPrefsConfigFile(void)
-{
-    return (SnmpbDir.filePath(PREFS_CONFIG_FILE));
+    QSettings settings;
+    QDir cfgdir = QFileInfo(settings.fileName()).dir();
+    return cfgdir.filePath(AGENTS_CONFIG_FILE);
 }
 
 QString Snmpb::GetLogConfigFile(void)
 {
-    return (SnmpbDir.filePath(LOG_CONFIG_FILE));
+    QSettings settings;
+    QDir cfgdir = QFileInfo(settings.fileName()).dir();
+    return cfgdir.filePath(LOG_CONFIG_FILE);
 }
 
 QString Snmpb::GetGraphsConfigFile(void)
 {
-    return (SnmpbDir.filePath(GRAPHS_CONFIG_FILE));
+    QSettings settings;
+    QDir cfgdir = QFileInfo(settings.fileName()).dir();
+    return cfgdir.filePath(GRAPHS_CONFIG_FILE);
 }
 
 void Snmpb::ManageAgentProfiles(bool)

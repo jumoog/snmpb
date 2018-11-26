@@ -17,6 +17,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include <memory>
 #include <stdio.h>
 #include <string.h>
 #include <qfileinfo.h>
@@ -109,10 +110,9 @@ char* LoadedMibModule::GetMibLanguage(void)
 static MibModule *CurrentModuleObject = NULL;
 
 MibModule::MibModule(Snmpb *snmpb)
+    : s(snmpb)
+    , Policy(MIBLOAD_DEFAULT)
 {
-    s = snmpb;
-    Policy = MIBLOAD_DEFAULT;
-
     QStringList columns;
     columns << "Module" << "Required" << "Language" << "Path"; 
     s->MainUI()->LoadedModules->setHeaderLabels(columns);
@@ -122,8 +122,8 @@ MibModule::MibModule(Snmpb *snmpb)
             s->MainUI()->LogOutput, SLOT ( append (QString) ));
 
     CurrentModuleObject = this;
-    RebuildTotalList(0);
     InitLib(0);
+    RescanPath();
 
     // Connect some signals
     connect( s->MainUI()->UnloadedModules, 
@@ -143,14 +143,9 @@ MibModule::MibModule(Snmpb *snmpb)
              SIGNAL( clicked() ), this, SLOT( RemoveModule() ));
     connect( this, SIGNAL( StopAgentTimer() ), 
              s->AgentObj(), SLOT( StopTimer() ));
-
-    for(SmiModule *mod = smiGetFirstModule(); 
-        mod; mod = smiGetNextModule(mod))
-        Wanted.append(QFileInfo(mod->path).fileName());
-    Refresh();
 }
 
-void MibModule::ShowModuleInfo(void)
+void MibModule::ShowModuleInfo()
 {
     QTreeWidgetItem *item;
     QList<QTreeWidgetItem *> item_list = 
@@ -177,19 +172,6 @@ void MibModule::ShowModuleInfo(void)
 bool compareModule(QStringList s1, QStringList s2)
 {
     return s1[0] < s2[0];
-}
-
-char *mystrtok_r(char *s1, const char *s2, char **lasts)
-{
-    char *ret;
-    if (s1 == NULL) s1 = *lasts;
-    while(*s1 && strchr(s2, *s1)) ++s1;
-    if(*s1 == '\0') return NULL;
-    ret = s1;
-    while(*s1 && !strchr(s2, *s1)) ++s1;
-    if(*s1) *s1++ = '\0';
-    *lasts = s1;
-    return ret;
 }
 
 static void NormalErrorHdlr(char *path, int line, int severity, 
@@ -237,32 +219,23 @@ static bool MibFilenameFilter(const QString& filename)
     return extension.isEmpty();
 }
 
-void MibModule::RebuildTotalList(int restart)
+void MibModule::RebuildTotalList()
 {
-    char    *dir, *smipath, *svptr = NULL;
-    char    sep[2] = {PATH_SEPARATOR, 0};
-
-    if (!restart) 
-    { 
-        smiInit(NULL);
-        smiReadConfig(s->GetPathConfigFile().toLatin1().data(), NULL);
-    }
-    
     /* Enable error reporting */
     smiSetFlags(smiGetFlags() | SMI_FLAG_ERRORS | SMI_FLAG_NODESCR);
     smiSetErrorHandler(NormalErrorHdlr);
     smiSetErrorLevel(3);
 
-    smipath = strdup(smiGetPath());
+    std::unique_ptr<char, decltype(&std::free)>
+        smipath{ smiGetPath(), &std::free };
+    QStringList
+        smipaths = QString(smipath.get()).split(SMI_PATH_SEPARATOR);
    
     Total.clear();
-
     QStringList errored_files;
-    
-    for (dir = mystrtok_r(smipath, sep, &svptr); dir; 
-         dir = mystrtok_r(NULL, sep, &svptr))
+    for (int i = 0; i < smipaths.size(); ++i)
     {
-        QDir d(dir, QString::null, QDir::Unsorted, QDir::Files | QDir::Readable);
+        QDir d(smipaths[i], "", QDir::Unsorted, QDir::Files | QDir::Readable);
         QStringList list = d.entryList();
         for (QStringListIterator it(list); it.hasNext(); )
         {
@@ -320,9 +293,6 @@ void MibModule::RebuildTotalList(int restart)
     }
 
     qSort(Total.begin(), Total.end(), compareModule);
-    if (!restart)
-        smiExit();
-    free(smipath);
 }
 
 // Attempts to identify and load a mib module that resolves a specific oid
@@ -399,8 +369,8 @@ QString MibModule::LoadBestModule(QString oid)
 
         // Load the module
         Wanted.append(best_file.toLatin1().data());
+
         Refresh();
-        SaveWantedModules();
         s->TabSelected();
     }
 
@@ -413,60 +383,50 @@ bool lessThanLoadedMibModule(const LoadedMibModule *lm1,
     return lm1->name < lm2->name;
 }
 
-void MibModule::RebuildLoadedList(void)
+void MibModule::RebuildLoadedList()
 {
-    SmiModule *mod;
-    int i = 0;
-    LoadedMibModule *lmodule;
-    char * required = NULL;
-    
     Loaded.clear();
     s->MainUI()->LoadedModules->clear();
-    
-    mod = smiGetFirstModule();
-    
-    while (mod)
-    {
-        lmodule = new LoadedMibModule(mod);
-        Loaded.append(lmodule);
-        
-        if (Wanted.contains(lmodule->name))
-            required = (char*)"no";
-        else
-            required = (char*)"yes";
-    
-        QStringList values;
-        values << lmodule->name.toLatin1().data() << required
-               << lmodule->GetMibLanguage() << lmodule->module->path; 
-        new QTreeWidgetItem(s->MainUI()->LoadedModules, values);
 
-        i++;
-        mod = smiGetNextModule(mod);
+    for (SmiModule *mod = smiGetFirstModule();
+         mod;
+         mod = smiGetNextModule(mod) )
+    {
+        LoadedMibModule *lmodule = new LoadedMibModule(mod);
+        Loaded.append(lmodule);
+
+        const char* required = Wanted.contains(lmodule->name) ? "yes" : "no";
+
+        QStringList columns;
+        columns << lmodule->name.toUtf8().data()
+                << required
+                << lmodule->GetMibLanguage()
+                << lmodule->module->path;
+        new QTreeWidgetItem(s->MainUI()->LoadedModules, columns);
     }
     
     qSort(Loaded.begin(), Loaded.end(), lessThanLoadedMibModule);
 }
 
-void MibModule::RebuildUnloadedList(void)
+void MibModule::RebuildUnloadedList()
 {
-    QString current;
-    int j;
- 
     Unloaded.clear();
     s->MainUI()->UnloadedModules->clear();
     
-    for(int i=0; i < Total.count(); i++)
+    for(int i = 0; i < Total.count(); ++i)
     {
-        current = Total[i][0];
-        LoadedMibModule *lmodule = NULL;
+        QString current = Total[i][0];
 
-        for(j = 0; j < Loaded.count(); j++)
+        bool found = false;
+        for(int j = 0; j < Loaded.count(); j++)
         { 
-            lmodule = Loaded[j];
-            if (QFileInfo(lmodule->module->path).fileName() == current) break;
+            if (QFileInfo(Loaded[j]->module->path).fileName() == current)
+            {
+                found = true;
+                break;
+            }
         }
-
-        if (!lmodule || (j >= Loaded.count())) {
+        if (!found) {
             Unloaded.append(current);
             new QTreeWidgetItem(s->MainUI()->UnloadedModules, 
                                 QStringList(current));
@@ -474,7 +434,7 @@ void MibModule::RebuildUnloadedList(void)
     }
 }
 
-void MibModule::AddModule(void)
+void MibModule::AddModule()
 {
     QList<QTreeWidgetItem *> item_list = 
                              s->MainUI()->UnloadedModules->selectedItems();
@@ -482,13 +442,13 @@ void MibModule::AddModule(void)
     for (int i = 0; i < item_list.size(); i++)
         Wanted.append(item_list[i]->text(0).toLatin1().data());
 
-    if (item_list.size())
-        Refresh();
-
-    SaveWantedModules();
+    if (!item_list.empty())
+    {
+        s->PreferencesObj()->Save();
+    }
 }
 
-void MibModule::RemoveModule(void)
+void MibModule::RemoveModule()
 {
     QList<QTreeWidgetItem *> item_list = 
                              s->MainUI()->LoadedModules->selectedItems();
@@ -496,33 +456,55 @@ void MibModule::RemoveModule(void)
     for (int i = 0; i < item_list.size(); i++)
         Wanted.removeAll(QFileInfo(item_list[i]->text(3)).fileName());
 
-    if (item_list.size())
-        Refresh();
-
-    SaveWantedModules();
-}
-
-void MibModule::SaveWantedModules(void)
-{
-    QFile mibs(s->GetMibConfigFile());
-    mibs.remove();
-    if (!mibs.open(QIODevice::WriteOnly | QIODevice::Text))
+    if (!item_list.empty())
     {
-        QString err = QString("Unable to save mibs in file %1 !\n")
-                              .arg(mibs.fileName());
-        QMessageBox::critical ( NULL, "SnmpB error", err, 
-                                QMessageBox::Ok, Qt::NoButton);
-        return;
+        s->PreferencesObj()->Save();
     }
-    QTextStream out(&mibs);
-    for (int i = 0; i < Wanted.size(); i++)
-        out << "load " << Wanted[i] << endl;
-    mibs.close();
 }
 
-void MibModule::Refresh(void)
+void MibModule::ReadMibPaths()
 {
+    // read in MIB path from config
+    QStringList paths;
+    QSettings settings;
+    int size = settings.beginReadArray("mibpaths");
+    for (int i = 0; i < size; ++i) {
+        settings.setArrayIndex(i);
+        paths << settings.value("dir").toString();
+    }
+
+    smiSetPath(paths.join(SMI_PATH_SEPARATOR).toLocal8Bit().data());
+}
+
+void MibModule::ReadMibPreloads()
+{
+    // read in MIB preload list from preferences
+    Wanted.clear();
+    QSettings settings;
+    int size = settings.beginReadArray("mibpreloads");
+    for (int i = 0; i < size; ++i) {
+        settings.setArrayIndex(i);
+        Wanted << settings.value("mib").toString();
+    }
+}
+
+void MibModule::Refresh()
+{
+    std::unique_ptr<char, decltype(&std::free)> old_smipath{ smiGetPath(), std::free };
+    ReadMibPaths();
+    std::unique_ptr<char, decltype(&std::free)> new_smipath{ smiGetPath(), std::free };
+
+    if (QString(old_smipath.get()) != QString(new_smipath.get())) {
+        // trigger MIB rescan
+        RescanPath();
+    }
+
+    ReadMibPreloads();
+
+    RegenerateSmiConf();
+
     InitLib(1);
+
     s->MibLoaderObj()->Load(Wanted);
     RebuildLoadedList();
     RebuildUnloadedList();
@@ -532,50 +514,55 @@ void MibModule::Refresh(void)
     s->MainUI()->UnloadedModules->sortByColumn(0, Qt::AscendingOrder);
 }
 
-void MibModule::RefreshPathChange(void)
+void MibModule::RescanPath()
 {
-    smiReadConfig(s->GetPathConfigFile().toLatin1().data(), NULL);
-
-    RebuildTotalList(1);
-    InitLib(1);
-
-    smiReadConfig(s->GetMibConfigFile().toLatin1().data(), NULL);
-
-    Wanted.clear();
-    for(SmiModule *mod = smiGetFirstModule(); 
-        mod; mod = smiGetNextModule(mod))
-        Wanted.append(QFileInfo(mod->path).fileName());
-
+    ReadMibPaths();
+    RebuildTotalList(); // this guy is slow...
     Refresh();
 }
 
 void MibModule::InitLib(int restart)
 {
-    int smiflags;
-    char *smipath;
-
     if (restart)
     {
-        smipath = strdup(smiGetPath());
+        std::unique_ptr<char, decltype(&std::free)>
+            smipath{ smiGetPath(), std::free };
         smiExit();
-        smiflags = smiGetFlags();
         smiInit(NULL);
-        smiSetPath(smipath);
+        smiSetPath(smipath.get());
         smiSetErrorHandler(NormalErrorHdlr);
         smiSetErrorLevel(0);
-        free(smipath);
     }
     else
     {
         smiInit(NULL);
-        smiflags = smiGetFlags();
-        smiflags |= SMI_FLAG_ERRORS;
+        smiSetFlags(smiGetFlags() | SMI_FLAG_ERRORS);
         smiSetErrorHandler(NormalErrorHdlr);
         smiSetErrorLevel(0);
-        // Read configuration files: order is important
-        smiReadConfig(s->GetPathConfigFile().toLatin1().data(), NULL);
-        smiReadConfig(s->GetMibConfigFile().toLatin1().data(), NULL);
+        // Read in the libsmi rc script -- shouldn't be necessary anymore
+        //smiReadConfig(s->GetSmiConfigFile().toLocal8Bit().data(), NULL);
+    }
+}
+
+void MibModule::RegenerateSmiConf()
+{
+    QFile smiconf(s->GetSmiConfigFile());
+    if (!smiconf.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QString err = tr("Unable to regenerate smi.conf!\nError opening file %1")
+                .arg(smiconf.fileName());
+        QMessageBox::critical(NULL, tr("SnmpB error"), err, QMessageBox::Ok);
+        return;
     }
 
-    smiSetFlags(smiflags);
+    // write out mibpaths
+    QTextStream out(&smiconf);
+
+    std::unique_ptr<char, decltype(&std::free)> smipath{ smiGetPath(), &std::free };
+    QStringList mibpaths = QString(smipath.get()).split(SMI_PATH_SEPARATOR);
+    out << "path " << mibpaths.join(SMI_PATH_SEPARATOR) << endl;
+
+    // write out mib preload list
+    for (int i = 0; i < Wanted.size(); ++i)
+        out << "load " << Wanted[i] << endl;
 }

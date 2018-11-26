@@ -32,5 +32,4 @@ Maintenance:
 - windows "portable" build
 - add CI builds/releases
 - investigate forks (3 on SF, a few on GitHub)
-- use XDG_CONFIG_DIR where appropriate
-- fix PATH_SEPARATOR being ';' on unix (not break existing configs?..)
+- .toLatin1() will probably not work on non-UTF-8 locales

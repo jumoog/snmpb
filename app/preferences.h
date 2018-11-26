@@ -26,7 +26,6 @@
 #include <qtreewidget.h>
 #include <qsettings.h>
 
-
 class Preferences: public QObject
 {
     Q_OBJECT
@@ -35,10 +34,13 @@ public:
     Preferences(Snmpb *snmpb);
     void Init(void);
     void Execute(void);
-    int GetTrapPort(void);
-    int GetTrapPort6(void);
-    bool GetEnableIPv4(void);
-    bool GetEnableIPv6(void);
+    void Save();
+    int GetTrapPort4();
+    int GetTrapPort6();
+    bool GetEnableIPv4();
+    bool GetEnableIPv6();
+    bool ShouldListenStdTrapPort4();
+    bool ShouldListenStdTrapPort6();
     bool GetExpandTrapBinding(void);
     bool GetShowAgentName(void);
     int GetAutomaticLoading(void);
@@ -52,23 +54,21 @@ public slots:
 protected slots:
     void SelectedPreferences( QTreeWidgetItem * item, QTreeWidgetItem * old);
     void SetHorizontalSplit(bool checked);
-    void SetTrapPort(void);
-    void SetTrapPort6(void);
+    void SetTrapPort();
+    void SetTrapPort6();
     void SetExpandTrapBinding(bool checked);
     void SetShowAgentName(bool checked);
-    void SelectAutomaticLoading(void);
-    void ModuleReset(void);
-    void ModuleAdd(void);
-    void ModuleDelete(void);
-
-protected:
-    void ModuleRefresh(void);
+    void SelectAutomaticLoading();
+    void MibPathAdd();
+    void MibPathDelete();
+    void MibPathReset();
+    void MibPathRefresh();
+    void MibPreloadsReset();
 
 private:
     Snmpb *s;
     Ui_Preferences *p;
     QDialog *pw;
-    QSettings *settings;
 
     QTreeWidgetItem *transport;
     QTreeWidgetItem *mibtree;
@@ -76,7 +76,7 @@ private:
     QTreeWidgetItem *traps;
 
     bool horizontalsplit;
-    int trapport;
+    int trapport4;
     int trapport6;
     bool enableipv4;
     bool enableipv6;
@@ -85,8 +85,6 @@ private:
     int automaticloading;
     QString curprofile;
     int curproto;
-    QStringList mibpaths;
-    bool pathschanged;
 };
 
 #endif /* PREFERENCES_H */
