@@ -58,11 +58,6 @@ else
 LIBSMI=libsmi/lib/.libs/libsmi.a
 endif
 
-snmpb: libtomcrypt/libtomcrypt.a \
-       $(LIBSMI) \
-       qwt/lib/libqwt.a \
-       app/snmpb
-
 libtomcrypt/libtomcrypt.a:
 	$(MAKE) -C libtomcrypt 
 
@@ -111,6 +106,11 @@ endif
 
 app/snmpb: app/makefile.snmpb
 	$(MAKE) -C app
+
+snmpb: libtomcrypt/libtomcrypt.a \
+       $(LIBSMI) \
+       qwt/lib/libqwt.a \
+       app/snmpb
 
 clean:
 	-$(MAKE) -C libtomcrypt clean

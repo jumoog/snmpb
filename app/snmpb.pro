@@ -1,4 +1,5 @@
-SOURCES	+= ../snmp++/src/address.cpp \
+SOURCES = \
+	../snmp++/src/address.cpp \
 	../snmp++/src/asn1.cpp \
 	../snmp++/src/auth_priv.cpp \
 	../snmp++/src/counter.cpp \
@@ -27,53 +28,75 @@ SOURCES	+= ../snmp++/src/address.cpp \
 	../snmp++/src/v3.cpp \
 	../snmp++/src/vb.cpp \
 	../snmp++/src/IPv6Utility.cpp \
-	main.cpp \
-	snmpb.cpp \
-	mibnode.cpp \
-	mibview.cpp \
-	mibmodule.cpp \
 	agent.cpp \
-	trap.cpp \
-	graph.cpp \
+	agentprofile.cpp \
 	comboboxes.cpp \
-	mibhighlighter.cpp \
+	discovery.cpp \
+	graph.cpp \
+	logsnmpb.cpp \
 	markerwidget.cpp \
 	mibeditor.cpp \
-	mibtextedit.cpp \
+	mibhighlighter.cpp \
+	mibmodule.cpp \
+	mibnode.cpp \
 	mibselection.cpp \
-	logsnmpb.cpp \
-	discovery.cpp \
-	agentprofile.cpp \
+	mibtextedit.cpp \
+	mibview.cpp \
+	preferences.cpp \
+	snmpb.cpp \
+	trap.cpp \
 	usmprofile.cpp \
-	preferences.cpp
+	main.cpp
 
-HEADERS	+= snmpb.h \
-        snmpbapp.h \
-	mibnode.h \
-	mibview.h \
-	mibmodule.h \
+HEADERS = \
 	agent.h \
-	trap.h \
-	graph.h \
+	agentprofile.h \
 	comboboxes.h \
-	mibhighlighter.h \
+	discovery.h \
+	graph.h \
+	logsnmpb.h \
 	markerwidget.h \
 	mibeditor.h \
-	mibtextedit.h \
+	mibhighlighter.h \
+	mibmodule.h \
+	mibnode.h \
 	mibselection.h \
-	logsnmpb.h \
-	discovery.h \
-	agentprofile.h \
-	usmprofile.h \
-	preferences.h
+	mibtextedit.h \
+	mibview.h \
+	preferences.h \
+	snmpb.h \
+	snmpbapp.h \
+	trap.h \
+	usmprofile.h
 
-FORMS	= mainw.ui agentprofile.ui usmprofile.ui preferences.ui gotoline.ui find.ui replace.ui varbinds.ui plot.ui
+FORMS += \
+	agentprofile.ui \
+	find.ui \
+	gotoline.ui \
+	mainw.ui \
+	plot.ui \
+	preferences.ui \
+	replace.ui \
+	usmprofile.ui \
+	varbinds.ui
+
+INCLUDEPATH += \
+	../snmp++/include \
+	../snmp++/ \
+	../libtomcrypt/src/headers \
+	../libsmi/lib \
+	../qwt/src
+LIBS	+= \
+	-L../libtomcrypt \
+	-L../libsmi/lib/.libs \
+	-L../qwt/lib \
+	-lsmi -ltomcrypt -lqwt
+
+RESOURCES	= snmpb.qrc
+
 TEMPLATE	= app
-CONFIG	+= qt warn_on debug
-RESOURCES     = snmpb.qrc
-INCLUDEPATH	+= ../snmp++/include ../snmp++/ ../libtomcrypt/src/headers ../libsmi/lib ../qwt/src
-LIBS	+= -L. -L../libtomcrypt -L../libsmi/lib/.libs -L../qwt/lib -lsmi -ltomcrypt -lqwt
 LANGUAGE	= C++
+CONFIG	+= qt warn_on debug
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
