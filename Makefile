@@ -52,16 +52,16 @@ endif
 
 all: snmpb
 
-snmpb: libtomcrypt/libtomcrypt.a \
-       $(LIBSMI) \
-       qwt/lib/libqwt.a \
-       app/snmpb
-
 ifneq ($(findstring MINGW,${os}),)
 LIBSMI=libsmi/win/libsmi.a
 else
 LIBSMI=libsmi/lib/.libs/libsmi.a
 endif
+
+snmpb: libtomcrypt/libtomcrypt.a \
+       $(LIBSMI) \
+       qwt/lib/libqwt.a \
+       app/snmpb
 
 libtomcrypt/libtomcrypt.a:
 	$(MAKE) -C libtomcrypt 
