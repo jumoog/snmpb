@@ -1,6 +1,15 @@
 1.0
 TBD
 
+0.9 (unreleased)
+- Library updates
+- Packaging fixes
+- Introduced a consistent icon theme
+- Preferences code reworked
+- Single-child nodes now autoexpand to speed up navigation
+- Fixed messagebox spam when many MIBs fail to load
+- Fixed a few crashes, memory leaks and memory errors
+
 0.8 (Sun, 21 Jun 2009)
 - Added support for SNMP SET
 - Added support for SNMP GET-BULK 
