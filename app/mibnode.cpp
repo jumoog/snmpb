@@ -26,7 +26,7 @@ MibNode::MibNode(enum MibType mibtype, SmiNode *node, MibNode * parent, MibNode 
     , Node(node)
 {    
     setText(0, node->name); 
-    SetPixmap(false);
+    SetPixmap(FoldState::COLLAPSED);
 }
 
 MibNode::MibNode(QString label, QTreeWidget* parent)
@@ -35,11 +35,12 @@ MibNode::MibNode(QString label, QTreeWidget* parent)
     , Node(nullptr)
 {
     setText (0, label);
-    SetPixmap(false);
+    SetPixmap(FoldState::COLLAPSED);
 }
 
-void MibNode::SetPixmap(bool isOpened)
+void MibNode::SetPixmap(FoldState fold)
 {
+    bool isOpened = (fold == FoldState::EXPANDED);
     switch(Type)
     {
     case MIBNODE_SCALAR:

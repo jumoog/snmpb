@@ -44,11 +44,13 @@ public:
         MIBNODE_COMPLIANCE,
         MIBNODE_CAPABILITIES
     };
+
+    enum class FoldState { COLLAPSED, EXPANDED };
     
     MibNode(enum MibType mibtype, SmiNode* node, MibNode* parent, MibNode * sibling = NULL);
     MibNode(QString label, QTreeWidget * parent);
 
-    void SetPixmap(bool isOpened);
+    void SetPixmap(FoldState);
     void PrintProperties(QString& text);
     const char *GetOid();
     enum MibNode::MibType GetKind(void) { return Type; }

@@ -1,7 +1,6 @@
 - Feature: Copy OID context menu (as numbers, as symbolic)
 - Feature: bookmarks, to OIDs and maybe to MIB lines
 - Feature: Go to MIB source
-- Feature: auto-expand single-child nodes
 - Feature: traffic indicator (up/down)
 - Feature: "busy" spinner (ideally, a progress bar)
 - Feature: cancellation (bulk, walk, table... any long request)

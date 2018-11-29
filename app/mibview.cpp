@@ -280,13 +280,23 @@ void BasicMibView::SelectFromOid(const QString& oid)
 void BasicMibView::ExpandNode( QTreeWidgetItem * item)
 {
     MibNode *node = (MibNode*)item;
-    node->SetPixmap(true);
+    node->SetPixmap(MibNode::FoldState::EXPANDED);
+
+    // speed up navigating deep hierarchies
+    if (item->childCount() == 1) {
+        item->child(0)->setExpanded(true);
+    }
 }
 
 void BasicMibView::CollapseNode( QTreeWidgetItem * item)
 {
     MibNode *node = (MibNode*)item;
-    node->SetPixmap(false);
+    node->SetPixmap(MibNode::FoldState::COLLAPSED);
+
+    // speed up navigating deep hierarchies
+    if (item->childCount() == 1) {
+        item->child(0)->setExpanded(false);
+    }
 }
 
 void BasicMibView::SelectedNode( QTreeWidgetItem * item, QTreeWidgetItem *)
