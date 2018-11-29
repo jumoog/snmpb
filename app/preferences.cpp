@@ -222,6 +222,24 @@ void Preferences::Save()
     s->TabSelected();
 }
 
+void Preferences::SaveWindowGeometry(const QMainWindow& mw)
+{
+    QSettings settings;
+    settings.beginGroup("mainwindow");
+    settings.setValue("size", mw.size());
+    settings.setValue("pos", mw.pos());
+}
+
+void Preferences::RestoreWindowGeometry(QMainWindow & mw)
+{
+    QSettings settings;
+    settings.beginGroup("mainwindow");
+    if (settings.contains("size"))
+        mw.resize(settings.value("size").toSize());
+    if (settings.contains("pos"))
+        mw.move(settings.value("pos").toPoint());
+}
+
 void Preferences::MibPathAdd()
 {
     QListWidgetItem *item = new QListWidgetItem("type new path here", p->ModulePaths);

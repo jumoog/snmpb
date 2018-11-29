@@ -51,6 +51,9 @@ public slots:
     void SetEnableIPv4(bool checked);
     void SetEnableIPv6(bool checked);
 
+    static void RestoreWindowGeometry(QMainWindow&);
+    static void SaveWindowGeometry(const QMainWindow&);
+
 protected slots:
     void SelectedPreferences( QTreeWidgetItem * item, QTreeWidgetItem * old);
     void SetHorizontalSplit(bool checked);

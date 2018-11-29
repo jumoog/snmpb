@@ -17,6 +17,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include <functional>
 #include <QtGui>
 #include <qfileinfo.h>
 #include <qdir.h>
@@ -97,6 +98,9 @@ void Snmpb::BindToGUI(QMainWindow* mw)
     }
 
     w.setupUi(mw);
+    prefs->RestoreWindowGeometry(*mw);
+    static auto saver = std::bind(&Preferences::SaveWindowGeometry, std::ref(*mw));
+    connect(QApplication::instance(), &QCoreApplication::aboutToQuit, saver);
 
     connect(&loader, SIGNAL ( LogError(QString) ),
             w.LogOutput, SLOT ( append (QString) ));
