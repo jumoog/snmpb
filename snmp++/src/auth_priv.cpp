@@ -2230,8 +2230,8 @@ int AuthSHABase::auth_out_msg(const unsigned char *key,
   int block_size = h->get_block_size();
   int key_len    = h->get_key_length();
   unsigned char digest[SNMPv3_AP_MAXLENGTH_AUTHPARAM];
-  std::auto_ptr<unsigned char> ipad(new unsigned char[block_size]);
-  std::auto_ptr<unsigned char> opad(new unsigned char[block_size]);
+  std::unique_ptr<unsigned char[]> ipad(new unsigned char[block_size]);
+  std::unique_ptr<unsigned char[]> opad(new unsigned char[block_size]);
   unsigned char *k_ipad = ipad.get(); /* inner padding - key XORd with ipad */
   unsigned char *k_opad = opad.get(); /* outer padding - key XORd with opad */
 
