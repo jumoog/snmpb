@@ -473,8 +473,8 @@ void AgentProfile::ProtocolV1Support(bool checked)
         (ap->V2->checkState() == Qt::Unchecked) && 
         (ap->V3->checkState() == Qt::Unchecked))
     {
-        QString err = QString("At least one protocol must be selected\n");
-        QMessageBox::critical ( NULL, "SnmpB error", err, 
+        QString err = tr("At least one protocol must be selected\n");
+        QMessageBox::critical ( NULL, tr("SnmpB error"), err,
                                 QMessageBox::Ok, Qt::NoButton);
         ap->V1->setCheckState(Qt::Checked); 
         return;
@@ -497,8 +497,8 @@ void AgentProfile::ProtocolV2Support(bool checked)
         (ap->V1->checkState() == Qt::Unchecked) && 
         (ap->V3->checkState() == Qt::Unchecked))
     {
-        QString err = QString("At least one protocol must be selected\n");
-        QMessageBox::critical ( NULL, "SnmpB error", err, 
+        QString err = tr("At least one protocol must be selected\n");
+        QMessageBox::critical ( NULL, tr("SnmpB error"), err,
                                 QMessageBox::Ok, Qt::NoButton);
         ap->V2->setCheckState(Qt::Checked); 
         return;
@@ -529,8 +529,8 @@ void AgentProfile::ProtocolV3Support(bool checked)
         (ap->V1->checkState() == Qt::Unchecked) && 
         (ap->V2->checkState() == Qt::Unchecked))
     {
-        QString err = QString("At least one protocol must be selected\n");
-        QMessageBox::critical ( NULL, "SnmpB error", err, 
+        QString err = tr("At least one protocol must be selected\n");
+        QMessageBox::critical ( NULL, tr("SnmpB error"), err,
                                 QMessageBox::Ok, Qt::NoButton);
         ap->V3->setCheckState(Qt::Checked); 
         return;

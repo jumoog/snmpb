@@ -80,8 +80,7 @@ void Snmpb::BindToGUI(QMainWindow* mw)
 {
     if (start_issuccess == false)
     {
-        QMessageBox::critical( NULL, "SnmpB", start_msg,
-                               QMessageBox::Ok, Qt::NoButton);
+        QMessageBox::critical(nullptr, tr("SnmpB"), start_msg, QMessageBox::Ok);
 
         // Desperate measures: delete the preferences file so 
         // at the next startup, the app might have a chance to start
@@ -92,8 +91,7 @@ void Snmpb::BindToGUI(QMainWindow* mw)
     else
     {
         if (start_msg != "")
-            QMessageBox::warning ( NULL, "SnmpB", start_msg,
-                                   QMessageBox::Ok, Qt::NoButton);
+            QMessageBox::warning(nullptr, tr("SnmpB"), start_msg, QMessageBox::Ok);
         agent->StartTrapTimer();
     }
 
@@ -188,7 +186,7 @@ void Snmpb::CheckForConfigFiles(void)
 
     if (!settings.isWritable())
     {
-        QMessageBox::warning(nullptr, "SnmpB",
+        QMessageBox::warning(nullptr, tr("SnmpB"),
                              tr("SnmpB config file is not writable:\n%1\n"
                                 "If it continues to be, changes in preferences will not be saved!")
                              .arg(settings.fileName()),
@@ -343,7 +341,7 @@ void Snmpb::TabSelected(void)
 
 void Snmpb::AboutBox(bool)
 {
-    QMessageBox::about(MainUI()->TabW, "About SnmpB", QString(
+    QMessageBox::about(MainUI()->TabW, tr("About SnmpB"), tr(
 "<H2><b>SnmpB</b></H2><br>                                                       \
 Version %1<br>                                                                   \
 <a href=http://sourceforge.net/projects/snmpb>                                   \

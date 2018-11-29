@@ -39,28 +39,28 @@ LoadedMibModule::LoadedMibModule(SmiModule* mod)
 void LoadedMibModule::PrintProperties(QString& text)
 {
     // Create a table and add elements ...
-    text = QString("<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" align=\"left\">");  
+    text = tr("<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" align=\"left\">");
     
     // Add the name
-    text += QString("<tr><td><b>Name:</b></td><td><font color=#009000><b>%1</b></font></td>").arg(module->name);
+    text += tr("<tr><td><b>Name:</b></td><td><font color=#009000><b>%1</b></font></td>").arg(module->name);
     
     // Add last revision
     SmiRevision * rev = smiGetFirstRevision(module);
     if(rev)
-        text += QString("<tr><td><b>Last revision:</b></td><td>%1</td></tr>").arg(asctime(gmtime(&rev->date)));
+        text += tr("<tr><td><b>Last revision:</b></td><td>%1</td></tr>").arg(asctime(gmtime(&rev->date)));
     
     // Add the description
-    text += QString("<tr><td><b>Description:</b></td><td><font face=fixed color=blue>");
+    text += tr("<tr><td><b>Description:</b></td><td><font face=fixed color=blue>");
     text += Qt::convertFromPlainText (module->description);
-    text += QString("</font></td></tr>");
+    text += tr("</font></td></tr>");
     
     // Add root node name
     SmiNode *node = smiGetModuleIdentityNode(module);
     if (node)
-        text += QString("<tr><td><b>Root node:</b></td><td>%1</td>").arg(node->name);
+        text += tr("<tr><td><b>Root node:</b></td><td>%1</td>").arg(node->name);
     
     // Add required modules
-    text += QString("<tr><td><b>Requires:</b></td><td><font color=red>");
+    text += tr("<tr><td><b>Requires:</b></td><td><font color=red>");
     SmiImport * ip = smiGetFirstImport(module);
     SmiImport * ipprev = NULL;
     int first = 1;
@@ -75,17 +75,17 @@ void LoadedMibModule::PrintProperties(QString& text)
         ipprev = ip;
         ip = smiGetNextImport(ip);
     }
-    text += QString("</font></td></tr>");
+    text += tr("</font></td></tr>");
     
     // Add organization
-    text += QString("<tr><td><b>Organization:</b></td><td>");
+    text += tr("<tr><td><b>Organization:</b></td><td>");
     text += Qt::convertFromPlainText (module->organization);
-    text += QString("</td></tr>");
+    text += tr("</td></tr>");
     
     // Add contact info
-    text += QString("<tr><td><b>Contact Info:</b></td><td><font face=fixed>");
+    text += tr("<tr><td><b>Contact Info:</b></td><td><font face=fixed>");
     text += Qt::convertFromPlainText (module->contactinfo);
-    text += QString("</font></td></tr>");
+    text += tr("</font></td></tr>");
              
     text += QString("</table>");
 }
@@ -114,7 +114,7 @@ MibModule::MibModule(Snmpb *snmpb)
     , Policy(MIBLOAD_DEFAULT)
 {
     QStringList columns;
-    columns << "Module" << "Required" << "Language" << "Path"; 
+    columns << tr("Module") << tr("Required") << tr("Language") << tr("Path");
     s->MainUI()->LoadedModules->setHeaderLabels(columns);
 
     // Must be connected before call to InitLib ...
@@ -180,7 +180,7 @@ static void NormalErrorHdlr(char *path, int line, int severity,
     (void)line; (void)tag;
 
     if (severity <= 1)
-        CurrentModuleObject->SendLogError(QString("ERROR(%1) loading %2: %3")
+        CurrentModuleObject->SendLogError(tr("ERROR(%1) loading %2: %3")
                                           .arg(severity).arg(path).arg(msg));
 }
 
@@ -282,13 +282,12 @@ void MibModule::RebuildTotalList()
     if (!errored_files.empty())
     {
         qSort(errored_files.begin(), errored_files.end());
-        QString msg
-            = QString("<p>The following MIB files failed to load. Check the log tab.</p>")
-            % "<code>\n"
-            % errored_files.join('\n')
-            % "\n</code>";
 
-        QMessageBox::warning (s->MainUI()->MIBTree, "MIB loading errors", msg,
+        QMessageBox::warning (s->MainUI()->MIBTree, tr("MIB loading errors"),
+                              tr("<p>The following MIB files failed to load. Check the log tab.</p>")
+                                  % "<code>\n"
+                                  % errored_files.join('\n')
+                                  % "\n</code>",
                               QMessageBox::Ok, Qt::NoButton);
     }
 
@@ -344,8 +343,8 @@ QString MibModule::LoadBestModule(QString oid)
             emit StopAgentTimer();
             int ret = QMessageBox::question (
                         s->MainUI()->MIBTree,
-                        "SnmpB automatic MIB loading",
-                        QString("Unknown OID %1\nAttempting to load resolving MIB module ?").arg(oid),
+                        tr("SnmpB automatic MIB loading"),
+                        tr("Unknown OID %1\nAttempting to load resolving MIB module ?").arg(oid),
                         QMessageBox::Yes | QMessageBox::No | 
                         QMessageBox::YesToAll | QMessageBox::NoToAll,
                         QMessageBox::Yes

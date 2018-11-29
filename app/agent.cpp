@@ -104,7 +104,7 @@ Agent::Agent(Snmpb *snmpb)
             snmp = new Snmp(status, UdpAddress("0.0.0.0"));
             if (status != SNMP_CLASS_SUCCESS)
             {
-                start_err = QString("Could not create IPv4 session.\n%1")
+                start_err = tr("Could not create IPv4 session.\n%1")
                                     .arg(Snmp::error_msg(status));
                 // Disable IPv4, for the current run only
                 s->PreferencesObj()->SetEnableIPv4(false);
@@ -112,7 +112,7 @@ Agent::Agent(Snmpb *snmpb)
                 snmp = new Snmp(status, UdpAddress("::"));
                 if (status != SNMP_CLASS_SUCCESS)
                 {
-                    start_err = QString("Could not create IPv4 and IPv6 sessions.\n%1\nAborting.")
+                    start_err = tr("Could not create IPv4 and IPv6 sessions.\n%1\nAborting.")
                                         .arg(Snmp::error_msg(status));
                     start_result = false;
                     return;
@@ -120,7 +120,7 @@ Agent::Agent(Snmpb *snmpb)
             }
             else
             {
-                start_err = QString("Could not create IPv6 session.\n%1")
+                start_err = tr("Could not create IPv6 session.\n%1")
                                     .arg(Snmp::error_msg(status2));
                 // Disable IPv6, for the current run only
                 s->PreferencesObj()->SetEnableIPv6(false);
@@ -132,7 +132,7 @@ Agent::Agent(Snmpb *snmpb)
         snmp = new Snmp(status, UdpAddress("0.0.0.0"));
         if (status != SNMP_CLASS_SUCCESS)
         {
-            start_err = QString("Could not create IPv4 session.\n%1\nAborting.")
+            start_err = tr("Could not create IPv4 session.\n%1\nAborting.")
                                 .arg(Snmp::error_msg(status));
             start_result = false;
             return;
@@ -143,7 +143,7 @@ Agent::Agent(Snmpb *snmpb)
         snmp = new Snmp(status, UdpAddress("::"));
         if (status != SNMP_CLASS_SUCCESS)
         {
-            start_err = QString("Could not create IPv6 session.\n%1\nAborting.")
+            start_err = tr("Could not create IPv6 session.\n%1\nAborting.")
                                 .arg(Snmp::error_msg(status));
             start_result = false;
             return;
@@ -151,7 +151,7 @@ Agent::Agent(Snmpb *snmpb)
     }
     else
     {
-        start_err = QString("No transport protocol enabled. Aborting.");
+        start_err = tr("No transport protocol enabled. Aborting.");
         start_result = false;
         return;
     }
@@ -166,7 +166,7 @@ Agent::Agent(Snmpb *snmpb)
     status = snmp->notify_register(oidc, targetc, callback_trap, this);
     if (status != SNMP_CLASS_SUCCESS)
     {
-        start_err = QString("Could not bind on either IPv4 trap\nport \
+        start_err = tr("Could not bind on either IPv4 trap\nport \
 %1 or IPv6 trap port %2.\n\n%3\nTrap reception disabled.")
             .arg(port4)
             .arg(port6)
@@ -272,7 +272,7 @@ void Agent::Init(void)
                             engineId, snmpEngineBoots);
     if ((status != SNMPv3_OK) && (status < SNMPv3_FILEOPEN_ERROR))
     {
-        QString err = QString("Error loading snmpEngineBoots counter: %1\n")
+        QString err = tr("Error loading snmpEngineBoots counter: %1\n")
                               .arg(status);
         QMessageBox::warning ( NULL, "SnmpB", err, 
                                QMessageBox::Ok, Qt::NoButton);
@@ -286,7 +286,7 @@ void Agent::Init(void)
                              engineId, snmpEngineBoots);
     if (status != SNMPv3_OK)
     {
-        QString err = QString("Error saving snmpEngineBoots counter: %1\n")
+        QString err = tr("Error saving snmpEngineBoots counter: %1\n")
                               .arg(status);
         QMessageBox::warning ( NULL, "SnmpB", err, 
                                QMessageBox::Ok, Qt::NoButton);
@@ -296,7 +296,7 @@ void Agent::Init(void)
     v3mp = new v3MP(engineId, snmpEngineBoots, status);
     if (status != SNMPv3_MP_OK)
     {
-        QString err = QString("Could not create v3MP object:\n")
+        QString err = tr("Could not create v3MP object:\n")
                               .arg(Snmp::error_msg(status));
         QMessageBox::warning ( NULL, "SnmpB", err, 
                                QMessageBox::Ok, Qt::NoButton);
@@ -442,7 +442,7 @@ int Agent::Setup(const QString& oid, SnmpTarget **t, Pdu **p, bool usevblist)
     // is done by the address object.
     if (!address.valid())
     {
-        QString err = QString("Invalid Address or DNS Name: %1\n")
+        QString err = tr("Invalid Address or DNS Name: %1\n")
                               .arg(ap->GetAddress());
         QMessageBox::warning ( NULL, "SnmpB", err, 
                                QMessageBox::Ok, Qt::NoButton);
@@ -687,9 +687,7 @@ void Agent::AsyncCallbackTrap(int reason, Pdu &pdu, SnmpTarget &target)
     IpAddress agent(addr);
     UdpAddress agentUDP(addr);
     
-    char buf[10];
-    sprintf(buf, "%.4u", nbr);
-    no = QString("%1").arg(buf);
+    no = QString("%1").arg(nbr, 4);
     date = QDate::currentDate().toString(Qt::ISODate);
     time = QTime::currentTime().toString(Qt::ISODate);  
     pdu.get_notify_timestamp(ts);
@@ -836,10 +834,10 @@ void Agent::AsyncCallback(int reason, Pdu &pdu,
     case SNMP_CLASS_SESSION_DESTROYED:
         break;
     case SNMP_CLASS_TIMEOUT:
-        msg = "<font color=red>Timeout</font>";
+        msg = tr("<font color=red>Timeout</font>");
         goto cleanup;
     default:
-        msg = QString("<font color=red>No response received: (%1) %2</font>")
+        msg = tr("<font color=red>No response received: (%1) %2</font>")
                        .arg(reason).arg(Snmp::error_msg(reason));
         goto cleanup;
     }
@@ -857,7 +855,7 @@ void Agent::AsyncCallback(int reason, Pdu &pdu,
             start_index = objects = pdu_index-1;
         else
         {
-            msg = QString("<font color=red>%1</font><br>")
+            msg = tr("<font color=red>%1</font><br>")
                 .arg(Snmp::error_msg(pdu_error));
             goto cleanup;
         }
@@ -866,7 +864,7 @@ void Agent::AsyncCallback(int reason, Pdu &pdu,
     // The Pdu must contain at least one Vb
     if (pdu.get_vb_count() == 0)
     {
-        msg = "<font color=red>Pdu is empty</font>";
+        msg = tr("<font color=red>Pdu is empty</font>");
         goto cleanup;
     }
 
@@ -905,7 +903,7 @@ node_restart:
                         s->MibModuleObj()->LoadBestModule(tmp.get_printable());
                     if (mod != "")
                     {
-                        msg += QString("[<font color=red>Loading %1</font>]<br>").arg(mod);
+                        msg += tr("[<font color=red>Loading %1</font>]<br>").arg(mod);
                         goto node_restart;
                     }
                 }
@@ -925,7 +923,7 @@ node_restart:
                             s->MibModuleObj()->LoadBestModule(tmp.get_printable());
                         if (mod != "")
                         {
-                            msg += QString("[<font color=red>Loading %1</font>]<br>").arg(mod);
+                            msg += tr("[<font color=red>Loading %1</font>]<br>").arg(mod);
                             goto node_restart;
                         }
                     }
@@ -941,13 +939,13 @@ node_restart:
                             s->MibModuleObj()->LoadBestModule(val_oid.get_printable());
                         if (mod != "")
                         {
-                            msg += QString("[<font color=red>Loading %1</font>]<br>").arg(mod);
+                            msg += tr("[<font color=red>Loading %1</font>]<br>").arg(mod);
                             goto node_restart;
                         }
                     }
 
                     if (vb_error || (pdu_error && (z+1 == pdu_index)))
-                        msg += QString("<font color=red>ERROR on varbind #</font>");
+                        msg += tr("<font color=red>ERROR on varbind #</font>");
 
                     // Print the OID part
                     msg += QString("%1: %2").arg(objects).arg(node->name);
@@ -956,17 +954,17 @@ node_restart:
                     if (vb_error || (pdu_error && (z+1 == pdu_index)))
                     {
                         if (pdu_error)
-                            msg += QString("<font color=red><br>%1</font><br>")
+                            msg += tr("<font color=red><br>%1</font><br>")
                                            .arg(Snmp::error_msg(pdu_error));
                         else
-                            msg += QString("<font color=red><br>%1</font><br>")
+                            msg += tr("<font color=red><br>%1</font><br>")
                                            .arg(vb_error==sNMP_SYNTAX_NOSUCHOBJECT?
-                                            "No Such Object":"No Such Instance");
+                                            tr("No Such Object"):tr("No Such Instance"));
                         goto end;
                     }
 
                     // Print the value part
-                    msg += QString("    <font color=blue>%1</font>")
+                    msg += tr("    <font color=blue>%1</font>")
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
                                    .arg(Qt::escape(GetPrintableValue(node, &vb)));
 #else
@@ -977,20 +975,20 @@ node_restart:
                 {
                     if (vb_error || (pdu_error && (z+1 == pdu_index)))
                     {
-                        msg += QString("<font color=red>ERROR on varbind #</font>%1: %2")
+                        msg += tr("<font color=red>ERROR on varbind #</font>%1: %2")
                                        .arg(objects).arg(vb.get_printable_oid());
                         if (pdu_error)
-                            msg += QString("<font color=red><br>%3</font><br>")
+                            msg += tr("<font color=red><br>%3</font><br>")
                                            .arg(Snmp::error_msg(pdu_error));
                         else
-                            msg += QString("<font color=red><br>%3</font><br>")
+                            msg += tr("<font color=red><br>%3</font><br>")
                                            .arg(vb_error==sNMP_SYNTAX_NOSUCHOBJECT?
                                             "No Such Object":"No Such Instance");
                     }
                     else
                     {
                         /* Unknown OID */
-                        msg += QString("%1: %2    <font color=blue>%3</font>")
+                        msg += tr("%1: %2    <font color=blue>%3</font>")
                             .arg(objects)
                             .arg(vb.get_printable_oid())
                             .arg(vb.get_printable_value());
@@ -1034,7 +1032,7 @@ node_restart:
         }
         else
         {
-            msg = QString("<font color=red>Could not send GETBULK request: %1</font>")
+            msg = tr("<font color=red>Could not send GETBULK request: %1</font>")
                            .arg(Snmp::error_msg(status));
             goto cleanup;
         }
@@ -1042,11 +1040,11 @@ node_restart:
    
 end:
     if (stop == true)
-        msg += "<font color=red>-----SNMP query stopped-----</font><br>";
+        msg += tr("<font color=red>-----SNMP query stopped-----</font><br>");
     else
-        msg += "-----SNMP query finished-----<br>";
-    msg += "<font color=#009000>Total # of Requests = ";    
-    msg += QString("%1<br>Total # of Objects = %2</font>")
+        msg += tr("-----SNMP query finished-----<br>");
+    msg += tr("<font color=#009000>Total # of Requests = ");
+    msg += tr("%1<br>Total # of Objects = %2</font>")
                     .arg(requests).arg(objects);
 cleanup:
     s->MainUI()->Query->append(msg);
@@ -1074,10 +1072,10 @@ void Agent::AsyncCallbackSet(int reason, Pdu &pdu, SnmpTarget &target)
     case SNMP_CLASS_SESSION_DESTROYED:
         break;
     case SNMP_CLASS_TIMEOUT:
-        msg = "<font color=red>Timeout</font>";
+        msg = tr("<font color=red>Timeout</font>");
         goto cleanup;
     default:
-        msg = QString("<font color=red>No response received: (%1) %2</font>")
+        msg = tr("<font color=red>No response received: (%1) %2</font>")
                        .arg(reason).arg(Snmp::error_msg(reason));
         goto cleanup;
     }
@@ -1092,7 +1090,7 @@ void Agent::AsyncCallbackSet(int reason, Pdu &pdu, SnmpTarget &target)
             start_index = objects = pdu_index-1;
         else
         {
-            msg = QString("<font color=red>%1</font><br>")
+            msg = tr("<font color=red>%1</font><br>")
                 .arg(Snmp::error_msg(pdu_error));
             goto cleanup;
         }
@@ -1101,7 +1099,7 @@ void Agent::AsyncCallbackSet(int reason, Pdu &pdu, SnmpTarget &target)
     // The Pdu must contain at least one Vb
     if (pdu.get_vb_count() == 0)
     {
-        msg = "<font color=red>Pdu is empty</font>";
+        msg = tr("<font color=red>Pdu is empty</font>");
         goto cleanup;
     }
 
@@ -1131,26 +1129,26 @@ void Agent::AsyncCallbackSet(int reason, Pdu &pdu, SnmpTarget &target)
                 /* f is now the remaining part */
 
                 if (vb_error || (pdu_error && (z+1 == pdu_index)))
-                    msg += QString("<font color=red>ERROR on varbind #</font>");
+                    msg += tr("<font color=red>ERROR on varbind #</font>");
 
                 // Print the OID part
-                msg += QString("%1: %2").arg(objects).arg(node->name);
+                msg += tr("%1: %2").arg(objects).arg(node->name);
                 if (*f != '\0') msg += QString("%1").arg(f);
 
                 if (vb_error || (pdu_error && (z+1 == pdu_index)))
                 {
                     if (pdu_error)
-                        msg += QString("<font color=red><br>%1</font><br>")
+                        msg += tr("<font color=red><br>%1</font><br>")
                                        .arg(Snmp::error_msg(pdu_error));
                     else
-                        msg += QString("<font color=red><br>%1</font><br>")
+                        msg += tr("<font color=red><br>%1</font><br>")
                                        .arg(vb_error==sNMP_SYNTAX_NOSUCHOBJECT?
-                                            "No Such Object":"No Such Instance");
+                                            tr("No Such Object"):tr("No Such Instance"));
                     goto end;
                 }
 
                 // Print the value part
-                msg += QString("    <font color=blue>%1</font>")
+                msg += tr("    <font color=blue>%1</font>")
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
                            .arg(Qt::escape(GetPrintableValue(node, &vb)));
 #else
@@ -1162,19 +1160,19 @@ void Agent::AsyncCallbackSet(int reason, Pdu &pdu, SnmpTarget &target)
                 /* Unknown OID */
                 if (vb_error || (pdu_error && (z+1 == pdu_index)))
                 {
-                    msg += QString("<font color=red>ERROR on varbind #</font>%1: %2")
+                    msg += tr("<font color=red>ERROR on varbind #</font>%1: %2")
                                    .arg(objects).arg(vb.get_printable_oid());
                     if (pdu_error)
-                        msg += QString("<font color=red><br>%3</font><br>")
+                        msg += tr("<font color=red><br>%3</font><br>")
                                        .arg(Snmp::error_msg(pdu_error));
                     else
-                        msg += QString("<font color=red><br>%3</font><br>")
+                        msg += tr("<font color=red><br>%3</font><br>")
                                        .arg(vb_error==sNMP_SYNTAX_NOSUCHOBJECT?
-                                            "No Such Object":"No Such Instance");
+                                            tr("No Such Object"):tr("No Such Instance"));
                 }
                 else
                 {
-                    msg += QString("%1: %2    <font color=blue>%3</font>")
+                    msg += tr("%1: %2    <font color=blue>%3</font>")
                         .arg(objects)
                         .arg(vb.get_printable_oid())
                         .arg(vb.get_printable_value());
@@ -1196,7 +1194,7 @@ void Agent::AsyncCallbackSet(int reason, Pdu &pdu, SnmpTarget &target)
     } // for  
 
 end:
-    msg += "-----SNMP set finished-----<br>";
+    msg += tr("-----SNMP set finished-----<br>");
 
 cleanup:
     s->MainUI()->Query->append(msg);
@@ -1217,7 +1215,7 @@ void Agent::WalkFrom(const QString& oid)
     
     // Clear the Query window ...
     s->MainUI()->Query->clear();
-    s->MainUI()->Query->append("<font color=black>-----SNMP query started-----</font>");
+    s->MainUI()->Query->append(tr("<font color=black>-----SNMP query started-----</font>"));
     
     // Clear some global vars
     requests = 0;
@@ -1241,7 +1239,7 @@ void Agent::WalkFrom(const QString& oid)
     }
     else
     {
-        msg = QString("<font color=red>Could not send GETBULK request: %1</font>")
+        msg = tr("<font color=red>Could not send GETBULK request: %1</font>")
                        .arg(Snmp::error_msg(status));
         s->MainUI()->Query->append(msg);
     }
@@ -1280,7 +1278,7 @@ void Agent::Get(const QString& oid, bool usevblist)
     
     // Clear the Query window ...
     s->MainUI()->Query->clear();
-    s->MainUI()->Query->append("<font color=black>-----SNMP query started-----</font>");
+    s->MainUI()->Query->append(tr("<font color=black>-----SNMP query started-----</font>"));
     
     // Clear some global vars
     requests = 0;
@@ -1298,7 +1296,7 @@ void Agent::Get(const QString& oid, bool usevblist)
     }
     else
     {
-        msg = QString("<font color=red>Could not send GET request: %1</font>")
+        msg = QString(tr("<font color=red>Could not send GET request: %1</font>"))
                        .arg(Snmp::error_msg(status));
         s->MainUI()->Query->append(msg);
     }
@@ -1319,7 +1317,7 @@ void Agent::GetNext(const QString& oid, bool usevblist)
         
     // Clear the Query window ...
     s->MainUI()->Query->clear();
-    s->MainUI()->Query->append("<font color=black>-----SNMP query started-----</font>");
+    s->MainUI()->Query->append(tr("<font color=black>-----SNMP query started-----</font>"));
     
     // Clear some global vars
     requests = 0;
@@ -1337,7 +1335,7 @@ void Agent::GetNext(const QString& oid, bool usevblist)
     }
     else
     {
-        msg = QString("<font color=red>Could not send GETNEXT request: %1</font>")
+        msg = QString(tr("<font color=red>Could not send GETNEXT request: %1</font>"))
                        .arg(Snmp::error_msg(status));
         s->MainUI()->Query->append(msg);
     }
@@ -1358,7 +1356,7 @@ void Agent::GetBulk(const QString& oid, bool usevblist)
         
     // Clear the Query window ...
     s->MainUI()->Query->clear();
-    s->MainUI()->Query->append("<font color=black>-----SNMP query started-----</font>");
+    s->MainUI()->Query->append(tr("<font color=black>-----SNMP query started-----</font>"));
     
     // Clear some global vars
     requests = 0;
@@ -1380,7 +1378,7 @@ void Agent::GetBulk(const QString& oid, bool usevblist)
     }
     else
     {
-        msg = QString("<font color=red>Could not send GETBULK request: %1</font>")
+        msg = tr("<font color=red>Could not send GETBULK request: %1</font>")
                        .arg(Snmp::error_msg(status));
         s->MainUI()->Query->append(msg);
     }
@@ -1401,7 +1399,7 @@ void Agent::Set(const QString& oid, bool usevblist)
 
     // Clear the Query window ...
     s->MainUI()->Query->clear();
-    s->MainUI()->Query->append("<font color=black>-----SNMP set started-----</font>");
+    s->MainUI()->Query->append(tr("<font color=black>-----SNMP set started-----</font>"));
 
     // Clear some global vars
     requests = 0;
@@ -1419,7 +1417,7 @@ void Agent::Set(const QString& oid, bool usevblist)
     }
     else
     {
-        msg = QString("<font color=red>Could not send SET request: %1</font>")
+        msg = tr("<font color=red>Could not send SET request: %1</font>")
             .arg(Snmp::error_msg(status));
         s->MainUI()->Query->append(msg);
     }
@@ -1466,14 +1464,14 @@ void Agent::TableViewFrom(const QString& oid)
     
     // Clear the Query window ...
     s->MainUI()->Query->clear();
-    s->MainUI()->Query->append("<font color=black>-----SNMP query started-----</font>");
+    s->MainUI()->Query->append(tr("<font color=black>-----SNMP query started-----</font>"));
     
     // Clear some global vars
     requests = 0;
     objects  = 0;
     msg = "";
 
-    s->MainUI()->Query->append("Collecting table objects, please wait ...<br>");
+    s->MainUI()->Query->append(tr("Collecting table objects, please wait ...<br>"));
     
     /* Set the parent oid & parent node */
     Oid poid(oid.toLatin1().data());
@@ -1485,7 +1483,7 @@ void Agent::TableViewFrom(const QString& oid)
     {
         delete target;
         delete pdu;
-        s->MainUI()->Query->append("<font color=red>Abort, not a table or row entry</font>");
+        s->MainUI()->Query->append(tr("<font color=red>Abort, not a table or row entry</font>"));
         return;
     }
    
@@ -1497,7 +1495,7 @@ void Agent::TableViewFrom(const QString& oid)
     }
 
     /* Build the table header */
-    msg += QString("<table border=\"1\"><tr bgcolor=yellow><td>Instance</td>");
+    msg += tr("<table border=\"1\"><tr bgcolor=yellow><td>Instance</td>");
     for (SmiNode *node = smiGetFirstChildNode(pnode); node != NULL;
          node = smiGetNextChildNode(node))
     {
@@ -1559,12 +1557,12 @@ void Agent::TableViewFrom(const QString& oid)
                 (svb.get_syntax() == sNMP_SYNTAX_NOSUCHOBJECT) ||       // For v2
                 (svb.get_syntax() == sNMP_SYNTAX_NOSUCHINSTANCE)) 
             {
-                msg += QString("<td>not available</td>");
+                msg += tr("<td>not available</td>");
             }
             else
             if (status != SNMP_CLASS_SUCCESS)
             {
-                msg += QString("<td>not available</td>");
+                msg += tr("<td>not available</td>");
             }
             else
                 msg += QString("<td>%1</td>")
@@ -1583,7 +1581,7 @@ void Agent::TableViewFrom(const QString& oid)
     }
     
     msg += QString("</table>");
-    msg += "-----SNMP query finished-----<br>";
+    msg += tr("-----SNMP query finished-----<br>");
     msg += QString("<font color=#009000>Total # of rows = %1<br>").arg(rows);
     s->MainUI()->Query->append(msg);
     
@@ -1634,7 +1632,7 @@ void Agent::Varbinds(void)
 void Agent::VarbindsFrom(const QString& oid)
 {
     // Do a background run of the mib selection dialog
-    MibSelection ms(s, vbd, "New VarBind", MIBSELECTION_NONE);
+    MibSelection ms(s, vbd, tr("New VarBind"), MIBSELECTION_NONE);
 
     ms.bgrun(oid);
 
@@ -1667,7 +1665,7 @@ void Agent::VarbindsFrom(const QString& oid)
 void Agent::VarbindsNew(void)
 {
     // Create and run the mib selection dialog
-    MibSelection ms(s, vbd, "New VarBind", MIBSELECTION_SET|MIBSELECTION_VALUE);
+    MibSelection ms(s, vbd, tr("New VarBind"), MIBSELECTION_SET|MIBSELECTION_VALUE);
 
     if (ms.run())
     {
@@ -1700,14 +1698,14 @@ void Agent::VarbindsEdit(void)
     QList<QTreeWidgetItem *> items = vbl->selectedItems();
     if (items.size() != 1)
     {
-        QMessageBox::critical( NULL, "Edit VarBind", 
-                "Please select only one VarBind",
+        QMessageBox::critical( NULL, tr("Edit VarBind"),
+                tr("Please select only one VarBind"),
                 QMessageBox::Ok, Qt::NoButton);
         return;
     }
 
     // Create and run the mib selection dialog
-    MibSelection ms(s, vbd, "Edit VarBind", MIBSELECTION_SET|MIBSELECTION_VALUE);
+    MibSelection ms(s, vbd, tr("Edit VarBind"), MIBSELECTION_SET|MIBSELECTION_VALUE);
 
     vb_data data = items[0]->data(0, Qt::UserRole).value<vb_data>();
 
@@ -1932,7 +1930,7 @@ int Agent::SelectTableInstance(const QString& oid, QString& outinstance)
     dlist.resize(220, 250);
     QGridLayout gl1(&dlist);
     QGridLayout gl2;
-    QLabel label("Please select table instance to query", &dlist);
+    QLabel label(tr("Please select table instance to query"), &dlist);
     gl2.addWidget(&label, 0, 0, 1, 1);
     QListWidget ilist(&dlist);
     gl2.addWidget(&ilist, 1, 0, 1, 1);
@@ -2032,7 +2030,7 @@ void Agent::GetFromPromptInstance(const QString& oid, int op)
     QDialog dprompt(s->MainUI()->MIBTree, Qt::WindowTitleHint);
     dprompt.resize(370, 60);
     QGridLayout gl(&dprompt);
-    QLabel label("Please type table instance to query", &dprompt);
+    QLabel label(tr("Please type table instance to query"), &dprompt);
     gl.addWidget(&label, 0, 0, 1, 1);
     QDialogButtonBox box(QDialogButtonBox::Ok, Qt::Vertical, &dprompt);
     gl.addWidget(&box, 0, 1, 2, 1);

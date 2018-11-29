@@ -107,8 +107,8 @@ Discovery::Discovery(Snmpb *snmpb)
     s = snmpb;
 
     QStringList columns;
-    columns << "Name" << "Address/Port" << "Protocol" << "Up Time" 
-            << "Contact Person" << "System Location" << "System Description";
+    columns << tr("Name") << tr("Address/Port") << tr("Protocol") << tr("Up Time")
+            << tr("Contact Person") << tr("System Location") << tr("System Description");
     s->MainUI()->DiscoveryOutput->setHeaderLabels(columns);
 
     connect( s->MainUI()->DiscoveryButton, 
@@ -652,20 +652,22 @@ void Discovery::Discover(void)
         // From must be a valid IP address
         if (!addr_from.valid() || (addr_from[0] == 0))
         {
-            QString err = QString("Invalid Address: %1")
-                                  .arg(s->MainUI()->DiscoveryFrom->text());
-            QMessageBox::critical ( NULL, "From address", err, 
-                                    QMessageBox::Ok, Qt::NoButton);
+            QMessageBox::critical(nullptr,
+                                  tr("\"From\" address"),
+                                  tr("Invalid Address: %1")
+                                    .arg(s->MainUI()->DiscoveryFrom->text()),
+                                  QMessageBox::Ok);
             return;
         }
 
         // To must be a valid IP address
         if (!addr_to.valid() || (addr_to[0] == 0))
         {
-            QString err = QString("Invalid Address: %1")
-                                  .arg(s->MainUI()->DiscoveryTo->text());
-            QMessageBox::critical ( NULL, "To address", err, 
-                                    QMessageBox::Ok, Qt::NoButton);
+            QMessageBox::critical(nullptr,
+                                  tr("\"To\" address"),
+                                  tr("Invalid Address: %1")
+                                    .arg(s->MainUI()->DiscoveryTo->text()),
+                                  QMessageBox::Ok);
             return;
         }
 
@@ -675,11 +677,12 @@ void Discovery::Discover(void)
         // IP versions must match
         if (vfrom != vto) 
         {
-            QString err = QString("IP address version mismatch: %1 -> %2")
-                                  .arg(vfrom==Address::version_ipv4?"IPv4":"IPv6")
-                                  .arg(vto==Address::version_ipv4?"IPv4":"IPv6");
-            QMessageBox::critical ( NULL, "IP version mismatch", err, 
-                                    QMessageBox::Ok, Qt::NoButton);
+            QMessageBox::critical(nullptr,
+                                  tr("IP version mismatch"),
+                                  tr("IP address version mismatch: %1 -> %2")
+                                    .arg(vfrom==Address::version_ipv4?"IPv4":"IPv6")
+                                    .arg(vto==Address::version_ipv4?"IPv4":"IPv6"),
+                                  QMessageBox::Ok);
             return;
         }
 
@@ -690,10 +693,11 @@ void Discovery::Discover(void)
 
             if (s->PreferencesObj()->GetEnableIPv4() == false)
             {
-                QString err = QString("IPv4 address specified but transport is ") +
-                    QString("unavailable (see Options menu->preferences->transport)");
-                QMessageBox::critical ( NULL, "IP transport", err, 
-                                        QMessageBox::Ok, Qt::NoButton);
+                QMessageBox::critical(nullptr,
+                                      tr("IP transport"),
+                                      tr("IPv4 address specified but transport is "
+                                         "unavailable (see Options menu->preferences->transport)"),
+                                      QMessageBox::Ok);
                 return;
             }
 
@@ -704,9 +708,10 @@ void Discovery::Discover(void)
                 dt->num_addresses = to - from + 1;
             else
             {
-                QString err = QString("'To address' must be greater than 'From address'");
-                QMessageBox::critical ( NULL, "Invalid address range", err, 
-                                        QMessageBox::Ok, Qt::NoButton);
+                QMessageBox::critical(nullptr,
+                                      tr("Invalid address range"),
+                                      tr("'To address' must be greater than 'From address'"),
+                                      QMessageBox::Ok);
                 return;
             }
         }
@@ -717,10 +722,11 @@ void Discovery::Discover(void)
 
             if (s->PreferencesObj()->GetEnableIPv6() == false)
             {
-                QString err = QString("IPv6 address specified but transport is ") +
-                    QString("unavailable (see Options menu->preferences->transport)");
-                QMessageBox::critical ( NULL, "IP transport", err, 
-                                        QMessageBox::Ok, Qt::NoButton);
+                QMessageBox::critical(nullptr,
+                                      tr("IP transport"),
+                                      tr("IPv6 address specified but transport is "
+                                         "unavailable (see Options menu->preferences->transport)"),
+                                      QMessageBox::Ok);
                 return;
             }
 
@@ -733,18 +739,20 @@ void Discovery::Discover(void)
                 dt->num_addresses = ~lofrom + loto + 1;
             else
             {
-                QString err = QString("'To address' must be greater than 'From") +
-                    QString(" address' with a range no larger than 2^64 addresses");
-                QMessageBox::critical ( NULL, "Invalid address range", err, 
-                        QMessageBox::Ok, Qt::NoButton);
+                QMessageBox::critical(nullptr,
+                                      tr("Invalid address range"),
+                                      tr("'To address' must be greater than 'From"
+                                         " address' with a range no larger than 2^64 addresses"),
+                                      QMessageBox::Ok);
                 return;
             }
         }
         else
         {
-            QString err = QString("Unsupported transport type");
-            QMessageBox::critical ( NULL, "Transport", err, 
-                                    QMessageBox::Ok, Qt::NoButton);
+            QMessageBox::critical(nullptr,
+                                  tr("Transport"),
+                                  tr("Unsupported transport type"),
+                                  QMessageBox::Ok);
             return;
         }
 

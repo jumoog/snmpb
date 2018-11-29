@@ -351,7 +351,7 @@ void GraphManager::EditPlot(QListWidgetItem * item)
 void GraphManager::SetPlotOID(void)
 {
     // Create and run the mib selection dialog
-    MibSelection ms(s, ui->Graph, "Browse OID", MIBSELECTION_TYPE);
+    MibSelection ms(s, ui->Graph, tr("Browse OID"), MIBSELECTION_TYPE);
 
     if (ms.run())
     {

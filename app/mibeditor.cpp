@@ -318,7 +318,7 @@ void MibEditor::MibFileOpen(QString fileName)
         }
         else
         {
-            QMessageBox::critical(NULL, tr("SnmpB: Open MIB File"),
+            QMessageBox::critical(nullptr, tr("SnmpB: Open MIB File"),
                                   tr("Cannot open file %1: %2.\n")
                                   .arg(file.fileName())
                                   .arg(file.errorString()));
@@ -334,7 +334,7 @@ void MibEditor::MibFileOpen(void)
 
     fileName = QFileDialog::getOpenFileName(s->MainUI()->MIBFile,
                                             tr("Open File"), "", 
-                                            "MIB Files (*-MIB *-PIB *-SMI *-TC *-TYPES *.mib *.pib *.smi *.MIB *.PIB *.SMI);;All Files (*)");
+                                            tr("MIB Files (*-MIB *-PIB *-SMI *-TC *-TYPES *.mib *.pib *.smi *.MIB *.PIB *.SMI);;All Files (*)"));
     MibFileOpen(fileName);
 }
 
@@ -346,7 +346,7 @@ void MibEditor::MibFileSave(void)
     QFile file(LoadedFile);
     if (!file.open(QFile::WriteOnly))
     {
-        QMessageBox::warning(NULL, tr("SnmpB: Save MIB File"),
+        QMessageBox::warning(nullptr, tr("SnmpB: Save MIB File"),
                              tr("Cannot save file %1: %2\n")
                              .arg(file.fileName())
                              .arg(file.errorString()));
@@ -366,7 +366,7 @@ void MibEditor::MibFileSaveAs(void)
 
     fileName  = QFileDialog::getSaveFileName(s->MainUI()->MIBFile, 
                                              tr("Save as..."), "", 
-                                             "MIB Files (*-MIB *-PIB *-SMI *-TC *-TYPES *.mib *.pib *.smi *.MIB *.PIB *.SMI);;All Files (*)");
+                                             tr("MIB Files (*-MIB *-PIB *-SMI *-TC *-TYPES *.mib *.pib *.smi *.MIB *.PIB *.SMI);;All Files (*)"));
     if (fileName.isEmpty())
         return;
     SetCurrentFileName(fileName);
@@ -387,13 +387,13 @@ void MibEditor::ErrorHandler(char *path, int line, int severity,
         case 1:
         case 2:
         case 3:
-            message += "Error ";
+            message += tr("Error ");
             num_error++;
             item_brush.setColor(Qt::red);
             break;
         case 4:
         case 5:
-            message += "Warning ";
+            message += tr("Warning ");
             num_warning++;
             item_brush.setColor(Qt::darkYellow);
             break;
@@ -401,13 +401,13 @@ void MibEditor::ErrorHandler(char *path, int line, int severity,
         case 7:
         case 8:
         case 9:
-            message += "Info ";
+            message += tr("Info ");
             num_info++;
             item_brush.setColor(Qt::blue);
             break;
     }
 
-    message += QString("(level %1), line %2: [%3] %4")
+    message += tr("(level %1), line %2: [%3] %4")
                        .arg(severity).arg(line).arg(tag).arg(msg);
     item = new QListWidgetItem(message, s->MainUI()->MIBLog);
     item->setForeground(item_brush);
@@ -438,13 +438,13 @@ void MibEditor::VerifyMIB(void)
     num_warning = 0;
     num_info = 0;
 
-    QString start_msg = QString("Starting MIB verification ...");
+    QString start_msg = tr("Starting MIB verification ...");
     s->MainUI()->MIBLog->addItem(new QListWidgetItem(start_msg, 
                                                      s->MainUI()->MIBLog));
 
     smiLoadModule(QDir::toNativeSeparators(LoadedFile).toLatin1().data());
 
-    QString stop_msg = QString("Verification completed. %1 errors, %2 warnings, %3 infos")
+    QString stop_msg = tr("Verification completed. %1 errors, %2 warnings, %3 infos")
                                .arg(num_error).arg(num_warning).arg(num_info);
     s->MainUI()->MIBLog->addItem(new QListWidgetItem(stop_msg, 
                                                      s->MainUI()->MIBLog));
@@ -483,7 +483,7 @@ void MibEditor::ExtractMIBfromRFC(void)
     // Open RFC file
     filename = QFileDialog::getOpenFileName(s->MainUI()->MIBFile,
                                         tr("Open RFC file"), "", 
-                                        "RFC files (*.txt);;All Files (*.*)");
+                                        tr("RFC files (*.txt);;All Files (*.*)"));
 
     if (!filename.isEmpty())
     {
@@ -741,7 +741,7 @@ void MibEditor::SelectedLogEntry(QListWidgetItem *item)
 
 void MibEditor::SetLineNumStatus(void)
 {
-    QString lc = QString("Line: %1, Col: %2").
+    QString lc = tr("Line: %1, Col: %2").
                      arg(s->MainUI()->MIBFile->textCursor().blockNumber()+1).
                      arg(s->MainUI()->MIBFile->textCursor().columnNumber()+1);
 

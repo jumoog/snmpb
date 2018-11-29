@@ -42,7 +42,7 @@ MibSelection::MibSelection(Snmpb *snmpb, QWidget *parent, QString title, int _fl
     dprompt->resize(400, 500);
 
     gl = new QGridLayout(dprompt);
-    oidlabel = new QLabel("<b>OID:</b>", dprompt);
+    oidlabel = new QLabel(tr("<b>OID:</b>"), dprompt);
     gl->addWidget(oidlabel, 1, 0, 1, 1);
 
     oid_le = new QLineEdit("", dprompt);
@@ -55,7 +55,7 @@ MibSelection::MibSelection(Snmpb *snmpb, QWidget *parent, QString title, int _fl
     bmv->Populate();
     gl->addWidget(bmv, 3, 0, 1, 1);
 
-    syntaxlabel = new QLabel("<b>Syntax:</b>", dprompt);
+    syntaxlabel = new QLabel(tr("<b>Syntax:</b>"), dprompt);
     gl->addWidget(syntaxlabel, 4, 0, 1, 1);
 
     syntax_cb = new QComboBox(dprompt);
@@ -81,7 +81,7 @@ MibSelection::MibSelection(Snmpb *snmpb, QWidget *parent, QString title, int _fl
 
     if (flags & MIBSELECTION_VALUE)
     {
-        vallabel = new QLabel("<b>Value:</b>", dprompt);
+        vallabel = new QLabel(tr("<b>Value:</b>"), dprompt);
         gl->addWidget(vallabel, 6, 0, 1, 1);
 
         val_le = new QLineEdit(dprompt);
@@ -234,9 +234,9 @@ void MibSelection::OKButtonPressed(void)
     // Fill-in pdu and do validation checking
     if (result_oid.isEmpty())
     {
-        QMessageBox::critical( NULL, "MIB Operation", 
-                "Invalid OID value",
-                QMessageBox::Ok, Qt::NoButton);
+        QMessageBox::critical(nullptr, tr("MIB Operation"),
+                tr("Invalid OID value"),
+                QMessageBox::Ok);
         return;
     }
 
@@ -277,9 +277,9 @@ void MibSelection::OKButtonPressed(void)
                     vb.set_value(octetstr);
                 else
                 {
-                    QMessageBox::critical( NULL, "MIB Operation", 
-                            "Invalid Octet String value",
-                            QMessageBox::Ok, Qt::NoButton);
+                    QMessageBox::critical(nullptr, tr("MIB Operation"),
+                            tr("Invalid Octet String value"),
+                            QMessageBox::Ok);
                     return;
                 } 
                 break;
@@ -292,9 +292,9 @@ void MibSelection::OKButtonPressed(void)
                     vb.set_value(opaquestr);
                 else
                 {
-                    QMessageBox::critical( NULL, "MIB Operation", 
-                            "Invalid Opaque String value",
-                            QMessageBox::Ok, Qt::NoButton);
+                    QMessageBox::critical(nullptr, tr("MIB Operation"),
+                            tr("Invalid Opaque String value"),
+                            QMessageBox::Ok);
                     return;
                 } 
                 break;
@@ -307,9 +307,9 @@ void MibSelection::OKButtonPressed(void)
                     vb.set_value(oid.valid()?oid:"0");
                 else
                 {
-                    QMessageBox::critical( NULL, "MIB Operation", 
-                            "Invalid Object Identifier value",
-                            QMessageBox::Ok, Qt::NoButton);
+                    QMessageBox::critical(nullptr, tr("MIB Operation"),
+                            tr("Invalid Object Identifier value"),
+                            QMessageBox::Ok);
                     return;
                 }
                 break;
@@ -326,9 +326,9 @@ void MibSelection::OKButtonPressed(void)
                     vb.set_value(timeticks);
                 else
                 {
-                    QMessageBox::critical( NULL, "MIB Operation", 
-                            "Invalid TimeTick value",
-                            QMessageBox::Ok, Qt::NoButton);
+                    QMessageBox::critical(nullptr, tr("MIB Operation"),
+                            tr("Invalid TimeTick value"),
+                            QMessageBox::Ok);
                     return;
                 }
                 break;
@@ -341,9 +341,9 @@ void MibSelection::OKButtonPressed(void)
                     vb.set_value( ipaddress);
                 else
                 {
-                    QMessageBox::critical( NULL, "MIB Operation", 
-                            "Invalid IP address value",
-                            QMessageBox::Ok, Qt::NoButton);
+                    QMessageBox::critical(nullptr, tr("MIB Operation"),
+                            tr("Invalid IP address value"),
+                            QMessageBox::Ok);
                     return;
                 } 
                 break;
@@ -395,10 +395,10 @@ void MibSelection::SetOidInfoType(const QString& oid)
             {
                 if (smiGetFirstRange(thetype))
                 {
-                    outinfo += QString("<br><b>Range:</b> ");
+                    outinfo += tr("<br><b>Range:</b> ");
                     for (r = smiGetFirstRange(thetype); r; r = smiGetNextRange(r))
                     {
-                        outinfo += QString("%1 .. %2")
+                        outinfo += tr("%1 .. %2")
                                            .arg(r->minValue.value.unsigned64)
                                            .arg(r->maxValue.value.unsigned64);
                         if (smiGetNextRange(r))
@@ -408,7 +408,7 @@ void MibSelection::SetOidInfoType(const QString& oid)
             }
 
             if ((thenode->access != SMI_ACCESS_READ_WRITE) && (flags & MIBSELECTION_SET))
-                outinfo += "<br><b><font color=red>WARNING: object is not writable!</font></b>";
+                outinfo += tr("<br><b><font color=red>WARNING: object is not writable!</font></b>");
 
             type = thetype;
         }

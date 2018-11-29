@@ -80,13 +80,13 @@ void Preferences::Init(void)
     p->PreferencesTree->setRootIsDecorated( true );
 
     transport = new QTreeWidgetItem(p->PreferencesTree);
-    transport->setText(0, "Transport");
+    transport->setText(0, tr("Transport"));
     mibtree = new QTreeWidgetItem(p->PreferencesTree);
-    mibtree->setText(0, "MIB Tree");
+    mibtree->setText(0, tr("MIB Tree"));
     modules = new QTreeWidgetItem(p->PreferencesTree);
-    modules->setText(0, "Modules");
+    modules->setText(0, tr("Modules"));
     traps = new QTreeWidgetItem(p->PreferencesTree);
-    traps->setText(0, "Traps");
+    traps->setText(0, tr("Traps"));
 
     connect( p->PreferencesTree, 
              SIGNAL( currentItemChanged( QTreeWidgetItem *, QTreeWidgetItem * ) ),
@@ -242,7 +242,7 @@ void Preferences::RestoreWindowGeometry(QMainWindow & mw)
 
 void Preferences::MibPathAdd()
 {
-    QListWidgetItem *item = new QListWidgetItem("type new path here", p->ModulePaths);
+    QListWidgetItem *item = new QListWidgetItem(tr("type new path here"), p->ModulePaths);
     item->setFlags(item->flags() | Qt::ItemIsEditable);
 
     p->ModulePaths->addItem(item);

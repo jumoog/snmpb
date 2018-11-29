@@ -574,18 +574,18 @@ void MibView::contextMenuEvent ( QContextMenuEvent *event)
 
     if (kind == MibNode::MIBNODE_COLUMN)
     {
-        QMenu *get_menu = menu.addMenu("Get");
+        QMenu *get_menu = menu.addMenu(tr("Get"));
         get_menu->addAction(getSelectAct);
         get_menu->addAction(getPromptAct);
 
-        QMenu *getnext_menu = menu.addMenu("Get Next");
-        getnextAct->setText("No Instance");
+        QMenu *getnext_menu = menu.addMenu(tr("Get Next"));
+        getnextAct->setText(tr("No Instance"));
         getnext_menu->addAction(getnextAct);
         getnext_menu->addAction(getnextSelectAct);
         getnext_menu->addAction(getnextPromptAct);
 
-        QMenu *getbulk_menu = menu.addMenu("Get Bulk");
-        getbulkAct->setText("No Instance");
+        QMenu *getbulk_menu = menu.addMenu(tr("Get Bulk"));
+        getbulkAct->setText(tr("No Instance"));
         getbulk_menu->addAction(getbulkAct);
         getbulk_menu->addAction(getbulkSelectAct);
         getbulk_menu->addAction(getbulkPromptAct);
@@ -602,10 +602,10 @@ void MibView::contextMenuEvent ( QContextMenuEvent *event)
         else
             getAct->setEnabled(false);
 
-        getnextAct->setText("Get Next");
+        getnextAct->setText(tr("Get Next"));
         menu.addAction(getnextAct);
 
-        getbulkAct->setText("Get Bulk");
+        getbulkAct->setText(tr("Get Bulk"));
         if (agentisv1)
             getbulkAct->setEnabled(false);
         else
@@ -679,7 +679,7 @@ void MibViewLoader::Load(QStringList &modules)
             modv[modc++] = smiModule;
         else
         {
-            emit LogError(QString("Error: `%1` module cannot be loaded (not in PATHS)")
+            emit LogError(tr("Error: `%1` module cannot be loaded (not in MIB paths)")
                                   .arg(module.toLatin1().data()));
         }
     }
