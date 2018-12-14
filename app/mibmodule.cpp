@@ -39,28 +39,31 @@ LoadedMibModule::LoadedMibModule(SmiModule* mod)
 void LoadedMibModule::PrintProperties(QString& text)
 {
     // Create a table and add elements ...
-    text = tr("<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" align=\"left\">");
+    text = QObject::tr("<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" align=\"left\">");
     
     // Add the name
-    text += tr("<tr><td><b>Name:</b></td><td><font color=#009000><b>%1</b></font></td>").arg(module->name);
+    text += QObject::tr("<tr><td><b>Name:</b></td><td><font color=#009000><b>%1</b></font></td>")
+            .arg(module->name);
     
     // Add last revision
     SmiRevision * rev = smiGetFirstRevision(module);
     if(rev)
-        text += tr("<tr><td><b>Last revision:</b></td><td>%1</td></tr>").arg(asctime(gmtime(&rev->date)));
+        text += QObject::tr("<tr><td><b>Last revision:</b></td><td>%1</td></tr>")
+                .arg(asctime(gmtime(&rev->date)));
     
     // Add the description
-    text += tr("<tr><td><b>Description:</b></td><td><font face=fixed color=blue>");
+    text += QObject::tr("<tr><td><b>Description:</b></td><td><font face=fixed color=blue>");
     text += Qt::convertFromPlainText (module->description);
-    text += tr("</font></td></tr>");
+    text += QObject::tr("</font></td></tr>");
     
     // Add root node name
     SmiNode *node = smiGetModuleIdentityNode(module);
     if (node)
-        text += tr("<tr><td><b>Root node:</b></td><td>%1</td>").arg(node->name);
+        text += QObject::tr("<tr><td><b>Root node:</b></td><td>%1</td>")
+                .arg(node->name);
     
     // Add required modules
-    text += tr("<tr><td><b>Requires:</b></td><td><font color=red>");
+    text += QObject::tr("<tr><td><b>Requires:</b></td><td><font color=red>");
     SmiImport * ip = smiGetFirstImport(module);
     SmiImport * ipprev = NULL;
     int first = 1;
@@ -75,17 +78,17 @@ void LoadedMibModule::PrintProperties(QString& text)
         ipprev = ip;
         ip = smiGetNextImport(ip);
     }
-    text += tr("</font></td></tr>");
+    text += QObject::tr("</font></td></tr>");
     
     // Add organization
-    text += tr("<tr><td><b>Organization:</b></td><td>");
+    text += QObject::tr("<tr><td><b>Organization:</b></td><td>");
     text += Qt::convertFromPlainText (module->organization);
-    text += tr("</td></tr>");
+    text += QObject::tr("</td></tr>");
     
     // Add contact info
-    text += tr("<tr><td><b>Contact Info:</b></td><td><font face=fixed>");
+    text += QObject::tr("<tr><td><b>Contact Info:</b></td><td><font face=fixed>");
     text += Qt::convertFromPlainText (module->contactinfo);
-    text += tr("</font></td></tr>");
+    text += QObject::tr("</font></td></tr>");
              
     text += QString("</table>");
 }
@@ -180,7 +183,7 @@ static void NormalErrorHdlr(char *path, int line, int severity,
     (void)line; (void)tag;
 
     if (severity <= 1)
-        CurrentModuleObject->SendLogError(tr("ERROR(%1) loading %2: %3")
+        CurrentModuleObject->SendLogError(QObject::tr("ERROR(%1) loading %2: %3")
                                           .arg(severity).arg(path).arg(msg));
 }
 
