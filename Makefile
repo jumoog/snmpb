@@ -21,7 +21,6 @@
 #
 os:=$(shell uname -s)
 
-# Default QT for windows: static 64 bits QT under MSYS2
 WINQT_PREFIX=/mingw64/qt5-static/bin/
 
 ifneq ($(findstring BSD,${os}),)
@@ -48,6 +47,10 @@ ifdef QTBIN
 QMAKE=${QTBIN}/qmake
 else
 QMAKE=qmake
+endif
+
+ifneq ($(findstring MINGW,${os}),)
+QMAKE=${WINQT_PREFIX}${QMAKE}
 endif
 
 all: snmpb
@@ -79,30 +82,10 @@ qwt/lib/libqwt.a: qwt/Makefile
 	$(MAKE) -C qwt
 
 qwt/Makefile:
-ifneq ($(findstring MINGW,${os}),)
-	cd qwt; ${WINQT_PREFIX}${QMAKE}  qwt.pro
-else
-ifneq ($(findstring Darwin,${os}),)
-	# MacOSX
-	cd qwt; ${QMAKE} -spec macx-g++ qwt.pro
-else
-	# Linux/BSD
 	cd qwt; ${QMAKE} qwt.pro
-endif
-endif
 
 app/makefile.snmpb:
-ifneq ($(findstring MINGW,${os}),)
-	cd app; ${WINQT_PREFIX}${QMAKE} -o makefile.snmpb snmpb.pro
-else
-ifneq ($(findstring Darwin,${os}),)
-	# MacOSX
-	cd app; ${QMAKE} -spec macx-g++ -o makefile.snmpb snmpb.pro
-else
-	# Linux/BSD
 	cd app; ${QMAKE} -o makefile.snmpb snmpb.pro
-endif
-endif
 
 app/snmpb: app/makefile.snmpb
 	$(MAKE) -C app

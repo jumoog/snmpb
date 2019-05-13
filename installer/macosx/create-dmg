@@ -171,7 +171,7 @@ if ! test -z "$VOLUME_ICON_FILE"; then
 fi
 
 # run applescript
-APPLESCRIPT=$(mktemp -t createdmg)
+APPLESCRIPT=$(mktemp -t createdmg.XXXX)
 echo '
 on run (volumeName)
 	tell application "Finder"

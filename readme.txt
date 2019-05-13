@@ -20,7 +20,7 @@ Make variables to tune:
  - BIN_PREFIX is "bin" by default, sets binary install path suffix
  - NO_ROOT enables non-root install (off by default)
 
-Tested & compiles on MSYS2/Windows, Linux, MacOSX (Leopard) and NetBSD
+Tested & compiles on MSYS2/Windows, Linux, MacOS Leonard & Sierra, and NetBSD
 
 
 ### Dependencies ###
