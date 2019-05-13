@@ -109,6 +109,7 @@ win32 {
   CONFIG += release
   RC_FILE = snmpb.rc
   LIBS	+= -lws2_32 -L../libsmi/win
+  QTPLUGIN += qsvg
 }
 macx:ICON = images/snmpb.icns
 

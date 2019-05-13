@@ -4,7 +4,7 @@
 - OSX: Crash multiple varbinds -> trigs autoloading
 
 == 1.0 milestones ==
-- Maintenance: make an icon theme, fix windows not understanding SVG
+✔ Maintenance: make an icon theme, fix windows not understanding SVG
 - Maintenance: rework the build system, allow shared/static linking choice
 - Maintenance: out-of-tree build
 - Maintenance: meson build (or at least CMake), get rid of custom makefile
