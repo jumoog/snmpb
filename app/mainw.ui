@@ -149,7 +149,7 @@
                    </sizepolicy>
                   </property>
                   <property name="text">
-                   <string>SNMPv3</string>
+                   <string notr="true">SNMPv3</string>
                   </property>
                  </widget>
                 </item>
@@ -162,7 +162,7 @@
                    </sizepolicy>
                   </property>
                   <property name="text">
-                   <string>SNMPv2c</string>
+                   <string notr="true">SNMPv2c</string>
                   </property>
                  </widget>
                 </item>
@@ -202,7 +202,7 @@
                    </sizepolicy>
                   </property>
                   <property name="text">
-                   <string>SNMPv1</string>
+                   <string notr="true">SNMPv1</string>
                   </property>
                   <property name="autoRepeat">
                    <bool>false</bool>
@@ -215,7 +215,7 @@
              <item>
               <widget class="QLabel" name="MIBTreeL">
                <property name="text">
-                <string>MIB Tree</string>
+                <string>OID tree</string>
                </property>
               </widget>
              </item>
@@ -254,7 +254,7 @@
              <item>
               <widget class="QLabel" name="NodeInfoL">
                <property name="text">
-                <string>Node Info</string>
+                <string>OID info</string>
                </property>
               </widget>
              </item>
@@ -599,9 +599,27 @@
                <property name="rootIsDecorated">
                 <bool>false</bool>
                </property>
+               <property name="columnCount">
+                <number>4</number>
+               </property>
                <column>
                 <property name="text">
-                 <string>1</string>
+                 <string>Module</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Required</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Language</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Path</string>
                 </property>
                </column>
               </widget>
@@ -823,7 +841,7 @@
       </widget>
       <widget class="QWidget" name="DiscoveryTab">
        <attribute name="title">
-        <string>Discovery</string>
+        <string extracomment="Scan, probing, IP range search">Discovery</string>
        </attribute>
        <layout class="QGridLayout">
         <property name="leftMargin">
@@ -865,7 +883,7 @@
            <item row="1" column="2">
             <widget class="QLabel" name="DiscoveryWaitTimeL2">
              <property name="text">
-              <string>secs.</string>
+              <string extracomment="abbreviated &quot;seconds&quot;">secs.</string>
              </property>
             </widget>
            </item>
@@ -992,7 +1010,7 @@
         <item row="0" column="0" rowspan="4">
          <widget class="QGroupBox" name="DiscoveryRange">
           <property name="title">
-           <string>Discovery range</string>
+           <string>Scan range</string>
           </property>
           <layout class="QGridLayout">
            <property name="leftMargin">
@@ -1116,7 +1134,7 @@
            <item row="0" column="2">
             <widget class="QLabel" name="DiscoveryLocal2">
              <property name="text">
-              <string>-&gt; 255.255.255.255/FF02::1</string>
+              <string notr="true">-&gt; 255.255.255.255/FF02::1</string>
              </property>
             </widget>
            </item>
@@ -1144,9 +1162,42 @@
           <property name="rootIsDecorated">
            <bool>false</bool>
           </property>
+          <property name="columnCount">
+           <number>7</number>
+          </property>
           <column>
            <property name="text">
-            <string>1</string>
+            <string>Name</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Address/Port</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Protocol</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Up Time</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Contact Person</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>System Location</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>System Description</string>
            </property>
           </column>
          </widget>
@@ -1176,7 +1227,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Discover</string>
+           <string>Scan</string>
           </property>
          </widget>
         </item>
@@ -1260,7 +1311,7 @@
               </property>
               <column>
                <property name="text">
-                <string>No</string>
+                <string>#</string>
                </property>
               </column>
               <column>
@@ -1349,11 +1400,9 @@
                <property name="rootIsDecorated">
                 <bool>true</bool>
                </property>
-               <column>
-                <property name="text">
-                 <string>Column 1</string>
-                </property>
-               </column>
+               <property name="columnCount">
+                <number>0</number>
+               </property>
               </widget>
              </item>
             </layout>
@@ -1571,7 +1620,7 @@
                  <item row="4" column="0">
                   <widget class="QPushButton" name="PlotAdd">
                    <property name="text">
-                    <string>Add  Plot ...</string>
+                    <string>Add  Plot...</string>
                    </property>
                   </widget>
                  </item>
@@ -1793,7 +1842,7 @@
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
-     <string>Tools</string>
+     <string>&amp;Tools</string>
     </property>
     <addaction name="actionGotoLine"/>
     <addaction name="separator"/>
@@ -1938,7 +1987,7 @@
   </action>
   <action name="actionManageUSMProfiles">
    <property name="text">
-    <string>Manage SNMPv3 USM Profiles...</string>
+    <string extracomment="&quot;USM Profiles&quot; are just accounts, username-password pairs">Manage SNMPv3 USM Profiles...</string>
    </property>
   </action>
   <action name="actionPreferences">

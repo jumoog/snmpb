@@ -106,12 +106,7 @@ Discovery::Discovery(Snmpb *snmpb)
 {
     s = snmpb;
 
-    QStringList columns;
-    columns << tr("Name") << tr("Address/Port") << tr("Protocol") << tr("Up Time")
-            << tr("Contact Person") << tr("System Location") << tr("System Description");
-    s->MainUI()->DiscoveryOutput->setHeaderLabels(columns);
-
-    connect( s->MainUI()->DiscoveryButton, 
+    connect( s->MainUI()->DiscoveryButton,
              SIGNAL( clicked() ), this, SLOT( Discover() ));
     connect( s->MainUI()->DiscoveryAbortButton, 
              SIGNAL( clicked() ), this, SLOT( Abort() ));
@@ -696,7 +691,7 @@ void Discovery::Discover(void)
                 QMessageBox::critical(nullptr,
                                       tr("IP transport"),
                                       tr("IPv4 address specified but transport is "
-                                         "unavailable (see Options menu->preferences->transport)"),
+                                         "unavailable (see Options menu->Preferences->Transport)"),
                                       QMessageBox::Ok);
                 return;
             }
@@ -725,7 +720,7 @@ void Discovery::Discover(void)
                 QMessageBox::critical(nullptr,
                                       tr("IP transport"),
                                       tr("IPv6 address specified but transport is "
-                                         "unavailable (see Options menu->preferences->transport)"),
+                                         "unavailable (see Options menu->Preferences->Transport)"),
                                       QMessageBox::Ok);
                 return;
             }

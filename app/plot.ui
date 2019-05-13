@@ -75,7 +75,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>SNMPv1</string>
+           <string notr="true">SNMPv1</string>
           </property>
           <property name="autoRepeat">
            <bool>false</bool>
@@ -91,7 +91,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>SNMPv2c</string>
+           <string notr="true">SNMPv2c</string>
           </property>
          </widget>
         </item>
@@ -104,7 +104,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>SNMPv3</string>
+           <string notr="true">SNMPv3</string>
           </property>
          </widget>
         </item>

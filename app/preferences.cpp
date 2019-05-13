@@ -170,8 +170,9 @@ void Preferences::Execute (void)
         enableipv4 != settings.value("enableipv4", true).toBool() ||
         enableipv6 != settings.value("enableipv6", true).toBool() )
         QMessageBox::information(NULL,
-                                 tr("SnmpB transport protocol or trap port changed"),
-                                 tr("Please restart SnmpB for the change to take effect."),
+                                 tr("Restart needed"),
+                                 tr("SnmpB transport protocol or trap port has changed.\n"
+                                    "Please restart SnmpB for the changes to take effect."),
                                  QMessageBox::Ok);
 
     Save();

@@ -116,10 +116,6 @@ MibModule::MibModule(Snmpb *snmpb)
     : s(snmpb)
     , Policy(MIBLOAD_DEFAULT)
 {
-    QStringList columns;
-    columns << tr("Module") << tr("Required") << tr("Language") << tr("Path");
-    s->MainUI()->LoadedModules->setHeaderLabels(columns);
-
     // Must be connected before call to InitLib ...
     connect(this, SIGNAL ( LogError(QString) ),
             s->MainUI()->LogOutput, SLOT ( append (QString) ));
@@ -347,7 +343,7 @@ QString MibModule::LoadBestModule(QString oid)
             int ret = QMessageBox::question (
                         s->MainUI()->MIBTree,
                         tr("SnmpB automatic MIB loading"),
-                        tr("Unknown OID %1\nAttempting to load resolving MIB module ?").arg(oid),
+                        tr("Unknown OID %1\nAttempt to load MIB module where this OID is defined?").arg(oid),
                         QMessageBox::Yes | QMessageBox::No | 
                         QMessageBox::YesToAll | QMessageBox::NoToAll,
                         QMessageBox::Yes

@@ -167,7 +167,7 @@
           <item row="0" column="0">
            <widget class="QLabel" name="AddressL">
             <property name="text">
-             <string>Agent Address/Name</string>
+             <string>Address/hostname</string>
             </property>
            </widget>
           </item>
@@ -325,10 +325,7 @@
        <item row="0" column="0">
         <widget class="QLabel" name="GeneralL">
          <property name="text">
-          <string>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;General Properties&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;span style=&quot;font-family:'Sans Serif'; font-size:18pt; font-weight:600;&quot;&gt;General Properties&lt;/span&gt;</string>
          </property>
         </widget>
        </item>
@@ -383,10 +380,10 @@ p, li { white-space: pre-wrap; }
        <item row="2" column="0">
         <widget class="QGroupBox" name="Communities">
          <property name="toolTip">
-          <string>Here options specific to SNMPv1/v2c can be entered</string>
+          <string>Community strings specific to SNMPv1/v2c can be entered here</string>
          </property>
          <property name="title">
-          <string>Communities</string>
+          <string extracomment="This has nothing to do with online/offline groups of people; rather, this is SNMP specific term, designating a piece of text used roughly as a password (or more like, a hidden directory name).">Communities</string>
          </property>
          <layout class="QGridLayout">
           <property name="leftMargin">
@@ -438,10 +435,7 @@ p, li { white-space: pre-wrap; }
        <item row="0" column="0">
         <widget class="QLabel" name="V1V2cL">
          <property name="text">
-          <string>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;SNMPv1 / v2c Properties&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;span style=&quot;font-family:'Sans Serif'; font-size:18pt; font-weight:600;&quot;&gt;SNMPv1 / v2c Properties&lt;/span&gt;</string>
          </property>
         </widget>
        </item>
@@ -496,10 +490,7 @@ p, li { white-space: pre-wrap; }
        <item row="0" column="0">
         <widget class="QLabel" name="BulkL">
          <property name="text">
-          <string>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Get-Bulk Properties&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;span style=&quot;font-family:'Sans Serif'; font-size:18pt; font-weight:600;&quot;&gt;Get-Bulk Properties&lt;/span&gt;</string>
          </property>
         </widget>
        </item>
@@ -541,14 +532,14 @@ p, li { white-space: pre-wrap; }
           <item row="0" column="0">
            <widget class="QLabel" name="NonRepeatersL">
             <property name="text">
-             <string>Non repeaters</string>
+             <string extracomment="this parameter is currently unused">Non repeaters</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0">
            <widget class="QLabel" name="MaxRepetitionsL">
             <property name="text">
-             <string>Max repetitions</string>
+             <string extracomment="this parameter is currently unused">Max repetitions</string>
             </property>
            </widget>
           </item>
@@ -673,17 +664,17 @@ p, li { white-space: pre-wrap; }
            <widget class="QComboBox" name="SecLevel">
             <item>
              <property name="text">
-              <string>noAuthNoPriv</string>
+              <string extracomment="no authentication, no privacy">noAuthNoPriv</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>authNoPriv</string>
+              <string extracomment="authenticated plaintext (no privacy)">authNoPriv</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>authPriv</string>
+              <string extracomment="both authentication and privacy protection (traffic encryption)">authPriv</string>
              </property>
             </item>
            </widget>
@@ -697,10 +688,7 @@ p, li { white-space: pre-wrap; }
        <item row="0" column="0">
         <widget class="QLabel" name="V3L">
          <property name="text">
-          <string>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;SNMPv3 Properties&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;span style=&quot;font-family:'Sans Serif'; font-size:18pt; font-weight:600;&quot;&gt;SNMPv3 Properties&lt;/span&gt;</string>
          </property>
         </widget>
        </item>

@@ -960,6 +960,8 @@ node_restart:
                             msg += tr("<font color=red><br>%1</font><br>")
                                            .arg(vb_error==sNMP_SYNTAX_NOSUCHOBJECT?
                                             tr("No Such Object"):tr("No Such Instance"));
+                        // Translator note: the above two strings might best be
+                        // left untranslated. It's like "not found" in a "404 Not Found".
                         goto end;
                     }
 

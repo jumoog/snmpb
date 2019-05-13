@@ -120,32 +120,32 @@
         </item>
         <item>
          <property name="text">
-          <string>DES</string>
+          <string notr="true">DES</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>3DES</string>
+          <string notr="true">3DES</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>IDEA</string>
+          <string notr="true">IDEA</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>AES128</string>
+          <string notr="true">AES128</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>AES192</string>
+          <string notr="true">AES192</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>AES256</string>
+          <string notr="true">AES256</string>
          </property>
         </item>
        </widget>
@@ -166,32 +166,32 @@
         </item>
         <item>
          <property name="text">
-          <string>MD5</string>
+          <string notr="true">MD5</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>SHA-1</string>
+          <string notr="true">SHA-1</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>SHA-2-224</string>
+          <string notr="true">SHA-2-224</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>SHA-2-256</string>
+          <string notr="true">SHA-2-256</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>SHA-2-384</string>
+          <string notr="true">SHA-2-384</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>SHA-2-512</string>
+          <string notr="true">SHA-2-512</string>
          </property>
         </item>
        </widget>

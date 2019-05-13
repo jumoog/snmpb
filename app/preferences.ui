@@ -76,17 +76,14 @@
    <item row="0" column="1">
     <widget class="QStackedWidget" name="PreferencesProps">
      <property name="currentIndex">
-      <number>2</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="TransportProps">
       <layout class="QGridLayout">
        <item row="0" column="0">
         <widget class="QLabel" name="TransportPropsL">
          <property name="text">
-          <string>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Transport Properties&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;span style=&quot;font-family:'Sans Serif'; font-size:18pt; font-weight:600;&quot;&gt;Transport Properties&lt;/span&gt;</string>
          </property>
         </widget>
        </item>
@@ -271,10 +268,7 @@ p, li { white-space: pre-wrap; }
        <item row="0" column="0">
         <widget class="QLabel" name="MIBTreePropsL">
          <property name="text">
-          <string>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;MIB Tree Properties&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;span style=&quot;font-family:'Sans Serif'; font-size:18pt; font-weight:600;&quot;&gt;MIB Tree Properties&lt;/span&gt;</string>
          </property>
         </widget>
        </item>
@@ -340,10 +334,7 @@ p, li { white-space: pre-wrap; }
        <item row="0" column="0" colspan="3">
         <widget class="QLabel" name="ModulesPropsL">
          <property name="text">
-          <string>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Modules Properties&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;span style=&quot;font-family:'Sans Serif'; font-size:18pt; font-weight:600;&quot;&gt;Modules Properties&lt;/span&gt;</string>
          </property>
         </widget>
        </item>
@@ -368,10 +359,7 @@ p, li { white-space: pre-wrap; }
        <item row="0" column="0">
         <widget class="QLabel" name="TrapsPropsL">
          <property name="text">
-          <string>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Traps Properties&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;span style=&quot;font-family:'Sans Serif'; font-size:18pt; font-weight:600;&quot;&gt;Traps Properties&lt;/span&gt;</string>
          </property>
         </widget>
        </item>
@@ -394,7 +382,7 @@ p, li { white-space: pre-wrap; }
        <item row="2" column="0">
         <widget class="QGroupBox" name="BindingTrapPort">
          <property name="title">
-          <string>Binding Trap Port</string>
+          <string>Trap listening ports</string>
          </property>
          <layout class="QGridLayout">
           <property name="leftMargin">

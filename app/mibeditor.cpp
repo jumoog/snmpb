@@ -438,13 +438,13 @@ void MibEditor::VerifyMIB(void)
     num_warning = 0;
     num_info = 0;
 
-    QString start_msg = tr("Starting MIB verification ...");
+    QString start_msg = tr("Starting MIB verification...");
     s->MainUI()->MIBLog->addItem(new QListWidgetItem(start_msg, 
                                                      s->MainUI()->MIBLog));
 
     smiLoadModule(QDir::toNativeSeparators(LoadedFile).toLatin1().data());
 
-    QString stop_msg = tr("Verification completed. %1 errors, %2 warnings, %3 infos")
+    QString stop_msg = tr("Verification complete. %1 errors, %2 warnings, %3 infos")
                                .arg(num_error).arg(num_warning).arg(num_info);
     s->MainUI()->MIBLog->addItem(new QListWidgetItem(stop_msg, 
                                                      s->MainUI()->MIBLog));
