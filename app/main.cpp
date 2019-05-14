@@ -19,6 +19,8 @@
 */
 #include <qapplication.h>
 #include <qmainwindow.h>
+#include <QTranslator>
+#include <QLibraryInfo>
 #include "snmpb.h"
 #include "mibeditor.h"
 #include "snmpbapp.h"
@@ -28,12 +30,23 @@ QString file_to_open;
 int main( int argc, char ** argv )
 {
     Snmpb snmpb;
-    SnmpBApplication a( argc, argv );
+    SnmpBApplication app( argc, argv );
+
+    // Qt translations
+    QTranslator l10n_qt;
+    l10n_qt.load("qt_" + QLocale::system().name(),
+                 QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    app.installTranslator(&l10n_qt);
+
+    // SnmpB translations
+    QTranslator l10n_app;
+    l10n_app.load(":/i18n/snmpb." + QLocale::system().name());
+    app.installTranslator(&l10n_app);
+
     QMainWindow mw;
     snmpb.BindToGUI(&mw);
-
     mw.show();
-    a.connect( &a, SIGNAL( lastWindowClosed() ), &a, SLOT( quit() ) );
+    app.connect(&app, SIGNAL( lastWindowClosed() ), &app, SLOT( quit() ));
 
     // Load a file specified as argument in the Mib Editor
     if (!file_to_open.isEmpty() || QCoreApplication::arguments().count() > 1)
@@ -42,5 +55,5 @@ int main( int argc, char ** argv )
         snmpb.MainUI()->TabW->setCurrentIndex(2); // Select the Editor Tab
     }
 
-    return a.exec();
+    return app.exec();
 }

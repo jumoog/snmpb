@@ -95,7 +95,6 @@ LIBS	+= \
 RESOURCES	= snmpb.qrc
 
 TEMPLATE	= app
-LANGUAGE	= C++
 CONFIG	+= qt warn_on debug
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -113,3 +112,37 @@ win32 {
 }
 macx:ICON = images/snmpb.icns
 
+#-- i18n --#
+
+TRANSLATIONS = \
+     l10n/snmpb.uk_UA.ts
+
+QMAKE_LRELEASE_FLAGS = -removeidentical -compress
+
+#-- this works in Qt 5.12+
+#CONFIG += lrelease embed_translations
+
+#-- below is a "roll your own" workaround
+isEmpty(QMAKE_LRELEASE) {
+    win32|os2:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\lrelease.exe
+    else:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease
+    unix {
+        !exists($$QMAKE_LRELEASE) { QMAKE_LRELEASE = lrelease-qt4 }
+    } else {
+        !exists($$QMAKE_LRELEASE) { QMAKE_LRELEASE = lrelease }
+    }
+}
+updateqm.input = TRANSLATIONS
+updateqm.output = .qm/${QMAKE_FILE_BASE}.qm
+updateqm.commands = $$QMAKE_LRELEASE ${QMAKE_FILE_IN} $$QMAKE_LRELEASE_FLAGS -qm ${QMAKE_FILE_OUT}
+updateqm.CONFIG += no_link target_predeps
+QMAKE_EXTRA_COMPILERS += updateqm
+
+for (translation, TRANSLATIONS) {
+    translation = $$basename(translation)
+    QM_FILES += $$OUT_PWD/.qm/$$replace(translation, \\.ts$, .qm)
+}
+embedqm.files = $$QM_FILES
+embedqm.base = $$OUT_PWD/.qm
+embedqm.prefix = i18n
+RESOURCES += embedqm
