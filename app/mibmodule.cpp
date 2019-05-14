@@ -308,24 +308,21 @@ QString MibModule::LoadBestModule(QString oid)
     QString best_oid = "";
 
     // Loop though all mibs
-    for (int k=0;k<Total.count();k++)
+    for (auto& mib: Total)
     {
         // Loop through all possible root oids for each mib
-        for (int l=1;l<Total[k].count();l++)
+        for (auto& root_oid: mib)
         {
             // If we have a possible match better than the best so far ...
-            if (((Total[k][l] != "") && oid.startsWith(Total[k][l]) && 
-                (Total[k][l].size() > best_oid.size())))
+            if (root_oid != "" && oid.startsWith(root_oid) &&
+                root_oid.size() > best_oid.size())
             {
                 // ...and it is not loaded ...
-                for (int m=0;m<Unloaded.count();m++)
+                if (Unloaded.contains(mib[0]))
                 {
-                    if (Total[k][0] == Unloaded[m])
-                    {
-                        // ... note it as best match so far and continue.
-                        best_file = Total[k][0];
-                        best_oid = Total[k][l];
-                    }
+                    // ... note it as best match so far and continue.
+                    best_file = mib[0];
+                    best_oid = root_oid;
                 }
                 break;
             }
@@ -367,8 +364,9 @@ QString MibModule::LoadBestModule(QString oid)
 
         // Load the module
         Wanted.append(best_file.toLatin1().data());
-
+        s->PreferencesObj()->Save();
         Refresh();
+
         s->TabSelected();
     }
 
