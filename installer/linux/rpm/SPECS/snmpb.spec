@@ -1,7 +1,7 @@
 Name: snmpb
 Summary: Graphical SNMP MIB browser written in QT.
-Version: 1.0.0
-Release:  2
+Version: 0.9
+Release:  2pre
 License: GPL2
 Group: Applications/Internet
 
@@ -46,7 +46,7 @@ update-desktop-database %prefix/share/applications
 %doc license.txt readme.txt todo.txt changelog.txt
 
 %changelog
-* Wed Nov 7 2018 Max <ulidtko@gmail.com> 1.0.0-2
+* Wed Nov 7 2018 Max <ulidtko@gmail.com> 0.9-2pre
 - Correct postinstall script
 - Abbreviate MIB/PIB lists
 - Remove force-redefines for _topdir, Prefix and Packager
