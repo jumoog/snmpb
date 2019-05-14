@@ -444,8 +444,12 @@ void MibEditor::VerifyMIB(void)
 
     smiLoadModule(QDir::toNativeSeparators(LoadedFile).toLatin1().data());
 
-    QString stop_msg = tr("Verification complete. %1 errors, %2 warnings, %3 infos")
-                               .arg(num_error).arg(num_warning).arg(num_info);
+    //: %1, %2, %3 are placeholders for pluralized num. of errors, warnings, infos
+    QString stop_msg = tr("Verification complete. %1, %2, %3")
+                          .arg(tr("%n errors", "", num_error))
+                          .arg(tr("%n warnings", "", num_warning))
+                          .arg(tr("%n infos", "", num_info))
+                          ;
     s->MainUI()->MIBLog->addItem(new QListWidgetItem(stop_msg, 
                                                      s->MainUI()->MIBLog));
 
@@ -560,7 +564,7 @@ void MibEditor::ExtractMIBfromRFC(void)
             {
                 QMessageBox mb(QMessageBox::Question, 
                                tr("SnmpB: Extract MIB from RFC"), 
-                               tr("The file %1 already exist.\n")
+                               tr("The file %1 already exists.\n")
                                .arg(file_out.fileName()));
                 QPushButton *ob = mb.addButton(tr("Overwrite"), 
                                                QMessageBox::YesRole);
@@ -715,18 +719,12 @@ void MibEditor::ExtractMIBfromRFC(void)
  
     if(modules.size() > 0)
     {
-        QString module_list;
-        for (int i = 0; i < modules.size(); i++)
-        {
-            module_list += "\n\t";
-            module_list +=  modules[i];
-        }
-
         QMessageBox::information(NULL, tr("SnmpB: Extract MIB from RFC"),
-                                 tr("%1 MIB module(s) have been extracted. \
-The following MIB file(s) were created: %2")
-                                 .arg(modules.size())
-                                 .arg(module_list));
+                                 //: %n is the number of MIBs for pluralization; %1 is multiline list of that many filenames.
+                                 tr("%n MIB module(s) have been extracted. "
+                                    "The following MIB file(s) were created: %1",
+                                    "", modules.size())
+                                 .arg(modules.join("\n\t")));
     }
 }
 
