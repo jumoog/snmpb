@@ -33,7 +33,7 @@ public:
     LoadedMibModule(SmiModule* mod);
     
     void PrintProperties(QString& text);   
-    char* GetMibLanguage(void);
+    const char* GetMibLanguage();
 
     QString name;
     SmiModule *module;

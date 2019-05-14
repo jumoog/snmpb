@@ -26,11 +26,14 @@
 #include <qtimer.h>
 #include <qpixmap.h>
 #include <qtreewidget.h>
+#include <QCoreApplication>
 
 #include "smi.h"
 
 class MibNode : public QTreeWidgetItem
 {
+    Q_DECLARE_TR_FUNCTIONS(MibNode)
+
 public:
     enum MibType 
     {

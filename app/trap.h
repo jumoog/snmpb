@@ -23,8 +23,13 @@
 #include "snmpb.h"
 #include "snmp_pp/snmp_pp.h"
 
+#include <QTreeWidgetItem>
+#include <QCoreApplication>
+
 class TrapItem : public QTreeWidgetItem
 {
+    Q_DECLARE_TR_FUNCTIONS(TrapItem)
+
 public:
     TrapItem(Oid &id, QTreeWidget* parent, const QStringList &values,
              QString community, QString seclevel,

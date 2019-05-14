@@ -62,42 +62,42 @@ void TrapItem::PrintProperties(QString& text)
     text = QString("<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" align=\"left\">");  
        
     // Add the name
-    text += QObject::tr("<tr><td><b>Name:</b></td><td><font color=#009000><b>%1</b></font></td>")
+    text += tr("<tr><td><b>Name:</b></td><td><font color=#009000><b>%1</b></font></td>")
             .arg(Node->name);
 	   
     // Add the full Oid
-    text += QObject::tr("<tr><td><b>Oid:</b></td><td>%1</td></tr>")
+    text += tr("<tr><td><b>Oid:</b></td><td>%1</td></tr>")
             .arg(smiRenderOID(Node->oidlen, Node->oid, SMI_RENDER_NUMERIC));
               
     // Add units (seconds, bits, ....)
-    text += QObject::tr("<tr><td><b>Units:</b></td><td>%1</td></tr>")
+    text += tr("<tr><td><b>Units:</b></td><td>%1</td></tr>")
             .arg(Node->units);
        
     // Add module
-    text += QObject::tr("<tr><td><b>Module:</b></td><td>%1</td></tr>")
+    text += tr("<tr><td><b>Module:</b></td><td>%1</td></tr>")
             .arg(smiGetNodeModule(Node)->name);
 
     // Add the reference
-    text += QObject::tr("<tr><td><b>Reference:</b></td><td><font face=fixed color=blue>");
+    text += tr("<tr><td><b>Reference:</b></td><td><font face=fixed color=blue>");
     text += Qt::convertFromPlainText (Node->reference);
-    text += QObject::tr("</font></td></tr>");
+    text += tr("</font></td></tr>");
        
     // Add the description
-    text += QObject::tr("<tr><td><b>Description:</b></td><td><font face=fixed color=blue>");
+    text += tr("<tr><td><b>Description:</b></td><td><font face=fixed color=blue>");
     text += Qt::convertFromPlainText (Node->description);
-    text += QObject::tr("</font></td></tr>");
+    text += tr("</font></td></tr>");
 	   
-    text += QObject::tr("</table>");
+    text += tr("</table>");
 }
 
 void TrapItem::PrintContent(QTreeWidget* TrapContent)
 {
     TrapContent->clear();
 
-    QString com_title = QObject::tr("Community: %1").arg(_community);
+    QString com_title = tr("Community: %1").arg(_community);
     new QTreeWidgetItem(TrapContent, QStringList(com_title));
      
-    QString bd_title = QObject::tr("Bindings (%1)").arg(content.count());
+    QString bd_title = tr("Bindings (%1)").arg(content.count());
     QTreeWidgetItem *bd = new QTreeWidgetItem(TrapContent, QStringList(bd_title));
     bd->setExpanded(_expand);
  

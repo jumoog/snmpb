@@ -39,31 +39,31 @@ LoadedMibModule::LoadedMibModule(SmiModule* mod)
 void LoadedMibModule::PrintProperties(QString& text)
 {
     // Create a table and add elements ...
-    text = QObject::tr("<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" align=\"left\">");
+    text = MibModule::tr("<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" align=\"left\">");
     
     // Add the name
-    text += QObject::tr("<tr><td><b>Name:</b></td><td><font color=#009000><b>%1</b></font></td>")
+    text += MibModule::tr("<tr><td><b>Name:</b></td><td><font color=#009000><b>%1</b></font></td>")
             .arg(module->name);
     
     // Add last revision
     SmiRevision * rev = smiGetFirstRevision(module);
     if(rev)
-        text += QObject::tr("<tr><td><b>Last revision:</b></td><td>%1</td></tr>")
+        text += MibModule::tr("<tr><td><b>Last revision:</b></td><td>%1</td></tr>")
                 .arg(asctime(gmtime(&rev->date)));
     
     // Add the description
-    text += QObject::tr("<tr><td><b>Description:</b></td><td><font face=fixed color=blue>");
+    text += MibModule::tr("<tr><td><b>Description:</b></td><td><font face=fixed color=blue>");
     text += Qt::convertFromPlainText (module->description);
-    text += QObject::tr("</font></td></tr>");
+    text += MibModule::tr("</font></td></tr>");
     
     // Add root node name
     SmiNode *node = smiGetModuleIdentityNode(module);
     if (node)
-        text += QObject::tr("<tr><td><b>Root node:</b></td><td>%1</td>")
+        text += MibModule::tr("<tr><td><b>Root node:</b></td><td>%1</td>")
                 .arg(node->name);
     
     // Add required modules
-    text += QObject::tr("<tr><td><b>Requires:</b></td><td><font color=red>");
+    text += MibModule::tr("<tr><td><b>Requires:</b></td><td><font color=red>");
     SmiImport * ip = smiGetFirstImport(module);
     SmiImport * ipprev = NULL;
     int first = 1;
@@ -78,35 +78,35 @@ void LoadedMibModule::PrintProperties(QString& text)
         ipprev = ip;
         ip = smiGetNextImport(ip);
     }
-    text += QObject::tr("</font></td></tr>");
+    text += MibModule::tr("</font></td></tr>");
     
     // Add organization
-    text += QObject::tr("<tr><td><b>Organization:</b></td><td>");
+    text += MibModule::tr("<tr><td><b>Organization:</b></td><td>");
     text += Qt::convertFromPlainText (module->organization);
-    text += QObject::tr("</td></tr>");
+    text += MibModule::tr("</td></tr>");
     
     // Add contact info
-    text += QObject::tr("<tr><td><b>Contact Info:</b></td><td><font face=fixed>");
+    text += MibModule::tr("<tr><td><b>Contact Info:</b></td><td><font face=fixed>");
     text += Qt::convertFromPlainText (module->contactinfo);
-    text += QObject::tr("</font></td></tr>");
+    text += MibModule::tr("</font></td></tr>");
              
     text += QString("</table>");
 }
 
-char* LoadedMibModule::GetMibLanguage(void)
+const char* LoadedMibModule::GetMibLanguage()
 {
     switch(module->language)
     {
     case SMI_LANGUAGE_SMIV1:
-        return (char*)"SMIv1";
+        return "SMIv1";
     case SMI_LANGUAGE_SMIV2:
-        return (char*)"SMIv2";
+        return "SMIv2";
     case SMI_LANGUAGE_SMING:
-        return (char*)"SMIng";
+        return "SMIng";
     case SMI_LANGUAGE_SPPI:
-        return (char*)"SPPI";
+        return "SPPI";
     default:
-        return (char*)"Unknown";
+        return "Unknown";
     }
 }
 
@@ -179,7 +179,7 @@ static void NormalErrorHdlr(char *path, int line, int severity,
     (void)line; (void)tag;
 
     if (severity <= 1)
-        CurrentModuleObject->SendLogError(QObject::tr("ERROR(%1) loading %2: %3")
+        CurrentModuleObject->SendLogError(MibModule::tr("ERROR(%1) loading %2: %3")
                                           .arg(severity).arg(path).arg(msg));
 }
 

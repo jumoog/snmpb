@@ -1954,7 +1954,7 @@
      <normaloff>:/images/snmpb.png</normaloff>:/images/snmpb.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;About SnmpB</string>
+    <string>&amp;About SnmpB...</string>
    </property>
    <property name="iconText">
     <string>About</string>
