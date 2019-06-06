@@ -145,4 +145,5 @@ for (translation, TRANSLATIONS) {
 embedqm.files = $$QM_FILES
 embedqm.base = $$OUT_PWD/.qm
 embedqm.prefix = i18n
+embedqm.depends = updateqm
 RESOURCES += embedqm
