@@ -391,7 +391,7 @@ void MibModule::RebuildLoadedList()
         LoadedMibModule *lmodule = new LoadedMibModule(mod);
         Loaded.append(lmodule);
 
-        const char* required = Wanted.contains(lmodule->name) ? tr("yes") : tr("no");
+        QString required = Wanted.contains(lmodule->name) ? tr("yes") : tr("no");
 
         QStringList columns;
         columns << lmodule->name.toUtf8().data()
