@@ -95,7 +95,7 @@ snmpb: libtomcrypt/libtomcrypt.a \
        qwt/lib/libqwt.a \
        app/snmpb
 
-clean:
+clean: app/makefile.snmpb
 	-$(MAKE) -C libtomcrypt clean
 ifneq ($(findstring MINGW,${os}),)
 	-$(MAKE) -C libsmi/win -f Makefile.mingw clean
@@ -103,7 +103,7 @@ else
 	-$(MAKE) -C libsmi clean
 endif
 	-$(MAKE) -C qwt clean
-	-$(MAKE) -C app clean
+	-$(MAKE) -C app -f makefile.snmpb clean
 
 distclean: clean
 ifneq ($(findstring MINGW,${os}),)
