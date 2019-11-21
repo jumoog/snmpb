@@ -8,11 +8,17 @@
 
 #define yy_create_buffer smi_create_buffer
 #define yy_delete_buffer smi_delete_buffer
-#define yy_flex_debug smi_flex_debug
+#define yy_scan_buffer smi_scan_buffer
+#define yy_scan_string smi_scan_string
+#define yy_scan_bytes smi_scan_bytes
 #define yy_init_buffer smi_init_buffer
 #define yy_flush_buffer smi_flush_buffer
 #define yy_load_buffer_state smi_load_buffer_state
 #define yy_switch_to_buffer smi_switch_to_buffer
+#define yypush_buffer_state smipush_buffer_state
+#define yypop_buffer_state smipop_buffer_state
+#define yyensure_buffer_stack smiensure_buffer_stack
+#define yy_flex_debug smi_flex_debug
 #define yyin smiin
 #define yyleng smileng
 #define yylex smilex
@@ -27,10 +33,244 @@
 
 #define FLEX_SCANNER
 #define YY_FLEX_MAJOR_VERSION 2
-#define YY_FLEX_MINOR_VERSION 5
-#define YY_FLEX_SUBMINOR_VERSION 37
+#define YY_FLEX_MINOR_VERSION 6
+#define YY_FLEX_SUBMINOR_VERSION 4
 #if YY_FLEX_SUBMINOR_VERSION > 0
 #define FLEX_BETA
+#endif
+
+#ifdef yy_create_buffer
+#define smi_create_buffer_ALREADY_DEFINED
+#else
+#define yy_create_buffer smi_create_buffer
+#endif
+
+#ifdef yy_delete_buffer
+#define smi_delete_buffer_ALREADY_DEFINED
+#else
+#define yy_delete_buffer smi_delete_buffer
+#endif
+
+#ifdef yy_scan_buffer
+#define smi_scan_buffer_ALREADY_DEFINED
+#else
+#define yy_scan_buffer smi_scan_buffer
+#endif
+
+#ifdef yy_scan_string
+#define smi_scan_string_ALREADY_DEFINED
+#else
+#define yy_scan_string smi_scan_string
+#endif
+
+#ifdef yy_scan_bytes
+#define smi_scan_bytes_ALREADY_DEFINED
+#else
+#define yy_scan_bytes smi_scan_bytes
+#endif
+
+#ifdef yy_init_buffer
+#define smi_init_buffer_ALREADY_DEFINED
+#else
+#define yy_init_buffer smi_init_buffer
+#endif
+
+#ifdef yy_flush_buffer
+#define smi_flush_buffer_ALREADY_DEFINED
+#else
+#define yy_flush_buffer smi_flush_buffer
+#endif
+
+#ifdef yy_load_buffer_state
+#define smi_load_buffer_state_ALREADY_DEFINED
+#else
+#define yy_load_buffer_state smi_load_buffer_state
+#endif
+
+#ifdef yy_switch_to_buffer
+#define smi_switch_to_buffer_ALREADY_DEFINED
+#else
+#define yy_switch_to_buffer smi_switch_to_buffer
+#endif
+
+#ifdef yypush_buffer_state
+#define smipush_buffer_state_ALREADY_DEFINED
+#else
+#define yypush_buffer_state smipush_buffer_state
+#endif
+
+#ifdef yypop_buffer_state
+#define smipop_buffer_state_ALREADY_DEFINED
+#else
+#define yypop_buffer_state smipop_buffer_state
+#endif
+
+#ifdef yyensure_buffer_stack
+#define smiensure_buffer_stack_ALREADY_DEFINED
+#else
+#define yyensure_buffer_stack smiensure_buffer_stack
+#endif
+
+#ifdef yylex
+#define smilex_ALREADY_DEFINED
+#else
+#define yylex smilex
+#endif
+
+#ifdef yyrestart
+#define smirestart_ALREADY_DEFINED
+#else
+#define yyrestart smirestart
+#endif
+
+#ifdef yylex_init
+#define smilex_init_ALREADY_DEFINED
+#else
+#define yylex_init smilex_init
+#endif
+
+#ifdef yylex_init_extra
+#define smilex_init_extra_ALREADY_DEFINED
+#else
+#define yylex_init_extra smilex_init_extra
+#endif
+
+#ifdef yylex_destroy
+#define smilex_destroy_ALREADY_DEFINED
+#else
+#define yylex_destroy smilex_destroy
+#endif
+
+#ifdef yyget_debug
+#define smiget_debug_ALREADY_DEFINED
+#else
+#define yyget_debug smiget_debug
+#endif
+
+#ifdef yyset_debug
+#define smiset_debug_ALREADY_DEFINED
+#else
+#define yyset_debug smiset_debug
+#endif
+
+#ifdef yyget_extra
+#define smiget_extra_ALREADY_DEFINED
+#else
+#define yyget_extra smiget_extra
+#endif
+
+#ifdef yyset_extra
+#define smiset_extra_ALREADY_DEFINED
+#else
+#define yyset_extra smiset_extra
+#endif
+
+#ifdef yyget_in
+#define smiget_in_ALREADY_DEFINED
+#else
+#define yyget_in smiget_in
+#endif
+
+#ifdef yyset_in
+#define smiset_in_ALREADY_DEFINED
+#else
+#define yyset_in smiset_in
+#endif
+
+#ifdef yyget_out
+#define smiget_out_ALREADY_DEFINED
+#else
+#define yyget_out smiget_out
+#endif
+
+#ifdef yyset_out
+#define smiset_out_ALREADY_DEFINED
+#else
+#define yyset_out smiset_out
+#endif
+
+#ifdef yyget_leng
+#define smiget_leng_ALREADY_DEFINED
+#else
+#define yyget_leng smiget_leng
+#endif
+
+#ifdef yyget_text
+#define smiget_text_ALREADY_DEFINED
+#else
+#define yyget_text smiget_text
+#endif
+
+#ifdef yyget_lineno
+#define smiget_lineno_ALREADY_DEFINED
+#else
+#define yyget_lineno smiget_lineno
+#endif
+
+#ifdef yyset_lineno
+#define smiset_lineno_ALREADY_DEFINED
+#else
+#define yyset_lineno smiset_lineno
+#endif
+
+#ifdef yywrap
+#define smiwrap_ALREADY_DEFINED
+#else
+#define yywrap smiwrap
+#endif
+
+#ifdef yyalloc
+#define smialloc_ALREADY_DEFINED
+#else
+#define yyalloc smialloc
+#endif
+
+#ifdef yyrealloc
+#define smirealloc_ALREADY_DEFINED
+#else
+#define yyrealloc smirealloc
+#endif
+
+#ifdef yyfree
+#define smifree_ALREADY_DEFINED
+#else
+#define yyfree smifree
+#endif
+
+#ifdef yytext
+#define smitext_ALREADY_DEFINED
+#else
+#define yytext smitext
+#endif
+
+#ifdef yyleng
+#define smileng_ALREADY_DEFINED
+#else
+#define yyleng smileng
+#endif
+
+#ifdef yyin
+#define smiin_ALREADY_DEFINED
+#else
+#define yyin smiin
+#endif
+
+#ifdef yyout
+#define smiout_ALREADY_DEFINED
+#else
+#define yyout smiout
+#endif
+
+#ifdef yy_flex_debug
+#define smi_flex_debug_ALREADY_DEFINED
+#else
+#define yy_flex_debug smi_flex_debug
+#endif
+
+#ifdef yylineno
+#define smilineno_ALREADY_DEFINED
+#else
+#define yylineno smilineno
 #endif
 
 /* First, we deal with  platform-specific or compiler-specific issues. */
@@ -103,65 +343,61 @@ typedef unsigned int flex_uint32_t;
 #define UINT32_MAX             (4294967295U)
 #endif
 
+#ifndef SIZE_MAX
+#define SIZE_MAX               (~(size_t)0)
+#endif
+
 #endif /* ! C99 */
 
 #endif /* ! FLEXINT_H */
 
-#ifdef __cplusplus
+/* begin standard C++ headers. */
 
-/* The "const" storage-class-modifier is valid. */
-#define YY_USE_CONST
-
-#else	/* ! __cplusplus */
-
-/* C99 requires __STDC__ to be defined as 1. */
-#if defined (__STDC__)
-
-#define YY_USE_CONST
-
-#endif	/* defined (__STDC__) */
-#endif	/* ! __cplusplus */
-
-#ifdef YY_USE_CONST
+/* TODO: this is always defined, so inline it */
 #define yyconst const
+
+#if defined(__GNUC__) && __GNUC__ >= 3
+#define yynoreturn __attribute__((__noreturn__))
 #else
-#define yyconst
+#define yynoreturn
 #endif
 
 /* Returned upon end-of-file. */
 #define YY_NULL 0
 
-/* Promotes a possibly negative, possibly signed char to an unsigned
- * integer for use as an array index.  If the signed char is negative,
- * we want to instead treat it as an 8-bit unsigned char, hence the
- * double cast.
+/* Promotes a possibly negative, possibly signed char to an
+ *   integer in range [0..255] for use as an array index.
  */
-#define YY_SC_TO_UI(c) ((unsigned int) (unsigned char) c)
+#define YY_SC_TO_UI(c) ((YY_CHAR) (c))
 
 /* Enter a start condition.  This macro really ought to take a parameter,
  * but we do it the disgusting crufty way forced on us by the ()-less
  * definition of BEGIN.
  */
 #define BEGIN (yy_start) = 1 + 2 *
-
 /* Translate the current start state into a value that can be later handed
  * to BEGIN to return to the state.  The YYSTATE alias is for lex
  * compatibility.
  */
 #define YY_START (((yy_start) - 1) / 2)
 #define YYSTATE YY_START
-
 /* Action number for EOF rule of a given start state. */
 #define YY_STATE_EOF(state) (YY_END_OF_BUFFER + state + 1)
-
 /* Special action meaning "start processing a new file". */
-#define YY_NEW_FILE smirestart(smiin  )
-
+#define YY_NEW_FILE yyrestart( yyin  )
 #define YY_END_OF_BUFFER_CHAR 0
 
 /* Size of default input buffer. */
 #ifndef YY_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k.
+ * Moreover, YY_BUF_SIZE is 2*YY_READ_BUF_SIZE in the general case.
+ * Ditto for the __ia64__ case accordingly.
+ */
+#define YY_BUF_SIZE 32768
+#else
 #define YY_BUF_SIZE 16384
+#endif /* __ia64__ */
 #endif
 
 /* The state buf must be large enough to hold one state per character in the main buffer.
@@ -178,30 +414,30 @@ typedef struct yy_buffer_state *YY_BUFFER_STATE;
 typedef size_t yy_size_t;
 #endif
 
-extern yy_size_t smileng;
+extern int yyleng;
 
-extern FILE *smiin, *smiout;
+extern FILE *yyin, *yyout;
 
 #define EOB_ACT_CONTINUE_SCAN 0
 #define EOB_ACT_END_OF_FILE 1
 #define EOB_ACT_LAST_MATCH 2
-
+    
     #define YY_LESS_LINENO(n)
+    #define YY_LINENO_REWIND_TO(ptr)
     
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
 	do \
 		{ \
-		/* Undo effects of setting up smitext. */ \
+		/* Undo effects of setting up yytext. */ \
         int yyless_macro_arg = (n); \
         YY_LESS_LINENO(yyless_macro_arg);\
 		*yy_cp = (yy_hold_char); \
 		YY_RESTORE_YY_MORE_OFFSET \
 		(yy_c_buf_p) = yy_cp = yy_bp + yyless_macro_arg - YY_MORE_ADJ; \
-		YY_DO_BEFORE_ACTION; /* set up smitext again */ \
+		YY_DO_BEFORE_ACTION; /* set up yytext again */ \
 		} \
 	while ( 0 )
-
 #define unput(c) yyunput( c, (yytext_ptr)  )
 
 #ifndef YY_STRUCT_YY_BUFFER_STATE
@@ -216,12 +452,12 @@ struct yy_buffer_state
 	/* Size of input buffer in bytes, not including room for EOB
 	 * characters.
 	 */
-	yy_size_t yy_buf_size;
+	int yy_buf_size;
 
 	/* Number of characters read into yy_ch_buf, not including EOB
 	 * characters.
 	 */
-	yy_size_t yy_n_chars;
+	int yy_n_chars;
 
 	/* Whether we "own" the buffer - i.e., we know we created it,
 	 * and can realloc() it to grow it, and should free() it to
@@ -244,7 +480,7 @@ struct yy_buffer_state
 
     int yy_bs_lineno; /**< The line count. */
     int yy_bs_column; /**< The column count. */
-    
+
 	/* Whether to try to fill the input buffer when we reach the
 	 * end of it.
 	 */
@@ -261,8 +497,8 @@ struct yy_buffer_state
 	 * possible backing-up.
 	 *
 	 * When we actually see the EOF, we change the status to "new"
-	 * (via smirestart()), so that the user can continue scanning by
-	 * just pointing smiin at a new input file.
+	 * (via yyrestart()), so that the user can continue scanning by
+	 * just pointing yyin at a new input file.
 	 */
 #define YY_BUFFER_EOF_PENDING 2
 
@@ -272,7 +508,7 @@ struct yy_buffer_state
 /* Stack of input buffers. */
 static size_t yy_buffer_stack_top = 0; /**< index of top of stack. */
 static size_t yy_buffer_stack_max = 0; /**< capacity of stack. */
-static YY_BUFFER_STATE * yy_buffer_stack = 0; /**< Stack as an array. */
+static YY_BUFFER_STATE * yy_buffer_stack = NULL; /**< Stack as an array. */
 
 /* We provide macros for accessing buffer states in case in the
  * future we want to put the buffer states in a more general
@@ -283,91 +519,88 @@ static YY_BUFFER_STATE * yy_buffer_stack = 0; /**< Stack as an array. */
 #define YY_CURRENT_BUFFER ( (yy_buffer_stack) \
                           ? (yy_buffer_stack)[(yy_buffer_stack_top)] \
                           : NULL)
-
 /* Same as previous macro, but useful when we know that the buffer stack is not
  * NULL or when we need an lvalue. For internal use only.
  */
 #define YY_CURRENT_BUFFER_LVALUE (yy_buffer_stack)[(yy_buffer_stack_top)]
 
-/* yy_hold_char holds the character lost when smitext is formed. */
+/* yy_hold_char holds the character lost when yytext is formed. */
 static char yy_hold_char;
-static yy_size_t yy_n_chars;		/* number of characters read into yy_ch_buf */
-yy_size_t smileng;
+static int yy_n_chars;		/* number of characters read into yy_ch_buf */
+int yyleng;
 
 /* Points to current character in buffer. */
-static char *yy_c_buf_p = (char *) 0;
+static char *yy_c_buf_p = NULL;
 static int yy_init = 0;		/* whether we need to initialize */
 static int yy_start = 0;	/* start state number */
 
-/* Flag which is used to allow smiwrap()'s to do buffer switches
- * instead of setting up a fresh smiin.  A bit of a hack ...
+/* Flag which is used to allow yywrap()'s to do buffer switches
+ * instead of setting up a fresh yyin.  A bit of a hack ...
  */
 static int yy_did_buffer_switch_on_eof;
 
-void smirestart (FILE *input_file  );
-void smi_switch_to_buffer (YY_BUFFER_STATE new_buffer  );
-YY_BUFFER_STATE smi_create_buffer (FILE *file,int size  );
-void smi_delete_buffer (YY_BUFFER_STATE b  );
-void smi_flush_buffer (YY_BUFFER_STATE b  );
-void smipush_buffer_state (YY_BUFFER_STATE new_buffer  );
-void smipop_buffer_state (void );
+void yyrestart ( FILE *input_file  );
+void yy_switch_to_buffer ( YY_BUFFER_STATE new_buffer  );
+YY_BUFFER_STATE yy_create_buffer ( FILE *file, int size  );
+void yy_delete_buffer ( YY_BUFFER_STATE b  );
+void yy_flush_buffer ( YY_BUFFER_STATE b  );
+void yypush_buffer_state ( YY_BUFFER_STATE new_buffer  );
+void yypop_buffer_state ( void );
 
-static void smiensure_buffer_stack (void );
-static void smi_load_buffer_state (void );
-static void smi_init_buffer (YY_BUFFER_STATE b,FILE *file  );
+static void yyensure_buffer_stack ( void );
+static void yy_load_buffer_state ( void );
+static void yy_init_buffer ( YY_BUFFER_STATE b, FILE *file  );
+#define YY_FLUSH_BUFFER yy_flush_buffer( YY_CURRENT_BUFFER )
 
-#define YY_FLUSH_BUFFER smi_flush_buffer(YY_CURRENT_BUFFER )
+YY_BUFFER_STATE yy_scan_buffer ( char *base, yy_size_t size  );
+YY_BUFFER_STATE yy_scan_string ( const char *yy_str  );
+YY_BUFFER_STATE yy_scan_bytes ( const char *bytes, int len  );
 
-YY_BUFFER_STATE smi_scan_buffer (char *base,yy_size_t size  );
-YY_BUFFER_STATE smi_scan_string (yyconst char *yy_str  );
-YY_BUFFER_STATE smi_scan_bytes (yyconst char *bytes,yy_size_t len  );
+void *yyalloc ( yy_size_t  );
+void *yyrealloc ( void *, yy_size_t  );
+void yyfree ( void *  );
 
-void *smialloc (yy_size_t  );
-void *smirealloc (void *,yy_size_t  );
-void smifree (void *  );
-
-#define yy_new_buffer smi_create_buffer
-
+#define yy_new_buffer yy_create_buffer
 #define yy_set_interactive(is_interactive) \
 	{ \
 	if ( ! YY_CURRENT_BUFFER ){ \
-        smiensure_buffer_stack (); \
+        yyensure_buffer_stack (); \
 		YY_CURRENT_BUFFER_LVALUE =    \
-            smi_create_buffer(smiin,YY_BUF_SIZE ); \
+            yy_create_buffer( yyin, YY_BUF_SIZE ); \
 	} \
 	YY_CURRENT_BUFFER_LVALUE->yy_is_interactive = is_interactive; \
 	}
-
 #define yy_set_bol(at_bol) \
 	{ \
 	if ( ! YY_CURRENT_BUFFER ){\
-        smiensure_buffer_stack (); \
+        yyensure_buffer_stack (); \
 		YY_CURRENT_BUFFER_LVALUE =    \
-            smi_create_buffer(smiin,YY_BUF_SIZE ); \
+            yy_create_buffer( yyin, YY_BUF_SIZE ); \
 	} \
 	YY_CURRENT_BUFFER_LVALUE->yy_at_bol = at_bol; \
 	}
-
 #define YY_AT_BOL() (YY_CURRENT_BUFFER_LVALUE->yy_at_bol)
 
 /* Begin user sect3 */
 
-#define smiwrap() 1
+#define smiwrap() (/*CONSTCOND*/1)
 #define YY_SKIP_YYWRAP
+typedef flex_uint8_t YY_CHAR;
 
-typedef unsigned char YY_CHAR;
-
-FILE *smiin = (FILE *) 0, *smiout = (FILE *) 0;
+FILE *yyin = NULL, *yyout = NULL;
 
 typedef int yy_state_type;
 
-extern int smilineno;
+extern int yylineno;
+int yylineno = 1;
 
-int smilineno = 1;
+extern char *yytext;
+#ifdef yytext_ptr
+#undef yytext_ptr
+#endif
+#define yytext_ptr yytext
 
-extern char *smitext;
-#define yytext_ptr smitext
-static yyconst flex_int16_t yy_nxt[][68] =
+static const flex_int16_t yy_nxt[][68] =
     {
     {
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
@@ -11220,21 +11453,20 @@ static yyconst flex_int16_t yy_nxt[][68] =
 
     } ;
 
-static yy_state_type yy_get_previous_state (void );
-static yy_state_type yy_try_NUL_trans (yy_state_type current_state  );
-static int yy_get_next_buffer (void );
-static void yy_fatal_error (yyconst char msg[]  );
+static yy_state_type yy_get_previous_state ( void );
+static yy_state_type yy_try_NUL_trans ( yy_state_type current_state  );
+static int yy_get_next_buffer ( void );
+static void yynoreturn yy_fatal_error ( const char* msg  );
 
 /* Done after the current pattern has been matched and before the
- * corresponding action - sets up smitext.
+ * corresponding action - sets up yytext.
  */
 #define YY_DO_BEFORE_ACTION \
 	(yytext_ptr) = yy_bp; \
-	smileng = (size_t) (yy_cp - yy_bp); \
+	yyleng = (int) (yy_cp - yy_bp); \
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-
 #define YY_NUM_RULES 115
 #define YY_END_OF_BUFFER 116
 /* This struct is not used in this scanner,
@@ -11244,7 +11476,7 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static yyconst flex_int16_t yy_accept[1014] =
+static const flex_int16_t yy_accept[1014] =
     {   0,
        22,   22,    0,    0,    0,    0,    7,    7,   17,   17,
         0,    0,  116,  114,   22,   23,   23,  114,  114,   19,
@@ -11360,7 +11592,7 @@ static yyconst flex_int16_t yy_accept[1014] =
        91,  105,   91
     } ;
 
-static yyconst flex_int32_t yy_ec[256] =
+static const YY_CHAR yy_ec[256] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
         1,    1,    4,    1,    1,    1,    1,    1,    1,    1,
@@ -11395,8 +11627,8 @@ static yyconst flex_int32_t yy_ec[256] =
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
 
-extern int smi_flex_debug;
-int smi_flex_debug = 0;
+extern int yy_flex_debug;
+int yy_flex_debug = 0;
 
 /* The intent behind this definition is that it'll catch
  * any uses of REJECT which flex missed.
@@ -11405,7 +11637,7 @@ int smi_flex_debug = 0;
 #define yymore() yymore_used_but_not_detected
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
-char *smitext;
+char *yytext;
 #line 1 "scanner-smi.l"
 /*
  * scanner-smi.l --
@@ -11446,11 +11678,11 @@ char *smitext;
 
 
 
-/* we need a reentrant parser, so smilex gets arguments */
+/* we need a reentrant parser, so yylex gets arguments */
 #if 0
-#define YY_DECL int smilex YY_PROTO((YYSTYPE *lvalp, void *parser))
+#define YY_DECL int yylex YY_PROTO((YYSTYPE *lvalp, void *parser))
 #else
-#define YY_DECL int smilex(YYSTYPE *lvalp,void *parser)
+#define YY_DECL int yylex(YYSTYPE *lvalp, void *parser)
 #endif
 
 
@@ -11486,7 +11718,7 @@ smiEnterLexRecursion(file)
 	return (-1);
     }
     yybuffer[lexDepth++] = YY_CURRENT_BUFFER;
-    smi_switch_to_buffer(smi_create_buffer(file,YY_BUF_SIZE));
+    yy_switch_to_buffer(yy_create_buffer(file, YY_BUF_SIZE));
     return (lexDepth);
 }
 
@@ -11495,12 +11727,13 @@ smiEnterLexRecursion(file)
 void
 smiLeaveLexRecursion()
 {    
-    smi_delete_buffer(YY_CURRENT_BUFFER);
-    smi_switch_to_buffer(yybuffer[--lexDepth]);
+    yy_delete_buffer(YY_CURRENT_BUFFER);
+    yy_switch_to_buffer(yybuffer[--lexDepth]);
 }
 
 
 
+#line 11737 "scanner-smi.c"
 /*
  * Lex pattern definitions.
  */
@@ -11508,11 +11741,7 @@ smiLeaveLexRecursion()
  * Lex state definitions.
  */
 
-
-
-
-
-#line 11516 "scanner-smi.c"
+#line 11745 "scanner-smi.c"
 
 #define INITIAL 0
 #define Macro 1
@@ -11533,36 +11762,36 @@ smiLeaveLexRecursion()
 #define YY_EXTRA_TYPE void *
 #endif
 
-static int yy_init_globals (void );
+static int yy_init_globals ( void );
 
 /* Accessor methods to globals.
    These are made visible to non-reentrant scanners for convenience. */
 
-int smilex_destroy (void );
+int yylex_destroy ( void );
 
-int smiget_debug (void );
+int yyget_debug ( void );
 
-void smiset_debug (int debug_flag  );
+void yyset_debug ( int debug_flag  );
 
-YY_EXTRA_TYPE smiget_extra (void );
+YY_EXTRA_TYPE yyget_extra ( void );
 
-void smiset_extra (YY_EXTRA_TYPE user_defined  );
+void yyset_extra ( YY_EXTRA_TYPE user_defined  );
 
-FILE *smiget_in (void );
+FILE *yyget_in ( void );
 
-void smiset_in  (FILE * in_str  );
+void yyset_in  ( FILE * _in_str  );
 
-FILE *smiget_out (void );
+FILE *yyget_out ( void );
 
-void smiset_out  (FILE * out_str  );
+void yyset_out  ( FILE * _out_str  );
 
-yy_size_t smiget_leng (void );
+			int yyget_leng ( void );
 
-char *smiget_text (void );
+char *yyget_text ( void );
 
-int smiget_lineno (void );
+int yyget_lineno ( void );
 
-void smiset_lineno (int line_number  );
+void yyset_lineno ( int _line_number  );
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -11570,35 +11799,43 @@ void smiset_lineno (int line_number  );
 
 #ifndef YY_SKIP_YYWRAP
 #ifdef __cplusplus
-extern "C" int smiwrap (void );
+extern "C" int yywrap ( void );
 #else
-extern int smiwrap (void );
+extern int yywrap ( void );
 #endif
 #endif
 
-    static void yyunput (int c,char *buf_ptr  );
+#ifndef YY_NO_UNPUT
     
+    static void yyunput ( int c, char *buf_ptr  );
+    
+#endif
+
 #ifndef yytext_ptr
-static void yy_flex_strncpy (char *,yyconst char *,int );
+static void yy_flex_strncpy ( char *, const char *, int );
 #endif
 
 #ifdef YY_NEED_STRLEN
-static int yy_flex_strlen (yyconst char * );
+static int yy_flex_strlen ( const char * );
 #endif
 
 #ifndef YY_NO_INPUT
-
 #ifdef __cplusplus
-static int yyinput (void );
+static int yyinput ( void );
 #else
-static int input (void );
+static int input ( void );
 #endif
 
 #endif
 
 /* Amount of stuff to slurp up with each read. */
 #ifndef YY_READ_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k */
+#define YY_READ_BUF_SIZE 16384
+#else
 #define YY_READ_BUF_SIZE 8192
+#endif /* __ia64__ */
 #endif
 
 /* Copy whatever the last rule matched to the standard output. */
@@ -11606,7 +11843,7 @@ static int input (void );
 /* This used to be an fputs(), but since the string might contain NUL's,
  * we now use fwrite().
  */
-#define ECHO do { if (fwrite( smitext, smileng, 1, smiout )) {} } while (0)
+#define ECHO do { if (fwrite( yytext, (size_t) yyleng, 1, yyout )) {} } while (0)
 #endif
 
 /* Gets input and stuffs it into "buf".  number of characters read, or YY_NULL,
@@ -11617,20 +11854,20 @@ static int input (void );
 	if ( YY_CURRENT_BUFFER_LVALUE->yy_is_interactive ) \
 		{ \
 		int c = '*'; \
-		size_t n; \
+		int n; \
 		for ( n = 0; n < max_size && \
-			     (c = getc( smiin )) != EOF && c != '\n'; ++n ) \
+			     (c = getc( yyin )) != EOF && c != '\n'; ++n ) \
 			buf[n] = (char) c; \
 		if ( c == '\n' ) \
 			buf[n++] = (char) c; \
-		if ( c == EOF && ferror( smiin ) ) \
+		if ( c == EOF && ferror( yyin ) ) \
 			YY_FATAL_ERROR( "input in flex scanner failed" ); \
 		result = n; \
 		} \
 	else \
 		{ \
 		errno=0; \
-		while ( (result = fread(buf, 1, max_size, smiin))==0 && ferror(smiin)) \
+		while ( (result = (int) fread(buf, 1, (yy_size_t) max_size, yyin)) == 0 && ferror(yyin)) \
 			{ \
 			if( errno != EINTR) \
 				{ \
@@ -11638,7 +11875,7 @@ static int input (void );
 				break; \
 				} \
 			errno=0; \
-			clearerr(smiin); \
+			clearerr(yyin); \
 			} \
 		}\
 \
@@ -11671,12 +11908,12 @@ static int input (void );
 #ifndef YY_DECL
 #define YY_DECL_IS_OURS 1
 
-extern int smilex (void);
+extern int yylex (void);
 
-#define YY_DECL int smilex (void)
+#define YY_DECL int yylex (void)
 #endif /* !YY_DECL */
 
-/* Code executed at the beginning of each rule, after smitext and smileng
+/* Code executed at the beginning of each rule, after yytext and yyleng
  * have been set up.
  */
 #ifndef YY_USER_ACTION
@@ -11685,7 +11922,7 @@ extern int smilex (void);
 
 /* Code executed at the end of each rule. */
 #ifndef YY_BREAK
-#define YY_BREAK break;
+#define YY_BREAK /*LINTED*/break;
 #endif
 
 #define YY_RULE_SETUP \
@@ -11695,25 +11932,10 @@ extern int smilex (void);
  */
 YY_DECL
 {
-	register yy_state_type yy_current_state;
-	register char *yy_cp, *yy_bp;
-	register int yy_act;
+	yy_state_type yy_current_state;
+	char *yy_cp, *yy_bp;
+	int yy_act;
     
-#line 122 "scanner-smi.l"
-
-
-
-
- /*
-  * Lex rules.
-  */
-
- /*
-  * Lex rules for skipping MACRO.
-  */
-
-#line 11716 "scanner-smi.c"
-
 	if ( !(yy_init) )
 		{
 		(yy_init) = 1;
@@ -11725,26 +11947,43 @@ YY_DECL
 		if ( ! (yy_start) )
 			(yy_start) = 1;	/* first start state */
 
-		if ( ! smiin )
-			smiin = stdin;
+		if ( ! yyin )
+			yyin = stdin;
 
-		if ( ! smiout )
-			smiout = stdout;
+		if ( ! yyout )
+			yyout = stdout;
 
 		if ( ! YY_CURRENT_BUFFER ) {
-			smiensure_buffer_stack ();
+			yyensure_buffer_stack ();
 			YY_CURRENT_BUFFER_LVALUE =
-				smi_create_buffer(smiin,YY_BUF_SIZE );
+				yy_create_buffer( yyin, YY_BUF_SIZE );
 		}
 
-		smi_load_buffer_state( );
+		yy_load_buffer_state(  );
 		}
 
-	while ( 1 )		/* loops until end-of-file is reached */
+	{
+#line 122 "scanner-smi.l"
+
+
+
+
+#line 127 "scanner-smi.l"
+ /*
+  * Lex rules.
+  */
+
+ /*
+  * Lex rules for skipping MACRO.
+  */
+
+#line 11981 "scanner-smi.c"
+
+	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
 		yy_cp = (yy_c_buf_p);
 
-		/* Support of smitext. */
+		/* Support of yytext. */
 		*yy_cp = (yy_hold_char);
 
 		/* yy_bp points to the position in yy_ch_buf of the start of
@@ -11785,37 +12024,38 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 134 "scanner-smi.l"
+#line 135 "scanner-smi.l"
 {
     BEGIN(Macro);
-    yylval.id = smitext;
+    yylval.id = yytext;
     return MACRO;
 }
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 140 "scanner-smi.l"
+#line 141 "scanner-smi.l"
 {
     thisParser.line++;
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 144 "scanner-smi.l"
+#line 145 "scanner-smi.l"
 {
 }
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 3);
 (yy_c_buf_p) = yy_cp = yy_bp + 3;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 147 "scanner-smi.l"
+#line 148 "scanner-smi.l"
 {
     BEGIN(INITIAL);
-    yylval.id = smitext;
+    yylval.id = yytext;
     return END;
 }
 	YY_BREAK
@@ -11824,17 +12064,17 @@ YY_RULE_SETUP
   */
 case 5:
 YY_RULE_SETUP
-#line 157 "scanner-smi.l"
+#line 158 "scanner-smi.l"
 {
     BEGIN(Exports);
-    yylval.id = smitext;
+    yylval.id = yytext;
     return EXPORTS;
 }
 	YY_BREAK
 case 6:
 /* rule 6 can match eol */
 YY_RULE_SETUP
-#line 163 "scanner-smi.l"
+#line 164 "scanner-smi.l"
 {
     thisParser.line++;
 }
@@ -11842,16 +12082,16 @@ YY_RULE_SETUP
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 167 "scanner-smi.l"
+#line 168 "scanner-smi.l"
 {
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 170 "scanner-smi.l"
+#line 171 "scanner-smi.l"
 {
     BEGIN(INITIAL);
-    return smitext[0];
+    return yytext[0];
 }
 	YY_BREAK
 /*
@@ -11859,17 +12099,17 @@ YY_RULE_SETUP
   */
 case 9:
 YY_RULE_SETUP
-#line 179 "scanner-smi.l"
+#line 180 "scanner-smi.l"
 {
     BEGIN(Choice);
-    yylval.id = smitext;
+    yylval.id = yytext;
     return CHOICE;
 }
 	YY_BREAK
 case 10:
 /* rule 10 can match eol */
 YY_RULE_SETUP
-#line 185 "scanner-smi.l"
+#line 186 "scanner-smi.l"
 {
     thisParser.line++;
 }
@@ -11877,16 +12117,16 @@ YY_RULE_SETUP
 case 11:
 /* rule 11 can match eol */
 YY_RULE_SETUP
-#line 189 "scanner-smi.l"
+#line 190 "scanner-smi.l"
 {
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 192 "scanner-smi.l"
+#line 193 "scanner-smi.l"
 {
     BEGIN(INITIAL);
-    return smitext[0];
+    return yytext[0];
 }
 	YY_BREAK
 /*
@@ -11894,14 +12134,14 @@ YY_RULE_SETUP
   */
 case 13:
 YY_RULE_SETUP
-#line 201 "scanner-smi.l"
+#line 202 "scanner-smi.l"
 {
     BEGIN(Comment);
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 205 "scanner-smi.l"
+#line 206 "scanner-smi.l"
 {
     thisParser.lcline = thisParser.line;
     BEGIN(INITIAL);
@@ -11915,7 +12155,7 @@ YY_RULE_SETUP
 case 15:
 /* rule 15 can match eol */
 YY_RULE_SETUP
-#line 215 "scanner-smi.l"
+#line 216 "scanner-smi.l"
 {
     smiPrintError(parser, ERR_COMMENT_TERMINATES);
     smiPrintError(parser, ERR_LEX_UNEXPECTED_CHAR);
@@ -11926,7 +12166,7 @@ YY_RULE_SETUP
 case 16:
 /* rule 16 can match eol */
 YY_RULE_SETUP
-#line 222 "scanner-smi.l"
+#line 223 "scanner-smi.l"
 {
     thisParser.line++;
     BEGIN(INITIAL);
@@ -11934,13 +12174,13 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 227 "scanner-smi.l"
+#line 228 "scanner-smi.l"
 {
 }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 229 "scanner-smi.l"
+#line 230 "scanner-smi.l"
 {
 }
 	YY_BREAK
@@ -11949,21 +12189,21 @@ YY_RULE_SETUP
   */
 case 19:
 YY_RULE_SETUP
-#line 236 "scanner-smi.l"
+#line 237 "scanner-smi.l"
 {
-    return smitext[0];
+    return yytext[0];
 }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 240 "scanner-smi.l"
+#line 241 "scanner-smi.l"
 {
     return DOT_DOT;
 }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 244 "scanner-smi.l"
+#line 245 "scanner-smi.l"
 {
     return COLON_COLON_EQUAL;
 }
@@ -11973,14 +12213,14 @@ YY_RULE_SETUP
   */
 case 22:
 YY_RULE_SETUP
-#line 252 "scanner-smi.l"
+#line 253 "scanner-smi.l"
 {
 }
 	YY_BREAK
 case 23:
 /* rule 23 can match eol */
 YY_RULE_SETUP
-#line 255 "scanner-smi.l"
+#line 256 "scanner-smi.l"
 {
     thisParser.line++;
 }
@@ -11991,983 +12231,1062 @@ YY_RULE_SETUP
 /* SMI(ng) specific */
 case 24:
 /* rule 24 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 6);
 (yy_c_buf_p) = yy_cp = yy_bp + 6;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 264 "scanner-smi.l"
+#line 265 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return ACCESS;
 }
 	YY_BREAK
 /* SMI(ng) specific */
 case 25:
 /* rule 25 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 18);
 (yy_c_buf_p) = yy_cp = yy_bp + 18;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 270 "scanner-smi.l"
+#line 271 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return AGENT_CAPABILITIES;
 }
 	YY_BREAK
 case 26:
 /* rule 26 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 11);
 (yy_c_buf_p) = yy_cp = yy_bp + 11;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 275 "scanner-smi.l"
+#line 276 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return APPLICATION;
 }
 	YY_BREAK
 case 27:
 /* rule 27 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 8);
 (yy_c_buf_p) = yy_cp = yy_bp + 8;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 280 "scanner-smi.l"
+#line 281 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return AUGMENTS;
 }
 	YY_BREAK
 case 28:
 /* rule 28 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 5);
 (yy_c_buf_p) = yy_cp = yy_bp + 5;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 285 "scanner-smi.l"
+#line 286 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return BEGIN_;
 }
 	YY_BREAK
 case 29:
 /* rule 29 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 4);
 (yy_c_buf_p) = yy_cp = yy_bp + 4;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 290 "scanner-smi.l"
+#line 291 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return BITS;
 }
 	YY_BREAK
 case 30:
 /* rule 30 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 12);
 (yy_c_buf_p) = yy_cp = yy_bp + 12;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 295 "scanner-smi.l"
+#line 296 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return CONTACT_INFO;
 }
 	YY_BREAK
 /* SMI(ng) specific */
 case 31:
 /* rule 31 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 17);
 (yy_c_buf_p) = yy_cp = yy_bp + 17;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 301 "scanner-smi.l"
+#line 302 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return CREATION_REQUIRES;
 }
 	YY_BREAK
 /* SMI(ng) specific */
 case 32:
 /* rule 32 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 9);
 (yy_c_buf_p) = yy_cp = yy_bp + 9;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 307 "scanner-smi.l"
+#line 308 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return COUNTER32;
 }
 	YY_BREAK
 /* SMI(ng) specific */
 case 33:
 /* rule 33 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 9);
 (yy_c_buf_p) = yy_cp = yy_bp + 9;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 313 "scanner-smi.l"
+#line 314 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return COUNTER64;
 }
 	YY_BREAK
 /* SMI(ng) specific */
 case 34:
 /* rule 34 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 11);
 (yy_c_buf_p) = yy_cp = yy_bp + 11;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 319 "scanner-smi.l"
+#line 320 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return DEFINITIONS;
 }
 	YY_BREAK
 case 35:
 /* rule 35 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 6);
 (yy_c_buf_p) = yy_cp = yy_bp + 6;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 324 "scanner-smi.l"
+#line 325 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return DEFVAL;
 }
 	YY_BREAK
 case 36:
 /* rule 36 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 11);
 (yy_c_buf_p) = yy_cp = yy_bp + 11;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 329 "scanner-smi.l"
+#line 330 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return DESCRIPTION;
 }
 	YY_BREAK
 case 37:
 /* rule 37 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 12);
 (yy_c_buf_p) = yy_cp = yy_bp + 12;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 334 "scanner-smi.l"
+#line 335 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return DISPLAY_HINT;
 }
 	YY_BREAK
 case 38:
 /* rule 38 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 3);
 (yy_c_buf_p) = yy_cp = yy_bp + 3;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 339 "scanner-smi.l"
+#line 340 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return END;
 }
 	YY_BREAK
 /* SMI(ng) specific */
 case 39:
 /* rule 39 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 10);
 (yy_c_buf_p) = yy_cp = yy_bp + 10;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 345 "scanner-smi.l"
+#line 346 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return ENTERPRISE;
 }
 	YY_BREAK
 /* SPPI specific */
 case 40:
 /* rule 40 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 7);
 (yy_c_buf_p) = yy_cp = yy_bp + 7;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 351 "scanner-smi.l"
+#line 352 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return EXTENDS;
 }
 	YY_BREAK
 case 41:
 /* rule 41 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 4);
 (yy_c_buf_p) = yy_cp = yy_bp + 4;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 356 "scanner-smi.l"
+#line 357 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return FROM;
 }
 	YY_BREAK
 case 42:
 /* rule 42 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 5);
 (yy_c_buf_p) = yy_cp = yy_bp + 5;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 361 "scanner-smi.l"
+#line 362 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return GROUP;
 }
 	YY_BREAK
 /* SMI(ng) specific */
 case 43:
 /* rule 43 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 7);
 (yy_c_buf_p) = yy_cp = yy_bp + 7;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 367 "scanner-smi.l"
+#line 368 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return GAUGE32;
 }
 	YY_BREAK
 case 44:
 /* rule 44 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 10);
 (yy_c_buf_p) = yy_cp = yy_bp + 10;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 372 "scanner-smi.l"
+#line 373 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return IDENTIFIER;
 }
 	YY_BREAK
 case 45:
 /* rule 45 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 8);
 (yy_c_buf_p) = yy_cp = yy_bp + 8;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 377 "scanner-smi.l"
+#line 378 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return IMPLICIT;
 }
 	YY_BREAK
 case 46:
 /* rule 46 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 7);
 (yy_c_buf_p) = yy_cp = yy_bp + 7;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 382 "scanner-smi.l"
+#line 383 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return IMPLIED;
 }
 	YY_BREAK
 case 47:
 /* rule 47 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 7);
 (yy_c_buf_p) = yy_cp = yy_bp + 7;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 387 "scanner-smi.l"
+#line 388 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return IMPORTS;
 }
 	YY_BREAK
 /* SMI(ng) specific */
 case 48:
 /* rule 48 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 8);
 (yy_c_buf_p) = yy_cp = yy_bp + 8;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 393 "scanner-smi.l"
+#line 394 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return INCLUDES;
 }
 	YY_BREAK
 case 49:
 /* rule 49 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 5);
 (yy_c_buf_p) = yy_cp = yy_bp + 5;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 398 "scanner-smi.l"
+#line 399 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return INDEX;
 }
 	YY_BREAK
 /* SPPI specific */
 case 50:
 /* rule 50 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 14);
 (yy_c_buf_p) = yy_cp = yy_bp + 14;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 404 "scanner-smi.l"
+#line 405 "scanner-smi.l"
 {
-  yylval.id = smitext;
+  yylval.id = yytext;
   return INSTALL_ERRORS;
 }
 	YY_BREAK
 case 51:
 /* rule 51 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 7);
 (yy_c_buf_p) = yy_cp = yy_bp + 7;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 409 "scanner-smi.l"
+#line 410 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return INTEGER;
 }
 	YY_BREAK
 case 52:
 /* rule 52 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 9);
 (yy_c_buf_p) = yy_cp = yy_bp + 9;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 414 "scanner-smi.l"
+#line 415 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return INTEGER32;
 }
 	YY_BREAK
 /* SPPI specific */
 case 53:
 /* rule 53 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 9);
 (yy_c_buf_p) = yy_cp = yy_bp + 9;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 420 "scanner-smi.l"
+#line 421 "scanner-smi.l"
 {
-  yylval.id = smitext;
+  yylval.id = yytext;
   return INTEGER64;
 }
 	YY_BREAK
 case 54:
 /* rule 54 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 9);
 (yy_c_buf_p) = yy_cp = yy_bp + 9;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 425 "scanner-smi.l"
+#line 426 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return IPADDRESS;
 }
 	YY_BREAK
 case 55:
 /* rule 55 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 12);
 (yy_c_buf_p) = yy_cp = yy_bp + 12;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 430 "scanner-smi.l"
+#line 431 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return LAST_UPDATED;
 }
 	YY_BREAK
 case 56:
 /* rule 56 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 16);
 (yy_c_buf_p) = yy_cp = yy_bp + 16;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 435 "scanner-smi.l"
+#line 436 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return MANDATORY_GROUPS;
 }
 	YY_BREAK
 /* SMI(ng) specific */
 case 57:
 /* rule 57 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 10);
 (yy_c_buf_p) = yy_cp = yy_bp + 10;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 441 "scanner-smi.l"
+#line 442 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return MAX_ACCESS;
 }
 	YY_BREAK
 /* SMI(ng) specific */
 case 58:
 /* rule 58 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 10);
 (yy_c_buf_p) = yy_cp = yy_bp + 10;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 447 "scanner-smi.l"
+#line 448 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return MIN_ACCESS;
 }
 	YY_BREAK
 case 59:
 /* rule 59 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 6);
 (yy_c_buf_p) = yy_cp = yy_bp + 6;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 452 "scanner-smi.l"
+#line 453 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return MODULE;
 }
 	YY_BREAK
 case 60:
 /* rule 60 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 17);
 (yy_c_buf_p) = yy_cp = yy_bp + 17;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 457 "scanner-smi.l"
+#line 458 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return MODULE_COMPLIANCE;
 }
 	YY_BREAK
 case 61:
 /* rule 61 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 15);
 (yy_c_buf_p) = yy_cp = yy_bp + 15;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 462 "scanner-smi.l"
+#line 463 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return MODULE_IDENTITY;
 }
 	YY_BREAK
 /* SMI(ng) specific */
 case 62:
 /* rule 62 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 18);
 (yy_c_buf_p) = yy_cp = yy_bp + 18;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 468 "scanner-smi.l"
+#line 469 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return NOTIFICATION_GROUP;
 }
 	YY_BREAK
 /* SMI(ng) specific */
 case 63:
 /* rule 63 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 17);
 (yy_c_buf_p) = yy_cp = yy_bp + 17;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 474 "scanner-smi.l"
+#line 475 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return NOTIFICATION_TYPE;
 }
 	YY_BREAK
 /* SMI(ng) specific */
 case 64:
 /* rule 64 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 13);
 (yy_c_buf_p) = yy_cp = yy_bp + 13;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 480 "scanner-smi.l"
+#line 481 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return NOTIFICATIONS;
 }
 	YY_BREAK
 case 65:
 /* rule 65 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 6);
 (yy_c_buf_p) = yy_cp = yy_bp + 6;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 485 "scanner-smi.l"
+#line 486 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return OBJECT;
 }
 	YY_BREAK
 case 66:
 /* rule 66 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 12);
 (yy_c_buf_p) = yy_cp = yy_bp + 12;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 490 "scanner-smi.l"
+#line 491 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return OBJECT_GROUP;
 }
 	YY_BREAK
 case 67:
 /* rule 67 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 15);
 (yy_c_buf_p) = yy_cp = yy_bp + 15;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 495 "scanner-smi.l"
+#line 496 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return OBJECT_IDENTITY;
 }
 	YY_BREAK
 case 68:
 /* rule 68 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 11);
 (yy_c_buf_p) = yy_cp = yy_bp + 11;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 500 "scanner-smi.l"
+#line 501 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return OBJECT_TYPE;
 }
 	YY_BREAK
 case 69:
 /* rule 69 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 7);
 (yy_c_buf_p) = yy_cp = yy_bp + 7;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 505 "scanner-smi.l"
+#line 506 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return OBJECTS;
 }
 	YY_BREAK
 case 70:
 /* rule 70 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 5);
 (yy_c_buf_p) = yy_cp = yy_bp + 5;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 510 "scanner-smi.l"
+#line 511 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return OCTET;
 }
 	YY_BREAK
 case 71:
 /* rule 71 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 2);
 (yy_c_buf_p) = yy_cp = yy_bp + 2;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 515 "scanner-smi.l"
+#line 516 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return OF;
 }
 	YY_BREAK
 case 72:
 /* rule 72 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 12);
 (yy_c_buf_p) = yy_cp = yy_bp + 12;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 520 "scanner-smi.l"
+#line 521 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return ORGANIZATION;
 }
 	YY_BREAK
 case 73:
 /* rule 73 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 6);
 (yy_c_buf_p) = yy_cp = yy_bp + 6;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 525 "scanner-smi.l"
+#line 526 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return OPAQUE;
 }
 	YY_BREAK
 /* SPPI specific */
 case 74:
 /* rule 74 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 10);
 (yy_c_buf_p) = yy_cp = yy_bp + 10;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 531 "scanner-smi.l"
+#line 532 "scanner-smi.l"
 {
-  yylval.id = smitext;
+  yylval.id = yytext;
   return PIB_ACCESS;
 }
 	YY_BREAK
 /* SPPI specific */
 case 75:
 /* rule 75 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 15);
 (yy_c_buf_p) = yy_cp = yy_bp + 15;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 537 "scanner-smi.l"
+#line 538 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return PIB_DEFINITIONS;
 }
 	YY_BREAK
 /* SPPI specific */
 case 76:
 /* rule 76 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 9);
 (yy_c_buf_p) = yy_cp = yy_bp + 9;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 543 "scanner-smi.l"
+#line 544 "scanner-smi.l"
 {
-  yylval.id = smitext;
+  yylval.id = yytext;
   return PIB_INDEX;
 }
 	YY_BREAK
 /* SPPI specific */
 case 77:
 /* rule 77 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 14);
 (yy_c_buf_p) = yy_cp = yy_bp + 14;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 549 "scanner-smi.l"
+#line 550 "scanner-smi.l"
 {
-  yylval.id = smitext;
+  yylval.id = yytext;
   return PIB_MIN_ACCESS;
 }
 	YY_BREAK
 /* SPPI specific */
 case 78:
 /* rule 78 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 14);
 (yy_c_buf_p) = yy_cp = yy_bp + 14;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 555 "scanner-smi.l"
+#line 556 "scanner-smi.l"
 {
-  yylval.id = smitext;
+  yylval.id = yytext;
   return PIB_REFERENCES;
 }
 	YY_BREAK
 /* SPPI specific */
 case 79:
 /* rule 79 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 7);
 (yy_c_buf_p) = yy_cp = yy_bp + 7;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 561 "scanner-smi.l"
+#line 562 "scanner-smi.l"
 {
-  yylval.id = smitext;
+  yylval.id = yytext;
   return PIB_TAG;
 }
 	YY_BREAK
 /* SPPI specific */
 case 80:
 /* rule 80 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 13);
 (yy_c_buf_p) = yy_cp = yy_bp + 13;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 567 "scanner-smi.l"
+#line 568 "scanner-smi.l"
 {
-  yylval.id = smitext;
+  yylval.id = yytext;
   return POLICY_ACCESS;
 }
 	YY_BREAK
 /* SMI(ng) specific */
 case 81:
 /* rule 81 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 15);
 (yy_c_buf_p) = yy_cp = yy_bp + 15;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 573 "scanner-smi.l"
+#line 574 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return PRODUCT_RELEASE;
 }
 	YY_BREAK
 case 82:
 /* rule 82 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 9);
 (yy_c_buf_p) = yy_cp = yy_bp + 9;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 578 "scanner-smi.l"
+#line 579 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return REFERENCE;
 }
 	YY_BREAK
 case 83:
 /* rule 83 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 8);
 (yy_c_buf_p) = yy_cp = yy_bp + 8;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 583 "scanner-smi.l"
+#line 584 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return REVISION;
 }
 	YY_BREAK
 case 84:
 /* rule 84 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 8);
 (yy_c_buf_p) = yy_cp = yy_bp + 8;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 588 "scanner-smi.l"
+#line 589 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return SEQUENCE;
 }
 	YY_BREAK
 case 85:
 /* rule 85 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 4);
 (yy_c_buf_p) = yy_cp = yy_bp + 4;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 593 "scanner-smi.l"
+#line 594 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return SIZE;
 }
 	YY_BREAK
 case 86:
 /* rule 86 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 6);
 (yy_c_buf_p) = yy_cp = yy_bp + 6;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 598 "scanner-smi.l"
+#line 599 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return STATUS;
 }
 	YY_BREAK
 case 87:
 /* rule 87 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 6);
 (yy_c_buf_p) = yy_cp = yy_bp + 6;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 603 "scanner-smi.l"
+#line 604 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return STRING;
 }
 	YY_BREAK
 /* SPPI specific */
 case 88:
 /* rule 88 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 18);
 (yy_c_buf_p) = yy_cp = yy_bp + 18;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 609 "scanner-smi.l"
+#line 610 "scanner-smi.l"
 {
-  yylval.id = smitext;
+  yylval.id = yytext;
   return SUBJECT_CATEGORIES;
 }
 	YY_BREAK
 /* SMI(ng) specific */
 case 89:
 /* rule 89 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 8);
 (yy_c_buf_p) = yy_cp = yy_bp + 8;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 615 "scanner-smi.l"
+#line 616 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return SUPPORTS;
 }
 	YY_BREAK
 case 90:
 /* rule 90 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 6);
 (yy_c_buf_p) = yy_cp = yy_bp + 6;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 620 "scanner-smi.l"
+#line 621 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return SYNTAX;
 }
 	YY_BREAK
 case 91:
 /* rule 91 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 18);
 (yy_c_buf_p) = yy_cp = yy_bp + 18;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 625 "scanner-smi.l"
+#line 626 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return TEXTUAL_CONVENTION;
 }
 	YY_BREAK
 case 92:
 /* rule 92 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 9);
 (yy_c_buf_p) = yy_cp = yy_bp + 9;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 630 "scanner-smi.l"
+#line 631 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return TIMETICKS;
 }
 	YY_BREAK
 /* SMI(ng) specific */
 case 93:
 /* rule 93 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 9);
 (yy_c_buf_p) = yy_cp = yy_bp + 9;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 636 "scanner-smi.l"
+#line 637 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return TRAP_TYPE;
 }
 	YY_BREAK
 /* SPPI specific */
 case 94:
 /* rule 94 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 10);
 (yy_c_buf_p) = yy_cp = yy_bp + 10;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 642 "scanner-smi.l"
+#line 643 "scanner-smi.l"
 {
-  yylval.id = smitext;
+  yylval.id = yytext;
   return UNIQUENESS;
 }
 	YY_BREAK
 case 95:
 /* rule 95 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 5);
 (yy_c_buf_p) = yy_cp = yy_bp + 5;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 647 "scanner-smi.l"
+#line 648 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return UNITS;
 }
 	YY_BREAK
 /* SMI(ng) specific */
 case 96:
 /* rule 96 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 9);
 (yy_c_buf_p) = yy_cp = yy_bp + 9;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 653 "scanner-smi.l"
+#line 654 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return UNIVERSAL;
 }
 	YY_BREAK
 case 97:
 /* rule 97 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 10);
 (yy_c_buf_p) = yy_cp = yy_bp + 10;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 658 "scanner-smi.l"
+#line 659 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return UNSIGNED32;
 }
 	YY_BREAK
 /* SPPI specific */
 case 98:
 /* rule 98 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 10);
 (yy_c_buf_p) = yy_cp = yy_bp + 10;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 664 "scanner-smi.l"
+#line 665 "scanner-smi.l"
 {
-  yylval.id = smitext;
+  yylval.id = yytext;
   return UNSIGNED64;
 }
 	YY_BREAK
 /* SPPI specific */
 case 99:
 /* rule 99 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 5);
 (yy_c_buf_p) = yy_cp = yy_bp + 5;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 670 "scanner-smi.l"
+#line 671 "scanner-smi.l"
 {
-  yylval.id = smitext;
+  yylval.id = yytext;
   return VALUE;
 }
 	YY_BREAK
 /* SMI(ng) specific */
 case 100:
 /* rule 100 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 9);
 (yy_c_buf_p) = yy_cp = yy_bp + 9;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 676 "scanner-smi.l"
+#line 677 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return VARIABLES;
 }
 	YY_BREAK
 /* SMI(ng) specific */
 case 101:
 /* rule 101 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 9);
 (yy_c_buf_p) = yy_cp = yy_bp + 9;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 682 "scanner-smi.l"
+#line 683 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return VARIATION;
 }
 	YY_BREAK
 /* SMI(ng) specific */
 case 102:
 /* rule 102 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 12);
 (yy_c_buf_p) = yy_cp = yy_bp + 12;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 688 "scanner-smi.l"
+#line 689 "scanner-smi.l"
 {
-    yylval.id = smitext;
+    yylval.id = yytext;
     return WRITE_SYNTAX;
 }
 	YY_BREAK
@@ -12978,23 +13297,24 @@ YY_RULE_SETUP
   */
 case 103:
 /* rule 103 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_cp - 1);
 (yy_c_buf_p) = yy_cp -= 1;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 699 "scanner-smi.l"
+#line 700 "scanner-smi.l"
 {
-    smiPrintError(parser, ERR_ILLEGAL_KEYWORD, smitext);
+    smiPrintError(parser, ERR_ILLEGAL_KEYWORD, yytext);
 }
 	YY_BREAK
 case 104:
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
 (yy_c_buf_p) = yy_cp -= 2;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 703 "scanner-smi.l"
+#line 704 "scanner-smi.l"
 {
-    smiPrintError(parser, ERR_ILLEGAL_KEYWORD, smitext);
+    smiPrintError(parser, ERR_ILLEGAL_KEYWORD, yytext);
 }
 	YY_BREAK
 /*
@@ -13003,30 +13323,30 @@ YY_RULE_SETUP
 /* e.g. module names: REF: draft,p.12-13 */
 case 105:
 YY_RULE_SETUP
-#line 712 "scanner-smi.l"
+#line 713 "scanner-smi.l"
 {
-    if (smitext[smileng-1] == '-') {
-	smiPrintError(parser, ERR_ID_ENDS_IN_HYPHEN, smitext);
+    if (yytext[yyleng-1] == '-') {
+	smiPrintError(parser, ERR_ID_ENDS_IN_HYPHEN, yytext);
     }
-    if (strchr(smitext, '_')) {
-        smiPrintError(parser, ERR_UNDERSCORE_IN_IDENTIFIER, smitext);
+    if (strchr(yytext, '_')) {
+        smiPrintError(parser, ERR_UNDERSCORE_IN_IDENTIFIER, yytext);
     }
-    yylval.id = smiStrdup(smitext);
+    yylval.id = smiStrdup(yytext);
     return UPPERCASE_IDENTIFIER;
 }
 	YY_BREAK
 /* same for lowercase names */
 case 106:
 YY_RULE_SETUP
-#line 724 "scanner-smi.l"
+#line 725 "scanner-smi.l"
 {
-    if (smitext[smileng-1] == '-') {
-	smiPrintError(parser, ERR_ID_ENDS_IN_HYPHEN, smitext);
+    if (yytext[yyleng-1] == '-') {
+	smiPrintError(parser, ERR_ID_ENDS_IN_HYPHEN, yytext);
     }
-    if (strchr(smitext, '_')) {
-        smiPrintError(parser, ERR_UNDERSCORE_IN_IDENTIFIER, smitext);
+    if (strchr(yytext, '_')) {
+        smiPrintError(parser, ERR_UNDERSCORE_IN_IDENTIFIER, yytext);
     }
-    yylval.id = smiStrdup(smitext);
+    yylval.id = smiStrdup(yytext);
     return LOWERCASE_IDENTIFIER;
 }
 	YY_BREAK
@@ -13034,30 +13354,31 @@ YY_RULE_SETUP
   * Lex rules for numbers.
   */
 case 107:
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
 (yy_c_buf_p) = yy_cp -= 1;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 739 "scanner-smi.l"
+#line 740 "scanner-smi.l"
 {
     smiPrintError(parser, ERR_LEADING_ZEROS);
 }
 	YY_BREAK
 case 108:
 /* rule 108 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_cp - 1);
 (yy_c_buf_p) = yy_cp -= 1;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 743 "scanner-smi.l"
+#line 744 "scanner-smi.l"
 {
     errno = 0;
-    yylval.unsigned32 = strtoul(smitext, NULL, 10);
+    yylval.unsigned32 = strtoul(yytext, NULL, 10);
     if (errno == ERANGE) {
         /* TODO: proper handling for SPPI vs SMI modules. */
         if ((thisParser.modulePtr->export.language == SMI_LANGUAGE_SPPI) ||
             (thisParser.modulePtr->export.language == SMI_LANGUAGE_SMIV2)) {
-            yylval.unsigned64 = strtoull(smitext, NULL, 10);
+            yylval.unsigned64 = strtoull(yytext, NULL, 10);
             if (errno == ERANGE) {
                 /*
                  * Dirty hack - on my system strtoull returns ERANGE for
@@ -13067,8 +13388,8 @@ YY_RULE_SETUP
                  */
                 char tmpbuf[24];
                 sprintf(tmpbuf, "%llu", yylval.unsigned64);
-                if (strcmp(smitext, tmpbuf))
-                    smiPrintError(parser, ERR_SPPI_UNSIGNED64_NUMBER_RANGE, smitext);
+                if (strcmp(yytext, tmpbuf))
+                    smiPrintError(parser, ERR_SPPI_UNSIGNED64_NUMBER_RANGE, yytext);
             }
             return NUMBER64;
         }
@@ -13077,7 +13398,7 @@ YY_RULE_SETUP
          * neither for COPS-PR-SPPI. */
 	if (strcmp(thisParser.modulePtr->export.name, "SNMPv2-SMI") &&
             strcmp(thisParser.modulePtr->export.name, "COPS-PR-SPPI")) {
-	    smiPrintError(parser, ERR_SMIV2_UNSIGNED_NUMBER_RANGE, smitext);
+	    smiPrintError(parser, ERR_SMIV2_UNSIGNED_NUMBER_RANGE, yytext);
 	}
     }
     return NUMBER;
@@ -13085,18 +13406,19 @@ YY_RULE_SETUP
 	YY_BREAK
 case 109:
 /* rule 109 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up smitext */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_cp - 1);
 (yy_c_buf_p) = yy_cp -= 1;
-YY_DO_BEFORE_ACTION; /* set up smitext again */
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 776 "scanner-smi.l"
+#line 777 "scanner-smi.l"
 {
     errno = 0;
-    yylval.integer32 = strtol(smitext, NULL, 10);
+    yylval.integer32 = strtol(yytext, NULL, 10);
     if (errno == ERANGE) {
         /* TODO: proper handling for SPPI vs SMI modules. */
         if (thisParser.modulePtr->export.language == SMI_LANGUAGE_SPPI) {
-            yylval.integer64 = strtoll(smitext, NULL, 10);
+            yylval.integer64 = strtoll(yytext, NULL, 10);
             if (errno == ERANGE) {
                 /*
                  * Dirty hack - on my system strtoull returns ERANGE for
@@ -13106,14 +13428,14 @@ YY_RULE_SETUP
                  */
                 char tmpbuf[24];
                 sprintf(tmpbuf, "%lld", yylval.integer64);
-                if (strcmp(smitext, tmpbuf))
-                    smiPrintError(parser, ERR_SPPI_SIGNED64_NUMBER_RANGE, smitext);
+                if (strcmp(yytext, tmpbuf))
+                    smiPrintError(parser, ERR_SPPI_SIGNED64_NUMBER_RANGE, yytext);
             }
             return NEGATIVENUMBER64;
         }
 	/* We don't want to see this error for the COPS-PR-SPPI module. */
 	if (strcmp(thisParser.modulePtr->export.name, "COPS-PR-SPPI"))
-	    smiPrintError(parser, ERR_SMIV2_SIGNED_NUMBER_RANGE, smitext);
+	    smiPrintError(parser, ERR_SMIV2_SIGNED_NUMBER_RANGE, yytext);
     }
     return NEGATIVENUMBER;
 }
@@ -13123,11 +13445,11 @@ YY_RULE_SETUP
   */
 case 110:
 YY_RULE_SETUP
-#line 808 "scanner-smi.l"
+#line 809 "scanner-smi.l"
 {
-    yylval.text = smitext + 1;
-    smitext[smileng-2] = '\0';
-    if ((smileng-3) % 8) {
+    yylval.text = yytext + 1;
+    yytext[yyleng-2] = '\0';
+    if ((yyleng-3) % 8) {
 	smiPrintError(parser, ERR_BIN_STRING_MUL8, yylval.text);
     }
     return BIN_STRING;
@@ -13135,11 +13457,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 111:
 YY_RULE_SETUP
-#line 817 "scanner-smi.l"
+#line 818 "scanner-smi.l"
 {
-    yylval.text = smitext + 1;
-    smitext[smileng-2] = '\0';
-    if ((smileng-3) % 2) {
+    yylval.text = yytext + 1;
+    yytext[yyleng-2] = '\0';
+    if ((yyleng-3) % 2) {
 	smiPrintError(parser, ERR_HEX_STRING_MUL2, yylval.text);
     }
     return HEX_STRING;
@@ -13148,7 +13470,7 @@ YY_RULE_SETUP
 case 112:
 /* rule 112 can match eol */
 YY_RULE_SETUP
-#line 826 "scanner-smi.l"
+#line 827 "scanner-smi.l"
 {
     char *s, *d;		/* the source and destination pointer */
     int column = 0;		/* the current column */
@@ -13157,8 +13479,8 @@ YY_RULE_SETUP
 				/* (computed by caculating the indentation */
 				/* of the first column) */
 
-    smitext[smileng-1] = '\0';
-    for (d = smitext, s = smitext+1; s[0]; s++, d++) {
+    yytext[yyleng-1] = '\0';
+    for (d = yytext, s = yytext+1; s[0]; s++, d++) {
 
 	if ((s[0] == '\n' && s[1] == '\r')	/* newline sequence */
 	    || (s[0] == '\r' && s[1] == '\n')) {
@@ -13201,7 +13523,7 @@ YY_RULE_SETUP
     }
     d[0] = '\0';
 
-    yylval.text = smitext;
+    yylval.text = yytext;
     return QUOTED_STRING;
 }
 	YY_BREAK
@@ -13211,7 +13533,7 @@ YY_RULE_SETUP
 case 113:
 /* rule 113 can match eol */
 YY_RULE_SETUP
-#line 885 "scanner-smi.l"
+#line 886 "scanner-smi.l"
 {
     thisParser.line++;
     BEGIN(INITIAL);
@@ -13222,7 +13544,7 @@ YY_RULE_SETUP
   */
 case 114:
 YY_RULE_SETUP
-#line 894 "scanner-smi.l"
+#line 895 "scanner-smi.l"
 {
     smiPrintError(parser, ERR_LEX_UNEXPECTED_CHAR);
     BEGIN(Skipline);
@@ -13230,10 +13552,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 115:
 YY_RULE_SETUP
-#line 899 "scanner-smi.l"
+#line 900 "scanner-smi.l"
 ECHO;
 	YY_BREAK
-#line 13237 "scanner-smi.c"
+#line 13559 "scanner-smi.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(Macro):
 case YY_STATE_EOF(Choice):
@@ -13255,15 +13577,15 @@ case YY_STATE_EOF(Skipline):
 			{
 			/* We're scanning a new file or input source.  It's
 			 * possible that this happened because the user
-			 * just pointed smiin at a new source and called
-			 * smilex().  If so, then we have to assure
+			 * just pointed yyin at a new source and called
+			 * yylex().  If so, then we have to assure
 			 * consistency between YY_CURRENT_BUFFER and our
 			 * globals.  Here is the right place to do so, because
 			 * this is the first action (other than possibly a
 			 * back-up) that will match for the new input source.
 			 */
 			(yy_n_chars) = YY_CURRENT_BUFFER_LVALUE->yy_n_chars;
-			YY_CURRENT_BUFFER_LVALUE->yy_input_file = smiin;
+			YY_CURRENT_BUFFER_LVALUE->yy_input_file = yyin;
 			YY_CURRENT_BUFFER_LVALUE->yy_buffer_status = YY_BUFFER_NORMAL;
 			}
 
@@ -13316,11 +13638,11 @@ case YY_STATE_EOF(Skipline):
 				{
 				(yy_did_buffer_switch_on_eof) = 0;
 
-				if ( smiwrap( ) )
+				if ( yywrap(  ) )
 					{
 					/* Note: because we've taken care in
 					 * yy_get_next_buffer() to have set up
-					 * smitext, we can now set up
+					 * yytext, we can now set up
 					 * yy_c_buf_p so that if some total
 					 * hoser (like flex itself) wants to
 					 * call the scanner after we return the
@@ -13369,7 +13691,8 @@ case YY_STATE_EOF(Skipline):
 			"fatal flex scanner internal error--no action found" );
 	} /* end of action switch */
 		} /* end of scanning one token */
-} /* end of smilex */
+	} /* end of user's declarations */
+} /* end of yylex */
 
 /* yy_get_next_buffer - try to read in a new buffer
  *
@@ -13380,9 +13703,9 @@ case YY_STATE_EOF(Skipline):
  */
 static int yy_get_next_buffer (void)
 {
-    	register char *dest = YY_CURRENT_BUFFER_LVALUE->yy_ch_buf;
-	register char *source = (yytext_ptr);
-	register int number_to_move, i;
+    	char *dest = YY_CURRENT_BUFFER_LVALUE->yy_ch_buf;
+	char *source = (yytext_ptr);
+	int number_to_move, i;
 	int ret_val;
 
 	if ( (yy_c_buf_p) > &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars) + 1] )
@@ -13411,7 +13734,7 @@ static int yy_get_next_buffer (void)
 	/* Try to read more data. */
 
 	/* First move last chars to start of buffer. */
-	number_to_move = (int) ((yy_c_buf_p) - (yytext_ptr)) - 1;
+	number_to_move = (int) ((yy_c_buf_p) - (yytext_ptr) - 1);
 
 	for ( i = 0; i < number_to_move; ++i )
 		*(dest++) = *(source++);
@@ -13424,7 +13747,7 @@ static int yy_get_next_buffer (void)
 
 	else
 		{
-			yy_size_t num_to_read =
+			int num_to_read =
 			YY_CURRENT_BUFFER_LVALUE->yy_buf_size - number_to_move - 1;
 
 		while ( num_to_read <= 0 )
@@ -13438,7 +13761,7 @@ static int yy_get_next_buffer (void)
 
 			if ( b->yy_is_our_buffer )
 				{
-				yy_size_t new_size = b->yy_buf_size * 2;
+				int new_size = b->yy_buf_size * 2;
 
 				if ( new_size <= 0 )
 					b->yy_buf_size += b->yy_buf_size / 8;
@@ -13447,11 +13770,12 @@ static int yy_get_next_buffer (void)
 
 				b->yy_ch_buf = (char *)
 					/* Include room in for 2 EOB chars. */
-					smirealloc((void *) b->yy_ch_buf,b->yy_buf_size + 2  );
+					yyrealloc( (void *) b->yy_ch_buf,
+							 (yy_size_t) (b->yy_buf_size + 2)  );
 				}
 			else
 				/* Can't grow it, we don't own it. */
-				b->yy_ch_buf = 0;
+				b->yy_ch_buf = NULL;
 
 			if ( ! b->yy_ch_buf )
 				YY_FATAL_ERROR(
@@ -13479,7 +13803,7 @@ static int yy_get_next_buffer (void)
 		if ( number_to_move == YY_MORE_ADJ )
 			{
 			ret_val = EOB_ACT_END_OF_FILE;
-			smirestart(smiin  );
+			yyrestart( yyin  );
 			}
 
 		else
@@ -13493,12 +13817,15 @@ static int yy_get_next_buffer (void)
 	else
 		ret_val = EOB_ACT_CONTINUE_SCAN;
 
-	if ((yy_size_t) ((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
+	if (((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
 		/* Extend the array by 50%, plus the number we really need. */
-		yy_size_t new_size = (yy_n_chars) + number_to_move + ((yy_n_chars) >> 1);
-		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) smirealloc((void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf,new_size  );
+		int new_size = (yy_n_chars) + number_to_move + ((yy_n_chars) >> 1);
+		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) yyrealloc(
+			(void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf, (yy_size_t) new_size  );
 		if ( ! YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
 			YY_FATAL_ERROR( "out of dynamic memory in yy_get_next_buffer()" );
+		/* "- 2" to take care of EOB's */
+		YY_CURRENT_BUFFER_LVALUE->yy_buf_size = (int) (new_size - 2);
 	}
 
 	(yy_n_chars) += number_to_move;
@@ -13514,8 +13841,8 @@ static int yy_get_next_buffer (void)
 
     static yy_state_type yy_get_previous_state (void)
 {
-	register yy_state_type yy_current_state;
-	register char *yy_cp;
+	yy_state_type yy_current_state;
+	char *yy_cp;
     
 	yy_current_state = (yy_start);
 
@@ -13539,8 +13866,8 @@ static int yy_get_next_buffer (void)
  */
     static yy_state_type yy_try_NUL_trans  (yy_state_type yy_current_state )
 {
-	register int yy_is_jam;
-    	register char *yy_cp = (yy_c_buf_p);
+	int yy_is_jam;
+    	char *yy_cp = (yy_c_buf_p);
 
 	yy_current_state = yy_nxt[yy_current_state][1];
 	yy_is_jam = (yy_current_state <= 0);
@@ -13557,22 +13884,24 @@ static int yy_get_next_buffer (void)
 		return yy_is_jam ? 0 : yy_current_state;
 }
 
-    static void yyunput (int c, register char * yy_bp )
+#ifndef YY_NO_UNPUT
+
+    static void yyunput (int c, char * yy_bp )
 {
-	register char *yy_cp;
+	char *yy_cp;
     
     yy_cp = (yy_c_buf_p);
 
-	/* undo effects of setting up smitext */
+	/* undo effects of setting up yytext */
 	*yy_cp = (yy_hold_char);
 
 	if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
 		{ /* need to shift things up to make room */
 		/* +2 for EOB chars. */
-		register yy_size_t number_to_move = (yy_n_chars) + 2;
-		register char *dest = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[
+		int number_to_move = (yy_n_chars) + 2;
+		char *dest = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[
 					YY_CURRENT_BUFFER_LVALUE->yy_buf_size + 2];
-		register char *source =
+		char *source =
 				&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move];
 
 		while ( source > YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
@@ -13581,7 +13910,7 @@ static int yy_get_next_buffer (void)
 		yy_cp += (int) (dest - source);
 		yy_bp += (int) (dest - source);
 		YY_CURRENT_BUFFER_LVALUE->yy_n_chars =
-			(yy_n_chars) = YY_CURRENT_BUFFER_LVALUE->yy_buf_size;
+			(yy_n_chars) = (int) YY_CURRENT_BUFFER_LVALUE->yy_buf_size;
 
 		if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
 			YY_FATAL_ERROR( "flex scanner push-back overflow" );
@@ -13593,6 +13922,8 @@ static int yy_get_next_buffer (void)
 	(yy_hold_char) = *yy_cp;
 	(yy_c_buf_p) = yy_cp;
 }
+
+#endif
 
 #ifndef YY_NO_INPUT
 #ifdef __cplusplus
@@ -13618,7 +13949,7 @@ static int yy_get_next_buffer (void)
 
 		else
 			{ /* need more input */
-			yy_size_t offset = (yy_c_buf_p) - (yytext_ptr);
+			int offset = (int) ((yy_c_buf_p) - (yytext_ptr));
 			++(yy_c_buf_p);
 
 			switch ( yy_get_next_buffer(  ) )
@@ -13635,14 +13966,14 @@ static int yy_get_next_buffer (void)
 					 */
 
 					/* Reset buffer status. */
-					smirestart(smiin );
+					yyrestart( yyin );
 
 					/*FALLTHROUGH*/
 
 				case EOB_ACT_END_OF_FILE:
 					{
-					if ( smiwrap( ) )
-						return EOF;
+					if ( yywrap(  ) )
+						return 0;
 
 					if ( ! (yy_did_buffer_switch_on_eof) )
 						YY_NEW_FILE;
@@ -13661,7 +13992,7 @@ static int yy_get_next_buffer (void)
 		}
 
 	c = *(unsigned char *) (yy_c_buf_p);	/* cast for 8-bit char's */
-	*(yy_c_buf_p) = '\0';	/* preserve smitext */
+	*(yy_c_buf_p) = '\0';	/* preserve yytext */
 	(yy_hold_char) = *++(yy_c_buf_p);
 
 	return c;
@@ -13673,32 +14004,32 @@ static int yy_get_next_buffer (void)
  * 
  * @note This function does not reset the start condition to @c INITIAL .
  */
-    void smirestart  (FILE * input_file )
+    void yyrestart  (FILE * input_file )
 {
     
 	if ( ! YY_CURRENT_BUFFER ){
-        smiensure_buffer_stack ();
+        yyensure_buffer_stack ();
 		YY_CURRENT_BUFFER_LVALUE =
-            smi_create_buffer(smiin,YY_BUF_SIZE );
+            yy_create_buffer( yyin, YY_BUF_SIZE );
 	}
 
-	smi_init_buffer(YY_CURRENT_BUFFER,input_file );
-	smi_load_buffer_state( );
+	yy_init_buffer( YY_CURRENT_BUFFER, input_file );
+	yy_load_buffer_state(  );
 }
 
 /** Switch to a different input buffer.
  * @param new_buffer The new input buffer.
  * 
  */
-    void smi_switch_to_buffer  (YY_BUFFER_STATE  new_buffer )
+    void yy_switch_to_buffer  (YY_BUFFER_STATE  new_buffer )
 {
     
 	/* TODO. We should be able to replace this entire function body
 	 * with
-	 *		smipop_buffer_state();
-	 *		smipush_buffer_state(new_buffer);
+	 *		yypop_buffer_state();
+	 *		yypush_buffer_state(new_buffer);
      */
-	smiensure_buffer_stack ();
+	yyensure_buffer_stack ();
 	if ( YY_CURRENT_BUFFER == new_buffer )
 		return;
 
@@ -13711,21 +14042,21 @@ static int yy_get_next_buffer (void)
 		}
 
 	YY_CURRENT_BUFFER_LVALUE = new_buffer;
-	smi_load_buffer_state( );
+	yy_load_buffer_state(  );
 
 	/* We don't actually know whether we did this switch during
-	 * EOF (smiwrap()) processing, but the only time this flag
-	 * is looked at is after smiwrap() is called, so it's safe
+	 * EOF (yywrap()) processing, but the only time this flag
+	 * is looked at is after yywrap() is called, so it's safe
 	 * to go ahead and always set it.
 	 */
 	(yy_did_buffer_switch_on_eof) = 1;
 }
 
-static void smi_load_buffer_state  (void)
+static void yy_load_buffer_state  (void)
 {
     	(yy_n_chars) = YY_CURRENT_BUFFER_LVALUE->yy_n_chars;
 	(yytext_ptr) = (yy_c_buf_p) = YY_CURRENT_BUFFER_LVALUE->yy_buf_pos;
-	smiin = YY_CURRENT_BUFFER_LVALUE->yy_input_file;
+	yyin = YY_CURRENT_BUFFER_LVALUE->yy_input_file;
 	(yy_hold_char) = *(yy_c_buf_p);
 }
 
@@ -13735,35 +14066,35 @@ static void smi_load_buffer_state  (void)
  * 
  * @return the allocated buffer state.
  */
-    YY_BUFFER_STATE smi_create_buffer  (FILE * file, int  size )
+    YY_BUFFER_STATE yy_create_buffer  (FILE * file, int  size )
 {
 	YY_BUFFER_STATE b;
     
-	b = (YY_BUFFER_STATE) smialloc(sizeof( struct yy_buffer_state )  );
+	b = (YY_BUFFER_STATE) yyalloc( sizeof( struct yy_buffer_state )  );
 	if ( ! b )
-		YY_FATAL_ERROR( "out of dynamic memory in smi_create_buffer()" );
+		YY_FATAL_ERROR( "out of dynamic memory in yy_create_buffer()" );
 
 	b->yy_buf_size = size;
 
 	/* yy_ch_buf has to be 2 characters longer than the size given because
 	 * we need to put in 2 end-of-buffer characters.
 	 */
-	b->yy_ch_buf = (char *) smialloc(b->yy_buf_size + 2  );
+	b->yy_ch_buf = (char *) yyalloc( (yy_size_t) (b->yy_buf_size + 2)  );
 	if ( ! b->yy_ch_buf )
-		YY_FATAL_ERROR( "out of dynamic memory in smi_create_buffer()" );
+		YY_FATAL_ERROR( "out of dynamic memory in yy_create_buffer()" );
 
 	b->yy_is_our_buffer = 1;
 
-	smi_init_buffer(b,file );
+	yy_init_buffer( b, file );
 
 	return b;
 }
 
 /** Destroy the buffer.
- * @param b a buffer created with smi_create_buffer()
+ * @param b a buffer created with yy_create_buffer()
  * 
  */
-    void smi_delete_buffer (YY_BUFFER_STATE  b )
+    void yy_delete_buffer (YY_BUFFER_STATE  b )
 {
     
 	if ( ! b )
@@ -13773,27 +14104,27 @@ static void smi_load_buffer_state  (void)
 		YY_CURRENT_BUFFER_LVALUE = (YY_BUFFER_STATE) 0;
 
 	if ( b->yy_is_our_buffer )
-		smifree((void *) b->yy_ch_buf  );
+		yyfree( (void *) b->yy_ch_buf  );
 
-	smifree((void *) b  );
+	yyfree( (void *) b  );
 }
 
 /* Initializes or reinitializes a buffer.
  * This function is sometimes called more than once on the same buffer,
- * such as during a smirestart() or at EOF.
+ * such as during a yyrestart() or at EOF.
  */
-    static void smi_init_buffer  (YY_BUFFER_STATE  b, FILE * file )
+    static void yy_init_buffer  (YY_BUFFER_STATE  b, FILE * file )
 
 {
 	int oerrno = errno;
     
-	smi_flush_buffer(b );
+	yy_flush_buffer( b );
 
 	b->yy_input_file = file;
 	b->yy_fill_buffer = 1;
 
-    /* If b is the current buffer, then smi_init_buffer was _probably_
-     * called from smirestart() or through yy_get_next_buffer.
+    /* If b is the current buffer, then yy_init_buffer was _probably_
+     * called from yyrestart() or through yy_get_next_buffer.
      * In that case, we don't want to reset the lineno or column.
      */
     if (b != YY_CURRENT_BUFFER){
@@ -13810,7 +14141,7 @@ static void smi_load_buffer_state  (void)
  * @param b the buffer state to be flushed, usually @c YY_CURRENT_BUFFER.
  * 
  */
-    void smi_flush_buffer (YY_BUFFER_STATE  b )
+    void yy_flush_buffer (YY_BUFFER_STATE  b )
 {
     	if ( ! b )
 		return;
@@ -13830,7 +14161,7 @@ static void smi_load_buffer_state  (void)
 	b->yy_buffer_status = YY_BUFFER_NEW;
 
 	if ( b == YY_CURRENT_BUFFER )
-		smi_load_buffer_state( );
+		yy_load_buffer_state(  );
 }
 
 /** Pushes the new state onto the stack. The new state becomes
@@ -13839,14 +14170,14 @@ static void smi_load_buffer_state  (void)
  *  @param new_buffer The new state.
  *  
  */
-void smipush_buffer_state (YY_BUFFER_STATE new_buffer )
+void yypush_buffer_state (YY_BUFFER_STATE new_buffer )
 {
     	if (new_buffer == NULL)
 		return;
 
-	smiensure_buffer_stack();
+	yyensure_buffer_stack();
 
-	/* This block is copied from smi_switch_to_buffer. */
+	/* This block is copied from yy_switch_to_buffer. */
 	if ( YY_CURRENT_BUFFER )
 		{
 		/* Flush out information for old buffer. */
@@ -13860,8 +14191,8 @@ void smipush_buffer_state (YY_BUFFER_STATE new_buffer )
 		(yy_buffer_stack_top)++;
 	YY_CURRENT_BUFFER_LVALUE = new_buffer;
 
-	/* copied from smi_switch_to_buffer. */
-	smi_load_buffer_state( );
+	/* copied from yy_switch_to_buffer. */
+	yy_load_buffer_state(  );
 	(yy_did_buffer_switch_on_eof) = 1;
 }
 
@@ -13869,18 +14200,18 @@ void smipush_buffer_state (YY_BUFFER_STATE new_buffer )
  *  The next element becomes the new top.
  *  
  */
-void smipop_buffer_state (void)
+void yypop_buffer_state (void)
 {
     	if (!YY_CURRENT_BUFFER)
 		return;
 
-	smi_delete_buffer(YY_CURRENT_BUFFER );
+	yy_delete_buffer(YY_CURRENT_BUFFER );
 	YY_CURRENT_BUFFER_LVALUE = NULL;
 	if ((yy_buffer_stack_top) > 0)
 		--(yy_buffer_stack_top);
 
 	if (YY_CURRENT_BUFFER) {
-		smi_load_buffer_state( );
+		yy_load_buffer_state(  );
 		(yy_did_buffer_switch_on_eof) = 1;
 	}
 }
@@ -13888,7 +14219,7 @@ void smipop_buffer_state (void)
 /* Allocates the stack if it does not exist.
  *  Guarantees space for at least one push.
  */
-static void smiensure_buffer_stack (void)
+static void yyensure_buffer_stack (void)
 {
 	yy_size_t num_to_alloc;
     
@@ -13898,15 +14229,15 @@ static void smiensure_buffer_stack (void)
 		 * scanner will even need a stack. We use 2 instead of 1 to avoid an
 		 * immediate realloc on the next call.
          */
-		num_to_alloc = 1;
-		(yy_buffer_stack) = (struct yy_buffer_state**)smialloc
+      num_to_alloc = 1; /* After all that talk, this was set to 1 anyways... */
+		(yy_buffer_stack) = (struct yy_buffer_state**)yyalloc
 								(num_to_alloc * sizeof(struct yy_buffer_state*)
 								);
 		if ( ! (yy_buffer_stack) )
-			YY_FATAL_ERROR( "out of dynamic memory in smiensure_buffer_stack()" );
-								  
+			YY_FATAL_ERROR( "out of dynamic memory in yyensure_buffer_stack()" );
+
 		memset((yy_buffer_stack), 0, num_to_alloc * sizeof(struct yy_buffer_state*));
-				
+
 		(yy_buffer_stack_max) = num_to_alloc;
 		(yy_buffer_stack_top) = 0;
 		return;
@@ -13915,15 +14246,15 @@ static void smiensure_buffer_stack (void)
 	if ((yy_buffer_stack_top) >= ((yy_buffer_stack_max)) - 1){
 
 		/* Increase the buffer to prepare for a possible push. */
-		int grow_size = 8 /* arbitrary grow size */;
+		yy_size_t grow_size = 8 /* arbitrary grow size */;
 
 		num_to_alloc = (yy_buffer_stack_max) + grow_size;
-		(yy_buffer_stack) = (struct yy_buffer_state**)smirealloc
+		(yy_buffer_stack) = (struct yy_buffer_state**)yyrealloc
 								((yy_buffer_stack),
 								num_to_alloc * sizeof(struct yy_buffer_state*)
 								);
 		if ( ! (yy_buffer_stack) )
-			YY_FATAL_ERROR( "out of dynamic memory in smiensure_buffer_stack()" );
+			YY_FATAL_ERROR( "out of dynamic memory in yyensure_buffer_stack()" );
 
 		/* zero only the new slots.*/
 		memset((yy_buffer_stack) + (yy_buffer_stack_max), 0, grow_size * sizeof(struct yy_buffer_state*));
@@ -13935,9 +14266,9 @@ static void smiensure_buffer_stack (void)
  * @param base the character buffer
  * @param size the size in bytes of the character buffer
  * 
- * @return the newly allocated buffer state object. 
+ * @return the newly allocated buffer state object.
  */
-YY_BUFFER_STATE smi_scan_buffer  (char * base, yy_size_t  size )
+YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size )
 {
 	YY_BUFFER_STATE b;
     
@@ -13945,49 +14276,49 @@ YY_BUFFER_STATE smi_scan_buffer  (char * base, yy_size_t  size )
 	     base[size-2] != YY_END_OF_BUFFER_CHAR ||
 	     base[size-1] != YY_END_OF_BUFFER_CHAR )
 		/* They forgot to leave room for the EOB's. */
-		return 0;
+		return NULL;
 
-	b = (YY_BUFFER_STATE) smialloc(sizeof( struct yy_buffer_state )  );
+	b = (YY_BUFFER_STATE) yyalloc( sizeof( struct yy_buffer_state )  );
 	if ( ! b )
-		YY_FATAL_ERROR( "out of dynamic memory in smi_scan_buffer()" );
+		YY_FATAL_ERROR( "out of dynamic memory in yy_scan_buffer()" );
 
-	b->yy_buf_size = size - 2;	/* "- 2" to take care of EOB's */
+	b->yy_buf_size = (int) (size - 2);	/* "- 2" to take care of EOB's */
 	b->yy_buf_pos = b->yy_ch_buf = base;
 	b->yy_is_our_buffer = 0;
-	b->yy_input_file = 0;
+	b->yy_input_file = NULL;
 	b->yy_n_chars = b->yy_buf_size;
 	b->yy_is_interactive = 0;
 	b->yy_at_bol = 1;
 	b->yy_fill_buffer = 0;
 	b->yy_buffer_status = YY_BUFFER_NEW;
 
-	smi_switch_to_buffer(b  );
+	yy_switch_to_buffer( b  );
 
 	return b;
 }
 
-/** Setup the input buffer state to scan a string. The next call to smilex() will
+/** Setup the input buffer state to scan a string. The next call to yylex() will
  * scan from a @e copy of @a str.
  * @param yystr a NUL-terminated string to scan
  * 
  * @return the newly allocated buffer state object.
  * @note If you want to scan bytes that may contain NUL values, then use
- *       smi_scan_bytes() instead.
+ *       yy_scan_bytes() instead.
  */
-YY_BUFFER_STATE smi_scan_string (yyconst char * yystr )
+YY_BUFFER_STATE yy_scan_string (const char * yystr )
 {
     
-	return smi_scan_bytes(yystr,strlen(yystr) );
+	return yy_scan_bytes( yystr, (int) strlen(yystr) );
 }
 
-/** Setup the input buffer state to scan the given bytes. The next call to smilex() will
+/** Setup the input buffer state to scan the given bytes. The next call to yylex() will
  * scan from a @e copy of @a bytes.
  * @param yybytes the byte buffer to scan
  * @param _yybytes_len the number of bytes in the buffer pointed to by @a bytes.
  * 
  * @return the newly allocated buffer state object.
  */
-YY_BUFFER_STATE smi_scan_bytes  (yyconst char * yybytes, yy_size_t  _yybytes_len )
+YY_BUFFER_STATE yy_scan_bytes  (const char * yybytes, int  _yybytes_len )
 {
 	YY_BUFFER_STATE b;
 	char *buf;
@@ -13995,19 +14326,19 @@ YY_BUFFER_STATE smi_scan_bytes  (yyconst char * yybytes, yy_size_t  _yybytes_len
 	int i;
     
 	/* Get memory for full buffer, including space for trailing EOB's. */
-	n = _yybytes_len + 2;
-	buf = (char *) smialloc(n  );
+	n = (yy_size_t) (_yybytes_len + 2);
+	buf = (char *) yyalloc( n  );
 	if ( ! buf )
-		YY_FATAL_ERROR( "out of dynamic memory in smi_scan_bytes()" );
+		YY_FATAL_ERROR( "out of dynamic memory in yy_scan_bytes()" );
 
 	for ( i = 0; i < _yybytes_len; ++i )
 		buf[i] = yybytes[i];
 
 	buf[_yybytes_len] = buf[_yybytes_len+1] = YY_END_OF_BUFFER_CHAR;
 
-	b = smi_scan_buffer(buf,n );
+	b = yy_scan_buffer( buf, n );
 	if ( ! b )
-		YY_FATAL_ERROR( "bad buffer in smi_scan_bytes()" );
+		YY_FATAL_ERROR( "bad buffer in yy_scan_bytes()" );
 
 	/* It's okay to grow etc. this buffer, and we should throw it
 	 * away when we're done.
@@ -14021,9 +14352,9 @@ YY_BUFFER_STATE smi_scan_bytes  (yyconst char * yybytes, yy_size_t  _yybytes_len
 #define YY_EXIT_FAILURE 2
 #endif
 
-static void yy_fatal_error (yyconst char* msg )
+static void yynoreturn yy_fatal_error (const char* msg )
 {
-    	(void) fprintf( stderr, "%s\n", msg );
+			fprintf( stderr, "%s\n", msg );
 	exit( YY_EXIT_FAILURE );
 }
 
@@ -14033,14 +14364,14 @@ static void yy_fatal_error (yyconst char* msg )
 #define yyless(n) \
 	do \
 		{ \
-		/* Undo effects of setting up smitext. */ \
+		/* Undo effects of setting up yytext. */ \
         int yyless_macro_arg = (n); \
         YY_LESS_LINENO(yyless_macro_arg);\
-		smitext[smileng] = (yy_hold_char); \
-		(yy_c_buf_p) = smitext + yyless_macro_arg; \
+		yytext[yyleng] = (yy_hold_char); \
+		(yy_c_buf_p) = yytext + yyless_macro_arg; \
 		(yy_hold_char) = *(yy_c_buf_p); \
 		*(yy_c_buf_p) = '\0'; \
-		smileng = yyless_macro_arg; \
+		yyleng = yyless_macro_arg; \
 		} \
 	while ( 0 )
 
@@ -14049,126 +14380,126 @@ static void yy_fatal_error (yyconst char* msg )
 /** Get the current line number.
  * 
  */
-int smiget_lineno  (void)
+int yyget_lineno  (void)
 {
-        
-    return smilineno;
+    
+    return yylineno;
 }
 
 /** Get the input stream.
  * 
  */
-FILE *smiget_in  (void)
+FILE *yyget_in  (void)
 {
-        return smiin;
+        return yyin;
 }
 
 /** Get the output stream.
  * 
  */
-FILE *smiget_out  (void)
+FILE *yyget_out  (void)
 {
-        return smiout;
+        return yyout;
 }
 
 /** Get the length of the current token.
  * 
  */
-yy_size_t smiget_leng  (void)
+int yyget_leng  (void)
 {
-        return smileng;
+        return yyleng;
 }
 
 /** Get the current token.
  * 
  */
 
-char *smiget_text  (void)
+char *yyget_text  (void)
 {
-        return smitext;
+        return yytext;
 }
 
 /** Set the current line number.
- * @param line_number
+ * @param _line_number line number
  * 
  */
-void smiset_lineno (int  line_number )
+void yyset_lineno (int  _line_number )
 {
     
-    smilineno = line_number;
+    yylineno = _line_number;
 }
 
 /** Set the input stream. This does not discard the current
  * input buffer.
- * @param in_str A readable stream.
+ * @param _in_str A readable stream.
  * 
- * @see smi_switch_to_buffer
+ * @see yy_switch_to_buffer
  */
-void smiset_in (FILE *  in_str )
+void yyset_in (FILE *  _in_str )
 {
-        smiin = in_str ;
+        yyin = _in_str ;
 }
 
-void smiset_out (FILE *  out_str )
+void yyset_out (FILE *  _out_str )
 {
-        smiout = out_str ;
+        yyout = _out_str ;
 }
 
-int smiget_debug  (void)
+int yyget_debug  (void)
 {
-        return smi_flex_debug;
+        return yy_flex_debug;
 }
 
-void smiset_debug (int  bdebug )
+void yyset_debug (int  _bdebug )
 {
-        smi_flex_debug = bdebug ;
+        yy_flex_debug = _bdebug ;
 }
 
 static int yy_init_globals (void)
 {
         /* Initialization is the same as for the non-reentrant scanner.
-     * This function is called from smilex_destroy(), so don't allocate here.
+     * This function is called from yylex_destroy(), so don't allocate here.
      */
 
-    (yy_buffer_stack) = 0;
+    (yy_buffer_stack) = NULL;
     (yy_buffer_stack_top) = 0;
     (yy_buffer_stack_max) = 0;
-    (yy_c_buf_p) = (char *) 0;
+    (yy_c_buf_p) = NULL;
     (yy_init) = 0;
     (yy_start) = 0;
 
 /* Defined in main.c */
 #ifdef YY_STDINIT
-    smiin = stdin;
-    smiout = stdout;
+    yyin = stdin;
+    yyout = stdout;
 #else
-    smiin = (FILE *) 0;
-    smiout = (FILE *) 0;
+    yyin = NULL;
+    yyout = NULL;
 #endif
 
     /* For future reference: Set errno on error, since we are called by
-     * smilex_init()
+     * yylex_init()
      */
     return 0;
 }
 
-/* smilex_destroy is for both reentrant and non-reentrant scanners. */
-int smilex_destroy  (void)
+/* yylex_destroy is for both reentrant and non-reentrant scanners. */
+int yylex_destroy  (void)
 {
     
     /* Pop the buffer stack, destroying each element. */
 	while(YY_CURRENT_BUFFER){
-		smi_delete_buffer(YY_CURRENT_BUFFER  );
+		yy_delete_buffer( YY_CURRENT_BUFFER  );
 		YY_CURRENT_BUFFER_LVALUE = NULL;
-		smipop_buffer_state();
+		yypop_buffer_state();
 	}
 
 	/* Destroy the stack itself. */
-	smifree((yy_buffer_stack) );
+	yyfree((yy_buffer_stack) );
 	(yy_buffer_stack) = NULL;
 
     /* Reset the globals. This is important in a non-reentrant scanner so the next time
-     * smilex() is called, initialization will occur. */
+     * yylex() is called, initialization will occur. */
     yy_init_globals( );
 
     return 0;
@@ -14179,18 +14510,19 @@ int smilex_destroy  (void)
  */
 
 #ifndef yytext_ptr
-static void yy_flex_strncpy (char* s1, yyconst char * s2, int n )
+static void yy_flex_strncpy (char* s1, const char * s2, int n )
 {
-	register int i;
+		
+	int i;
 	for ( i = 0; i < n; ++i )
 		s1[i] = s2[i];
 }
 #endif
 
 #ifdef YY_NEED_STRLEN
-static int yy_flex_strlen (yyconst char * s )
+static int yy_flex_strlen (const char * s )
 {
-	register int n;
+	int n;
 	for ( n = 0; s[n]; ++n )
 		;
 
@@ -14198,13 +14530,14 @@ static int yy_flex_strlen (yyconst char * s )
 }
 #endif
 
-void *smialloc (yy_size_t  size )
+void *yyalloc (yy_size_t  size )
 {
-	return (void *) malloc( size );
+			return malloc(size);
 }
 
-void *smirealloc  (void * ptr, yy_size_t  size )
+void *yyrealloc  (void * ptr, yy_size_t  size )
 {
+		
 	/* The cast to (char *) in the following accommodates both
 	 * implementations that use char* generic pointers, and those
 	 * that use void* generic pointers.  It works with the latter
@@ -14212,17 +14545,16 @@ void *smirealloc  (void * ptr, yy_size_t  size )
 	 * any pointer type to void*, and deal with argument conversions
 	 * as though doing an assignment.
 	 */
-	return (void *) realloc( (char *) ptr, size );
+	return realloc(ptr, size);
 }
 
-void smifree (void * ptr )
+void yyfree (void * ptr )
 {
-	free( (char *) ptr );	/* see smirealloc() for (char *) cast */
+			free( (char *) ptr );	/* see yyrealloc() for (char *) cast */
 }
 
 #define YYTABLES_NAME "yytables"
 
-#line 899 "scanner-smi.l"
-
+#line 900 "scanner-smi.l"
 
 
