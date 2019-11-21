@@ -30,9 +30,9 @@ externalproject_add(libsmi
     COMMAND       ${PATCH} -p1 < "${PATCH_DIR}/libsmi/0003-automake-1.15.1-regen.patch"
 
     #-- NOTE: use `autoreconf` to regenerate the configure script and Makefile.in's
-    CONFIGURE_COMMAND ${SnmpB_SOURCE_DIR}/libsmi/configure --prefix=/
+    CONFIGURE_COMMAND ${SnmpB_SOURCE_DIR}/libsmi/configure --prefix=/libsmi-prefix
 
-    INSTALL_COMMAND make DESTDIR=${SnmpB_BINARY_DIR}/libsmi-prefix install
+    INSTALL_COMMAND make DESTDIR=${SnmpB_BINARY_DIR} install
 
     #-- FIXME proper out-of-source build doesn't work here;
     #-- the FLEX/BISON calls in libsmi/lib/Makefile.am need some tweaking

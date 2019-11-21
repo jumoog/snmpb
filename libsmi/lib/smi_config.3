@@ -152,7 +152,7 @@ a path name (identified by containing at least one dot or slash character),
 this
 is assumed to be the exact file to read. Otherwise, if a module is identified
 by its plain module name, the correspondant file (either SMIv1/2 or
-SMIng) is searched along a path. This path is initialized with /Users/schoenw/share/mibs/ietf:/Users/schoenw/share/mibs/iana:/Users/schoenw/share/mibs/irtf:/Users/schoenw/share/mibs/site:/Users/schoenw/share/mibs/jacobs:/Users/schoenw/share/mibs/tubs:/Users/schoenw/share/pibs/ietf:/Users/schoenw/share/pibs/site:/Users/schoenw/share/pibs/tubs:/Users/schoenw/share/yang/ietf:/Users/schoenw/share/yang/iana:/Users/schoenw/share/yang/site.
+SMIng) is searched along a path. This path is initialized with /libsmi-prefix/share/mibs/ietf:/libsmi-prefix/share/mibs/iana:/libsmi-prefix/share/mibs/irtf:/libsmi-prefix/share/mibs/site:/libsmi-prefix/share/mibs/jacobs:/libsmi-prefix/share/mibs/tubs:/libsmi-prefix/share/pibs/ietf:/libsmi-prefix/share/pibs/site:/libsmi-prefix/share/pibs/tubs:/libsmi-prefix/share/yang/ietf:/libsmi-prefix/share/yang/iana:/libsmi-prefix/share/yang/site.
 Afterwards the optional global and user configuration files are parsed for
 `path' commands, and finally the optional \fBSMIPATH\fP environment variable
 is evaluated. The `path' command argument and the environment variable
@@ -232,7 +232,7 @@ Example configuration:
 ${prefix}/etc/smi.conf    global configuration file
 $HOME/.smirc               user configuration file
 ${prefix}/include/smi.h   SMI library header file
-/Users/schoenw/share/mibs/     SMI module repository directory
+/libsmi-prefix/share/mibs/     SMI module repository directory
 .fi
 .SH "SEE ALSO"
 .BR libsmi "(3), "

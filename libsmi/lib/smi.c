@@ -2646,15 +2646,15 @@ char *smiRenderValue(SmiValue *smiValuePtr, SmiType *smiTypePtr, int flags)
 	    (!smiTypePtr->format &&
 	     (smiTypePtr->name && strcmp( smiTypePtr->name, "IpAddress")) ) ) {
 	    for (i = 0; i < smiValuePtr->len; i++) {
-        int val = smiValuePtr->value.ptr[i];
-        if (!(isprint(val) || ((val >= 0x9) && (val <= 0xd)))) break; /* HTAB,VTAB,LF,FF,CR */
+	        int val = smiValuePtr->value.ptr[i];
+	        if (!(isprint(val) || ((val >= 0x9) && (val <= 0xd)))) break; /* HTAB,VTAB,LF,FF,CR */
 	    }
 	    if ((i < smiValuePtr->len) ||
 		!(flags & SMI_RENDER_PRINTABLE)) {
 		smiAsprintf(&s, "");
 		for (i=0; i < smiValuePtr->len; i++) {
 		    ss = s;
-            smiAsprintf(&s, "%s%02X ", ss, (smiValuePtr->value.ptr[i]&0xFF));
+		    smiAsprintf(&s, "%s%02X ", ss, (smiValuePtr->value.ptr[i]&0xFF));
 		    smiFree(ss);
 		}
 	    } else {
