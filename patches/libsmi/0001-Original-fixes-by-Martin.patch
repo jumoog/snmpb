@@ -1,8 +1,14 @@
+From 36014633607e57e8436dc2ca3a255fb66d126bed Mon Sep 17 00:00:00 2001
 From: Martin Jolicoeur <martsjoli@gmail.com>
 Date: Mon, 18 Nov 2019 21:41:25 +0200
-Subject: [PATCH 1/2] Original libsmi-0.5.0 patch by Martin Jolicoeur
+Subject: [PATCH 1/3] Original fixes by Martin
 
-Modified file(s):
+This patch documents the changes to libsmi made by Martin Jolicoeur,
+relative from the official 0.5.0 tarball.
+Below is the original description.
+
+-----------------------------------------------------------------------
+
 win/Makefile.mingw
 win/config.h
 lib/Makefile.am
@@ -21,6 +27,12 @@ lib/parser-smi.y "Fixed crash on compliance statement group"
 Deleted mibs/ietf/IANA-ITU-ALARM-TC-MIB: redundant with one in iana folder
 (prevented proper copy in win32 installer)
 
+-----------------------------------------------------------------------
+
+Additionally, I'm moving the changes to win/config.h from the
+autoconf-output (i.e. generated) file to win/config.h.in where they
+should've always been.
+
 Signed-Off-By: Max <ulidtko@gmail.com>
 ---
  Makefile.am        |   2 +-
@@ -32,8 +44,8 @@ Signed-Off-By: Max <ulidtko@gmail.com>
  lib/snprintf.c     | 986 ++++++++++++++++++++++++---------------------
  lib/util.c         |   2 +-
  win/Makefile.mingw |  28 +-
- win/config.h       |   9 +-
- 10 files changed, 588 insertions(+), 487 deletions(-)
+ win/config.h.in    |   8 +-
+ 10 files changed, 587 insertions(+), 487 deletions(-)
 
 diff --git a/Makefile.am b/Makefile.am
 index 914963a..d7fce16 100644
@@ -1413,16 +1425,16 @@ index 74c0085..1b15da1 100644
  
  TOOLSOBJS = \
  	smiquery.o \
-diff --git a/win/config.h b/win/config.h
-index 005ec86..3e39290 100644
---- a/win/config.h
-+++ b/win/config.h
+diff --git a/win/config.h.in b/win/config.h.in
+index 08c8d63..4045d39 100644
+--- a/win/config.h.in
++++ b/win/config.h.in
 @@ -11,7 +11,7 @@
  /* #define BACKEND_SMING */
  
  /* Define if the SMIng parser shall be active. */
 -#define BACKEND_YANG
-+/* #define BACKEND_YANG */
++#undef BACKEND_YANG
  
  /* The default error level at libsmi initialization. */
  #define DEFAULT_ERRORLEVEL 3

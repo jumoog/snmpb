@@ -26,10 +26,11 @@ externalproject_add(libsmi
     URL_HASH SHA224=5448d442c761e776905fb60f064a2ec3b1e26c0df145ee76cfed0e00
 
     PATCH_COMMAND ${PATCH} -p1 < "${PATCH_DIR}/libsmi/0001-Original-fixes-by-Martin.patch"
-    COMMAND       ${PATCH} -p1 < "${PATCH_DIR}/libsmi/0002-GNU-Autotools-junk.patch"
+    COMMAND       ${PATCH} -p1 < "${PATCH_DIR}/libsmi/0002-automake-1.15-regen.patch"
+    COMMAND       ${PATCH} -p1 < "${PATCH_DIR}/libsmi/0003-automake-1.15.1-regen.patch"
 
-    CONFIGURE_COMMAND autoreconf -iv #${SnmpB_SOURCE_DIR}/libsmi
-    COMMAND           ${SnmpB_SOURCE_DIR}/libsmi/configure --prefix=/
+    #-- NOTE: use `autoreconf` to regenerate the configure script and Makefile.in's
+    CONFIGURE_COMMAND ${SnmpB_SOURCE_DIR}/libsmi/configure --prefix=/
 
     INSTALL_COMMAND make DESTDIR=${SnmpB_BINARY_DIR}/libsmi-prefix install
 

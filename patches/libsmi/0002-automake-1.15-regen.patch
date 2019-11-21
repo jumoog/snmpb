@@ -1,6 +1,7 @@
+From ba6030ca0aa2ec4e1182ef55247d247a84de1061 Mon Sep 17 00:00:00 2001
 From: max ulidtko <ulidtko@gmail.com>
 Date: Mon, 18 Nov 2019 21:41:35 +0200
-Subject: [PATCH 2/2] GNU Autotools junk
+Subject: [PATCH 2/3] automake-1.15 regen
 
 These are the results of 'autoreconf -i' with automake-1.15 done by Martin.
 

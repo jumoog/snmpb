@@ -7,12 +7,45 @@
 *.exe
 *.Debug
 *.Release
-libsmi/config.h
 .cproject
 .project
 .settings/
 
+# GNU/autotools exhaust
+*/autom4te.cache
+*/config.log
+*/config.status
+*/libtool
+*/stamp-h1
+libsmi/config.h
+libsmi/config.h.in~
+libsmi/**/Makefile
 **/Makefile.in
+
+# Lex/Bison generated
+libsmi/lib/parser-smi.c
+libsmi/lib/parser-smi.tab.h
+libsmi/lib/scanner-smi.c
+libsmi/win/parser-smi.c
+libsmi/win/parser-smi.tab.h
+libsmi/win/scanner-smi.c
+
+# More ignored parts of libsmi
+libsmi/tools/mib2svg.cgi
+libsmi/tools/smicache
+libsmi/tools/smistrip
+#libsmi/tools/smidiff
+#libsmi/tools/smidump
+#libsmi/tools/smilint
+#libsmi/tools/smiquery
+#libsmi/tools/smixlate
+#libsmi/test/parser.test
+#libsmi/lib/smi_config.3
+
+# NOTE: we can't have libsmi/.gitignore; CMake will wipe the whole subdir.
+
+
+# Qt Creator byproducts
 **/.qmake.stash
 **/*.pro.user
 build-*
