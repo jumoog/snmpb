@@ -575,7 +575,7 @@ public:
 
   int get_id() const { return SNMP_AUTHPROTOCOL_HMACMD5; };
 
-  const char *get_id_string() const { return "HMAC-MD5"; };
+  const char *get_id_string() const { return "HMAC-MD5-96"; };
 
   int get_auth_params_len() const { return 12; };
 
@@ -925,7 +925,7 @@ private:
 public:
   int get_id() const { return SNMP_AUTHPROTOCOL_HMACSHA; };
 
-  const char *get_id_string() const { return "HMAC-SHA"; };
+  const char *get_id_string() const { return "HMAC-SHA-96"; };
 
   int get_auth_params_len() const { return 12; };
 
