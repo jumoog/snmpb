@@ -4,10 +4,11 @@
 <context>
     <name>Agent</name>
     <message>
-        <location filename="app/agent.cpp" line="+107"/>
+        <location filename="../agent.cpp" line="+107"/>
         <source>Could not create IPv4 session.
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сесію IPv4 не створено.
+%1</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -20,7 +21,8 @@ Aborting.</source>
         <location line="+8"/>
         <source>Could not create IPv6 session.
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сесію IPv6 не створено.
+%1</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -54,13 +56,15 @@ Trap reception disabled.</source>
         <location line="+106"/>
         <source>Error loading snmpEngineBoots counter: %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося зчитати лічильник snmpEngineBoots: %1
+</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Error saving snmpEngineBoots counter: %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося зберегти лічильник snmpEngineBoots: %1
+</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -72,34 +76,35 @@ Trap reception disabled.</source>
         <location line="+146"/>
         <source>Invalid Address or DNS Name: %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Некоректна адреса або ім&apos;я DNS: %1
+</translation>
     </message>
     <message>
         <location line="+392"/>
-        <location line="+238"/>
+        <location line="+239"/>
         <source>&lt;font color=red&gt;Timeout&lt;/font&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-235"/>
-        <location line="+238"/>
+        <location line="-236"/>
+        <location line="+239"/>
         <source>&lt;font color=red&gt;No response received: (%1) %2&lt;/font&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-220"/>
-        <location line="+235"/>
+        <location line="-221"/>
+        <location line="+236"/>
         <source>&lt;font color=red&gt;%1&lt;/font&gt;&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-226"/>
-        <location line="+235"/>
+        <location line="-227"/>
+        <location line="+236"/>
         <source>&lt;font color=red&gt;Pdu is empty&lt;/font&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-196"/>
+        <location line="-197"/>
         <location line="+20"/>
         <location line="+16"/>
         <source>[&lt;font color=red&gt;Loading %1&lt;/font&gt;]&lt;br&gt;</source>
@@ -107,14 +112,14 @@ Trap reception disabled.</source>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+184"/>
+        <location line="+185"/>
         <source>&lt;font color=red&gt;ERROR on varbind #&lt;/font&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-175"/>
+        <location line="-176"/>
         <location line="+3"/>
-        <location line="+181"/>
+        <location line="+182"/>
         <location line="+3"/>
         <source>&lt;font color=red&gt;&lt;br&gt;%1&lt;/font&gt;&lt;br&gt;</source>
         <translation type="unfinished"></translation>
@@ -124,6 +129,7 @@ Trap reception disabled.</source>
         <location line="+184"/>
         <location line="+25"/>
         <source>No Such Object</source>
+        <extracomment>These two strings might best be left untranslated. It&apos;s like &quot;not found&quot; in a &quot;404 Not Found&quot;.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -288,49 +294,44 @@ Trap reception disabled.</source>
 <context>
     <name>AgentProfile</name>
     <message>
-        <location filename="app/agentprofile.ui" line="+39"/>
+        <location filename="../agentprofile.ui" line="+39"/>
         <source>Agent Profiles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+72"/>
         <source>Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Профіль</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Назва</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Target SNMP Agent</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Цільовий агент SNMP</translation>
     </message>
     <message>
-        <location line="+21"/>
-        <source>Agent Address/Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+21"/>
+        <location line="+42"/>
         <source>Agent Port</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Порт агента</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Timeout and Retries</source>
-        <translation type="unfinished"></translation>
+        <translation>Таймаут і повторні спроби</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Timeout (sec)</source>
-        <translation type="unfinished"></translation>
+        <translation>Таймаут (сек)</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Retries</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Повторних спроб</translation>
     </message>
     <message>
         <location line="+33"/>
@@ -340,7 +341,7 @@ Trap reception disabled.</source>
     <message>
         <location line="+3"/>
         <source>Supported SNMP Version</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Підтримувані версії протоколу SNMP</translation>
     </message>
     <message>
         <location line="+30"/>
@@ -358,21 +359,9 @@ Trap reception disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;General Properties&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+58"/>
-        <source>Here options specific to SNMPv1/v2c can be entered</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="+68"/>
         <source>Communities</source>
+        <extracomment>This has nothing to do with online/offline groups of people; rather, this is SNMP specific term, designating a piece of text used roughly as a password (or more like, a hidden directory name).</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -386,40 +375,51 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;SNMPv1 / v2c Properties&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <location line="-258"/>
+        <source>Address/hostname</source>
+        <translation type="unfinished">Хост-адреса</translation>
+    </message>
+    <message>
+        <location line="+158"/>
+        <source>&lt;span style=&quot;font-family:&apos;Sans Serif&apos;; font-size:18pt; font-weight:600;&quot;&gt;General Properties&lt;/span&gt;</source>
+        <translation>&lt;span style=&quot;font-family:&apos;Sans Serif&apos;; font-size:18pt; font-weight:600;&quot;&gt;Загальні параметри&lt;/span&gt;</translation>
+    </message>
+    <message>
+        <location line="+55"/>
+        <source>Community strings specific to SNMPv1/v2c can be entered here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+58"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Get-Bulk Properties&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <location line="+55"/>
+        <source>&lt;span style=&quot;font-family:&apos;Sans Serif&apos;; font-size:18pt; font-weight:600;&quot;&gt;SNMPv1 / v2c Properties&lt;/span&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+55"/>
+        <source>&lt;span style=&quot;font-family:&apos;Sans Serif&apos;; font-size:18pt; font-weight:600;&quot;&gt;Get-Bulk Properties&lt;/span&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Get-Bulk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+35"/>
         <source>Non repeaters</source>
+        <extracomment>this parameter is currently unused</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Max repetitions</source>
+        <extracomment>this parameter is currently unused</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+42"/>
         <source>SNMPv3 context</source>
-        <translation type="unfinished"></translation>
+        <translation>Контекст SNMPv3</translation>
     </message>
     <message>
         <location line="+27"/>
@@ -434,7 +434,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location line="+13"/>
         <source>SNMPv3 user (USM)</source>
-        <translation type="unfinished"></translation>
+        <translation>Обліковий запис SNMPv3 (USM)</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -449,76 +449,77 @@ p, li { white-space: pre-wrap; }
     <message>
         <location line="+8"/>
         <source>noAuthNoPriv</source>
+        <extracomment>no authentication, no privacy</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
         <source>authNoPriv</source>
+        <extracomment>authenticated plaintext (no privacy)</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
         <source>authPriv</source>
+        <extracomment>both authentication and privacy protection (traffic encryption)</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+14"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;SNMPv3 Properties&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <source>&lt;span style=&quot;font-family:&apos;Sans Serif&apos;; font-size:18pt; font-weight:600;&quot;&gt;SNMPv3 Properties&lt;/span&gt;</source>
+        <translation>&lt;span style=&quot;font-family:&apos;Sans Serif&apos;; font-size:18pt; font-weight:600;&quot;&gt;Параметри SNMPv3&lt;/span&gt;</translation>
     </message>
     <message>
-        <location filename="app/agentprofile.cpp" line="+476"/>
-        <location line="+24"/>
-        <location line="+32"/>
+        <location filename="../agentprofile.cpp" line="+478"/>
+        <location line="+25"/>
+        <location line="+33"/>
         <source>At least one protocol must be selected
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть принаймні один протокол
+</translation>
     </message>
     <message>
-        <location line="-55"/>
-        <location line="+24"/>
-        <location line="+32"/>
+        <location line="-59"/>
+        <location line="+25"/>
+        <location line="+33"/>
         <source>SnmpB error</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка SnmpB</translation>
     </message>
 </context>
 <context>
     <name>AgentProfileManager</name>
     <message>
-        <location line="-486"/>
+        <location line="-488"/>
         <source>&amp;New agent profile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Додали профіль агента</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&amp;Delete agent profile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Вилучити профіль агента</translation>
     </message>
     <message>
         <location line="+267"/>
         <source>Actions</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Дії</translation>
     </message>
 </context>
 <context>
     <name>BasicMibView</name>
     <message>
-        <location filename="app/mibview.cpp" line="+53"/>
+        <location filename="../mibview.cpp" line="+53"/>
         <source>Expand</source>
-        <translation type="unfinished"></translation>
+        <translation>Розгорнути</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Collapse</source>
-        <translation type="unfinished"></translation>
+        <translation>Згорнути</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук</translation>
     </message>
     <message>
         <location line="+253"/>
@@ -529,49 +530,14 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Discovery</name>
     <message>
-        <location filename="app/discovery.cpp" line="+110"/>
-        <source>Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>Address/Port</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>Protocol</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>Up Time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Contact Person</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>System Location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>System Description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+30"/>
+        <location filename="../discovery.cpp" line="+136"/>
         <source>&amp;Add agent(s) to profile list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+449"/>
         <source>Actions</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Дії</translation>
     </message>
     <message>
         <location line="+66"/>
@@ -607,11 +573,16 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location line="-28"/>
-        <source>IPv4 address specified but transport is unavailable (see Options menu-&gt;preferences-&gt;transport)</source>
+        <source>IPv4 address specified but transport is unavailable (see Options menu-&gt;Preferences-&gt;Transport)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+29"/>
+        <source>IPv6 address specified but transport is unavailable (see Options menu-&gt;Preferences-&gt;Transport)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-15"/>
         <location line="+31"/>
         <source>Invalid address range</source>
         <translation type="unfinished"></translation>
@@ -622,19 +593,14 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>IPv6 address specified but transport is unavailable (see Options menu-&gt;preferences-&gt;transport)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+17"/>
+        <location line="+31"/>
         <source>&apos;To address&apos; must be greater than &apos;From address&apos; with a range no larger than 2^64 addresses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Transport</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Транспорт</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -645,93 +611,93 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>FindDialog</name>
     <message>
-        <location filename="app/find.ui" line="+33"/>
+        <location filename="../find.ui" line="+33"/>
         <source>Find Text</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Пошук тексту</translation>
     </message>
     <message>
         <location line="+38"/>
         <source>F&amp;ind:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Шукати:</translation>
     </message>
     <message>
         <location line="+31"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Опції</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>&amp;Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>Тільки цілі слова</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Case &amp;sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Чутливо до регістру</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Search &amp;backward</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Зворотній напрямок</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>&amp;Find Next</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Далі</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрити</translation>
     </message>
 </context>
 <context>
     <name>GotoLineDialog</name>
     <message>
-        <location filename="app/gotoline.ui" line="+33"/>
+        <location filename="../gotoline.ui" line="+33"/>
         <source>Goto Line</source>
-        <translation type="unfinished"></translation>
+        <translation>До рядку</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>&amp;Line:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Рядок:</translation>
     </message>
     <message>
         <location line="+65"/>
         <source>&amp;Goto</source>
-        <translation type="unfinished"></translation>
+        <translation>Перей&amp;ти</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Скасувати</translation>
     </message>
 </context>
 <context>
     <name>GraphManager</name>
     <message>
-        <location filename="app/graph.cpp" line="+354"/>
+        <location filename="../graph.cpp" line="+354"/>
         <source>Browse OID</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати OID</translation>
     </message>
 </context>
 <context>
     <name>MainW</name>
     <message>
-        <location filename="app/mainw.ui" line="+39"/>
+        <location filename="../mainw.ui" line="+39"/>
         <source>SnmpB</source>
-        <translation type="unfinished">SnmpB</translation>
+        <translation>SnmpB</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>SnmpB - SNMP MIB Browser</source>
-        <translation type="unfinished">SnmpB - проглядач SNMP MIB</translation>
+        <translation>SnmpB - проглядач SNMP MIB</translation>
     </message>
     <message>
         <location line="+32"/>
         <source>Tree</source>
-        <translation type="unfinished">Дерево</translation>
+        <translation>Дерево</translation>
     </message>
     <message>
         <location line="+47"/>
@@ -739,55 +705,68 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+27"/>
-        <location line="+803"/>
-        <source>SNMPv3</source>
-        <translation type="unfinished">SNMPv3</translation>
-    </message>
-    <message>
-        <location line="-790"/>
-        <location line="+780"/>
-        <source>SNMPv2c</source>
-        <translation type="unfinished">SNMPv2c</translation>
-    </message>
-    <message>
-        <location line="-740"/>
-        <location line="+730"/>
-        <source>SNMPv1</source>
-        <translation type="unfinished">SNMPv1</translation>
-    </message>
-    <message>
-        <location line="-717"/>
-        <source>MIB Tree</source>
-        <translation type="unfinished"></translation>
+        <location line="+93"/>
+        <source>OID tree</source>
+        <translation>OID-дерево</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>Node Info</source>
+        <source>OID info</source>
+        <translation>Про OID</translation>
+    </message>
+    <message>
+        <location line="+355"/>
+        <source>Required</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+43"/>
-        <source>Query Results</source>
+        <location line="+5"/>
+        <source>Language</source>
+        <translation type="unfinished">Діалект</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Path</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+351"/>
+        <source>SNMPv3</source>
+        <translation>SNMPv3</translation>
+    </message>
+    <message>
+        <location line="-10"/>
+        <source>SNMPv2c</source>
+        <translation>SNMPv2c</translation>
+    </message>
+    <message>
+        <location line="-10"/>
+        <source>SNMPv1</source>
+        <translation>SNMPv1</translation>
+    </message>
+    <message>
+        <location line="-653"/>
+        <source>Query Results</source>
+        <translation>Результати запиту</translation>
     </message>
     <message>
         <location line="+52"/>
         <source>Modules</source>
-        <translation type="unfinished">Модулі</translation>
+        <translation>Модулі</translation>
     </message>
     <message>
         <location line="+76"/>
         <source>Available MIB modules</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Доступні MIB-модулі</translation>
     </message>
     <message>
         <location line="+32"/>
+        <location line="+147"/>
         <source>Module</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="-86"/>
         <source>-&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -799,37 +778,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location line="+44"/>
         <source>Loaded MIB modules</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Активні MIB-модулі</translation>
     </message>
     <message>
-        <location line="+20"/>
-        <location line="+545"/>
-        <source>1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-517"/>
+        <location line="+66"/>
         <source>Module info</source>
-        <translation type="unfinished"></translation>
+        <translation>Про модуль</translation>
     </message>
     <message>
         <location line="+40"/>
         <source>Editor</source>
-        <translation type="unfinished">Редактор</translation>
+        <translation>Редактор</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>Loaded MIB file</source>
-        <translation type="unfinished">Завантажений файл MIB</translation>
+        <translation>Активний файл MIB</translation>
     </message>
     <message>
         <location line="+83"/>
         <source>Verification log</source>
-        <translation type="unfinished">Висновки верифікації</translation>
+        <translation>Висновки верифікації</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>Discovery</source>
+        <extracomment>Scan, probing, IP range search</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -839,19 +813,20 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location line="+21"/>
-        <location line="+655"/>
+        <location line="+686"/>
         <source>secs.</source>
+        <extracomment>abbreviated &quot;seconds&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-635"/>
+        <location line="-666"/>
         <source>Wait time per protocol version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Use probe packet for SNMPv3</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Слати SNMPv3 пінг</translation>
     </message>
     <message>
         <location line="+19"/>
@@ -859,47 +834,32 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+81"/>
-        <source>Discovery range</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+75"/>
+        <location line="+156"/>
         <source>To address</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Адреси по</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>From address</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Адреси з</translation>
     </message>
     <message>
         <location line="+32"/>
         <source>Local subnet(s)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Локальні підмережі</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>-&gt; 255.255.255.255/FF02::1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
+        <location line="+17"/>
         <source>IP networks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="+73"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Стоп</translation>
     </message>
     <message>
-        <location line="+13"/>
-        <source>Discover</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+21"/>
+        <location line="+34"/>
         <source>Traps</source>
         <translation type="unfinished"></translation>
     </message>
@@ -909,12 +869,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+20"/>
-        <source>No</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location line="+25"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
@@ -959,12 +914,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+20"/>
-        <source>Column 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+27"/>
+        <location line="+45"/>
         <source>Trap info</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1000,12 +950,58 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-360"/>
+        <location line="+368"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="-525"/>
+        <source>Scan range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+162"/>
+        <source>Address/Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Protocol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Up Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Contact Person</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>System Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>System Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>Scan</source>
+        <translation type="unfinished">Пуск</translation>
+    </message>
+    <message>
+        <location line="+84"/>
+        <source>#</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+238"/>
         <source>Poll interval</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1015,24 +1011,19 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Add  Plot ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+40"/>
+        <location line="+50"/>
         <source>Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Лог</translation>
     </message>
     <message>
         <location line="+38"/>
         <source>Enable SNMP stack logging</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Показувати логи SNMP-стеку</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Logging levels</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Рівні логування</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -1070,12 +1061,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Tools</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
+        <location line="+25"/>
         <source>&amp;File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1142,11 +1128,21 @@ p, li { white-space: pre-wrap; }
     <message>
         <location line="+3"/>
         <source>Exit</source>
+        <translation type="unfinished">Вихід</translation>
+    </message>
+    <message>
+        <location line="-322"/>
+        <source>Add  Plot...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
-        <source>&amp;About SnmpB</source>
+        <location line="+222"/>
+        <source>&amp;Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+112"/>
+        <source>&amp;About SnmpB...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1178,6 +1174,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location line="+5"/>
         <source>Manage SNMPv3 USM Profiles...</source>
+        <extracomment>&quot;USM Profiles&quot; are just accounts, username-password pairs</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1250,7 +1247,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MibEditor</name>
     <message>
-        <location filename="app/mibeditor.cpp" line="+106"/>
+        <location filename="../mibeditor.cpp" line="+106"/>
         <source>%1 *</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1319,18 +1316,63 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location line="+31"/>
-        <source>Starting MIB verification ...</source>
-        <translation type="unfinished"></translation>
+        <source>Starting MIB verification...</source>
+        <translation>Початок верифікації MIB...</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Verification completed. %1 errors, %2 warnings, %3 infos</source>
-        <translation type="unfinished"></translation>
+        <location line="+7"/>
+        <source>Verification complete. %1, %2, %3</source>
+        <extracomment>%1, %2, %3 are placeholders for pluralized num. of errors, warnings, infos</extracomment>
+        <translation>Верифікацію завершено. %1, %2, %3</translation>
+    </message>
+    <message numerus="yes">
+        <location line="+1"/>
+        <source>%n errors</source>
+        <translation>
+            <numerusform>%n помилка</numerusform>
+            <numerusform>%n помилки</numerusform>
+            <numerusform>%n помилок</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location line="+1"/>
+        <source>%n warnings</source>
+        <translation>
+            <numerusform>%n попередження</numerusform>
+            <numerusform>%n попередження</numerusform>
+            <numerusform>%n попереджень</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location line="+1"/>
+        <source>%n infos</source>
+        <translation>
+            <numerusform>%n підказка</numerusform>
+            <numerusform>%n підказки</numerusform>
+            <numerusform>%n підказок</numerusform>
+        </translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+116"/>
+        <source>The file %1 already exists.
+</source>
+        <translation>Файл %1 вже існує.
+</translation>
+    </message>
+    <message numerus="yes">
+        <location line="+157"/>
+        <source>%n MIB module(s) have been extracted. The following MIB file(s) were created: %1</source>
+        <extracomment>%n is the number of MIBs for pluralization; %1 is multiline list of that many filenames.</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location line="-235"/>
         <source>Open RFC file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Відкрити файл RFC</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1344,12 +1386,12 @@ p, li { white-space: pre-wrap; }
         <location line="+30"/>
         <location line="+15"/>
         <location line="+28"/>
-        <location line="+135"/>
+        <location line="+128"/>
         <source>SnmpB: Extract MIB from RFC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-231"/>
+        <location line="-224"/>
         <source>Cannot read file %1: %2
 </source>
         <translation type="unfinished"></translation>
@@ -1363,7 +1405,7 @@ p, li { white-space: pre-wrap; }
         <location line="+5"/>
         <source>No directory selected. Aborting.
 </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Директорію не вибрано. Скасовано.</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -1378,63 +1420,89 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
-        <source>The file %1 already exist.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+17"/>
         <source>Overwrite</source>
-        <translation type="unfinished">Перезаписати</translation>
+        <translation>Перезаписати</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Skip</source>
-        <translation type="unfinished">Пропустити</translation>
+        <translation>Пропустити</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Cannot create file %1: %2. Skipping.
 </source>
-        <translation type="unfinished">Не вдалося створити файл %1: %2. Пропущений.
+        <translation>Не вдалося створити файл %1: %2. Пропущений.
 </translation>
     </message>
     <message>
-        <location line="+135"/>
-        <source>%1 MIB module(s) have been extracted. The following MIB file(s) were created: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
+        <location line="+147"/>
         <source>Line: %1, Col: %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Рядок %1, стовпчик %2</translation>
     </message>
 </context>
 <context>
     <name>MibModule</name>
     <message>
-        <location filename="app/mibmodule.cpp" line="+120"/>
-        <source>Module</source>
+        <location filename="../mibmodule.cpp" line="+42"/>
+        <source>&lt;table border=&quot;1&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; align=&quot;left&quot;&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>Required</source>
+        <location line="+3"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Name:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;font color=#009000&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/font&gt;&lt;/td&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>Language</source>
+        <location line="+6"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Last revision:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>Path</source>
+        <location line="+4"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Description:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;font face=fixed color=blue&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+169"/>
+        <location line="+2"/>
+        <location line="+24"/>
+        <location line="+10"/>
+        <source>&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-29"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Root node:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Requires:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;font color=red&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Organization:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Contact Info:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;font face=fixed&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+93"/>
+        <source>ERROR(%1) loading %2: %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+103"/>
         <source>MIB loading errors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1444,18 +1512,18 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+56"/>
         <source>SnmpB automatic MIB loading</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Unknown OID %1
-Attempting to load resolving MIB module ?</source>
+Attempt to load MIB module where this OID is defined?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+204"/>
+        <location line="+205"/>
         <source>Unable to regenerate smi.conf!
 Error opening file %1</source>
         <translation type="unfinished"></translation>
@@ -1467,9 +1535,129 @@ Error opening file %1</source>
     </message>
 </context>
 <context>
+    <name>MibNode</name>
+    <message>
+        <location filename="../mibnode.cpp" line="+297"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Index(es):&lt;/b&gt;&lt;/td&gt;&lt;td&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Augments:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Sparse:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Expands:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Size&lt;/b&gt;&lt;/td&gt;&lt;td&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>%1 .. %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Value List&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;font color=green&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+49"/>
+        <location line="+6"/>
+        <source>&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-44"/>
+        <source>&lt;table border=&quot;1&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; align=&quot;left&quot;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Name:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;font color=#009000&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/font&gt;&lt;/td&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Oid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Composed Type:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Base Type:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Status:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Access:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Kind:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;SMI Type:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Units:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Module:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Reference:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;font face=fixed color=blue&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Description:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;font face=fixed color=blue&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>&lt;/table&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MibSelection</name>
     <message>
-        <location filename="app/mibselection.cpp" line="+45"/>
+        <location filename="../mibselection.cpp" line="+45"/>
         <source>&lt;b&gt;OID:&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1542,7 +1730,7 @@ Error opening file %1</source>
 <context>
     <name>MibTextEdit</name>
     <message>
-        <location filename="app/mibtextedit.cpp" line="+72"/>
+        <location filename="../mibtextedit.cpp" line="+72"/>
         <source>SnmpB: Open MIB File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1556,15 +1744,15 @@ Error opening file %1</source>
 <context>
     <name>MibView</name>
     <message>
-        <location filename="app/mibview.cpp" line="+18"/>
+        <location filename="../mibview.cpp" line="+18"/>
         <source>Walk</source>
-        <translation type="unfinished"></translation>
+        <translation>Обхід</translation>
     </message>
     <message>
         <location line="+3"/>
         <location line="+244"/>
         <source>Get</source>
-        <translation type="unfinished"></translation>
+        <translation>Читати</translation>
     </message>
     <message>
         <location line="-242"/>
@@ -1585,34 +1773,34 @@ Error opening file %1</source>
         <location line="+241"/>
         <location line="+24"/>
         <source>Get Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Читати наступний</translation>
     </message>
     <message>
         <location line="-258"/>
         <location line="+240"/>
         <location line="+21"/>
         <source>Get Bulk</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Читати пачкою</translation>
     </message>
     <message>
         <location line="-254"/>
         <source>Set...</source>
-        <translation type="unfinished"></translation>
+        <translation>Писати...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Стоп</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Table View</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Як таблицю</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Multiple Varbinds...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Кілька змінних...</translation>
     </message>
     <message>
         <location line="+201"/>
@@ -1631,13 +1819,13 @@ Error opening file %1</source>
     <message>
         <location line="+94"/>
         <source>Error: `%1` module cannot be loaded (not in MIB paths)</source>
-        <translation type="unfinished"></translation>
+        <translation>Хибно: модуль `%1` не активований (відсутній в шляхах пошуку MIB)</translation>
     </message>
 </context>
 <context>
     <name>Plot</name>
     <message>
-        <location filename="app/plot.ui" line="+14"/>
+        <location filename="../plot.ui" line="+14"/>
         <source>Plot</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1652,22 +1840,7 @@ Error opening file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+45"/>
-        <source>SNMPv1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>SNMPv2c</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>SNMPv3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+24"/>
+        <location line="+98"/>
         <source>Pen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1695,32 +1868,29 @@ Error opening file %1</source>
 <context>
     <name>Preferences</name>
     <message>
-        <location filename="app/preferences.ui" line="+39"/>
+        <location filename="../preferences.ui" line="+39"/>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметри</translation>
     </message>
     <message>
         <location line="+47"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Transport Properties&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <source>&lt;span style=&quot;font-family:&apos;Sans Serif&apos;; font-size:18pt; font-weight:600;&quot;&gt;Transport Properties&lt;/span&gt;</source>
+        <translation>&lt;span style=&quot;font-family:&apos;Sans Serif&apos;; font-size:18pt; font-weight:600;&quot;&gt;Параметри транспорту&lt;/span&gt;</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+23"/>
         <source>Protocol</source>
-        <translation type="unfinished"></translation>
+        <translation>Протокол</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Enable Internet Protocol v4 (IPv4)</source>
-        <translation type="unfinished"></translation>
+        <translation>Задіяти Internet Protocol v4 (IPv4)</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Enable Internet Protocol v6 (IPv6)</source>
-        <translation type="unfinished"></translation>
+        <translation>Задіяти Internet Protocol v6 (IPv6)</translation>
     </message>
     <message>
         <location line="+45"/>
@@ -1735,7 +1905,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location line="+10"/>
         <source>Automatic MIB loading on walk</source>
-        <translation type="unfinished"></translation>
+        <translation>Під час обходу, активувати MIB автоматично</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -1754,62 +1924,53 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location line="+23"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;MIB Tree Properties&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;span style=&quot;font-family:&apos;Sans Serif&apos;; font-size:18pt; font-weight:600;&quot;&gt;MIB Tree Properties&lt;/span&gt;</source>
+        <translation>&lt;span style=&quot;font-family:&apos;Sans Serif&apos;; font-size:18pt; font-weight:600;&quot;&gt;Параметри MIB дерева&lt;/span&gt;</translation>
+    </message>
+    <message>
+        <location line="+66"/>
+        <source>&lt;span style=&quot;font-family:&apos;Sans Serif&apos;; font-size:18pt; font-weight:600;&quot;&gt;Modules Properties&lt;/span&gt;</source>
+        <translation>&lt;span style=&quot;font-family:&apos;Sans Serif&apos;; font-size:18pt; font-weight:600;&quot;&gt;Параметри модулів&lt;/span&gt;</translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>&lt;span style=&quot;font-family:&apos;Sans Serif&apos;; font-size:18pt; font-weight:600;&quot;&gt;Traps Properties&lt;/span&gt;</source>
+        <translation type="unfinished">&lt;span style=&quot;font-family:&apos;Sans Serif&apos;; font-size:18pt; font-weight:600;&quot;&gt;Параметри Трепів&lt;/span&gt;</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Trap listening ports</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="-62"/>
         <source>Reset to defaults</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Скинути</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>MIB Module Search Paths</source>
-        <translation type="unfinished"></translation>
+        <translation>Шляхи пошуку MIB модулів</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Modules Properties&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
+        <location line="+14"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Прибрати</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати</translation>
     </message>
     <message>
-        <location line="+11"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Traps Properties&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Binding Trap Port</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+34"/>
+        <location line="+68"/>
         <source>IPv4 port number</source>
-        <translation type="unfinished"></translation>
+        <translation>Номер порту IPv4</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>IPv6 port number</source>
-        <translation type="unfinished"></translation>
+        <translation>Номер порту IPv6</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1827,7 +1988,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="app/preferences.cpp" line="+83"/>
+        <location filename="../preferences.cpp" line="+83"/>
         <source>Transport</source>
         <translation>Транспорт</translation>
     </message>
@@ -1839,7 +2000,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location line="+2"/>
         <source>Modules</source>
-        <translation type="unfinished"></translation>
+        <translation>Модулі</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -1848,16 +2009,18 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location line="+84"/>
-        <source>SnmpB transport protocol or trap port changed</source>
-        <translation type="unfinished"></translation>
+        <source>Restart needed</source>
+        <translation>Потрібен перезапуск</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Please restart SnmpB for the change to take effect.</source>
-        <translation type="unfinished"></translation>
+        <source>SnmpB transport protocol or trap port has changed.
+Please restart SnmpB for the changes to take effect.</source>
+        <translation>Змінено параметри транспорту SnmpB.
+Будь ласка, перезапустіть програму для застосування змін.</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>type new path here</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1885,243 +2048,67 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QObject</name>
-    <message>
-        <location filename="app/mibmodule.cpp" line="-514"/>
-        <location filename="app/mibnode.cpp" line="+383"/>
-        <source>&lt;table border=&quot;1&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; align=&quot;left&quot;&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="app/mibnode.cpp" line="+3"/>
-        <location filename="app/trap.cpp" line="+65"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Name:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;font color=#009000&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/font&gt;&lt;/td&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Last revision:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <location filename="app/mibnode.cpp" line="+39"/>
-        <location filename="app/trap.cpp" line="+21"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Description:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;font face=fixed color=blue&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location line="+24"/>
-        <location line="+10"/>
-        <location filename="app/mibnode.cpp" line="-53"/>
-        <location line="+49"/>
-        <location line="+6"/>
-        <location filename="app/trap.cpp" line="-3"/>
-        <location line="+5"/>
-        <source>&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-29"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Root node:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Requires:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;font color=red&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Organization:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="app/mibnode.cpp" line="-118"/>
-        <source>&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Contact Info:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;font face=fixed&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+97"/>
-        <source>ERROR(%1) loading %2: %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="app/mibnode.cpp" line="-12"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Index(es):&lt;/b&gt;&lt;/td&gt;&lt;td&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Augments:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Sparse:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Expands:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Size&lt;/b&gt;&lt;/td&gt;&lt;td&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>%1 .. %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Value List&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;font color=green&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <location filename="app/trap.cpp" line="-19"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Oid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Composed Type:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Base Type:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Status:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Access:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Kind:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;SMI Type:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <location filename="app/trap.cpp" line="+4"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Units:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location filename="app/trap.cpp" line="+4"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Module:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location filename="app/trap.cpp" line="+4"/>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Reference:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;font face=fixed color=blue&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <location filename="app/trap.cpp" line="+9"/>
-        <source>&lt;/table&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="app/trap.cpp" line="+7"/>
-        <source>Community: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Bindings (%1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ReplaceDialog</name>
     <message>
-        <location filename="app/replace.ui" line="+33"/>
+        <location filename="../replace.ui" line="+33"/>
         <source>Replace Text</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Заміна тексту</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>R&amp;eplace:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Замінити:</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>&amp;Find:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Шукати:</translation>
     </message>
     <message>
         <location line="+47"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Опції</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>&amp;Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Тільки цілі слова</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Case &amp;sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Чутливо до регістру</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Search &amp;backward</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Зворотній напрямок</translation>
     </message>
     <message>
         <location line="+30"/>
         <source>&amp;Replace</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Замінити</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>&amp;Find Next</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Наступн.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Replace &amp;All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Замін. всі</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрити</translation>
     </message>
 </context>
 <context>
     <name>Snmpb</name>
     <message>
-        <location filename="app/snmpb.cpp" line="+83"/>
+        <location filename="../snmpb.cpp" line="+83"/>
         <location line="+11"/>
         <location line="+95"/>
         <source>SnmpB</source>
@@ -2148,118 +2135,112 @@ If it continues to be, changes in preferences will not be saved!</source>
     </message>
 </context>
 <context>
+    <name>TrapItem</name>
+    <message>
+        <location filename="../trap.cpp" line="+65"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Name:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;font color=#009000&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/font&gt;&lt;/td&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Oid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Units:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Module:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Reference:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;font face=fixed color=blue&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location line="+5"/>
+        <source>&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-2"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Description:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;font face=fixed color=blue&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>&lt;/table&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Community: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Bindings (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>USMProfile</name>
     <message>
-        <location filename="app/usmprofile.ui" line="+39"/>
+        <location filename="../usmprofile.ui" line="+39"/>
         <source>USM Profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Профілі USM</translation>
     </message>
     <message>
         <location line="+50"/>
         <source>Security</source>
-        <translation type="unfinished"></translation>
+        <translation>Захист</translation>
     </message>
     <message>
         <location line="+29"/>
         <location line="+46"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Немає</translation>
     </message>
     <message>
-        <location line="-41"/>
-        <source>DES</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>3DES</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>IDEA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>AES128</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>AES192</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>AES256</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>MD5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>SHA-1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>SHA-2-224</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>SHA-2-256</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>SHA-2-384</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>SHA-2-512</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location line="+38"/>
         <source>Privacy Protocol</source>
-        <translation type="unfinished"></translation>
+        <translation>Протокол шифрування</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Authentication Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль автентифікації</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Authentication Protocol</source>
-        <translation type="unfinished"></translation>
+        <translation>Протокол автентифікації</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Privacy Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль шифрування</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>User</source>
-        <translation type="unfinished"></translation>
+        <translation>Користувач</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Security User Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Акаунт користувача</translation>
     </message>
 </context>
 <context>
     <name>USMProfileManager</name>
     <message>
-        <location filename="app/usmprofile.cpp" line="+44"/>
+        <location filename="../usmprofile.cpp" line="+44"/>
         <source>&amp;New USM profile</source>
         <translation>&amp;Створити профіль USM</translation>
     </message>
@@ -2277,7 +2258,7 @@ If it continues to be, changes in preferences will not be saved!</source>
 <context>
     <name>Varbinds</name>
     <message>
-        <location filename="app/varbinds.ui" line="+14"/>
+        <location filename="../varbinds.ui" line="+14"/>
         <source>Multiple Variable Bindings</source>
         <translation type="unfinished"></translation>
     </message>
