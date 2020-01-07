@@ -25,12 +25,20 @@ Tested & compiles on MSYS2/Windows, Linux, MacOS Leonard & Sierra, and NetBSD
 
 ### Dependencies ###
 
-- bison & flex
-- autoconf and automake
-- GNU make
-- GNU install
-- gcc and g++
-- Qt5 headers (development package)
+ - C++ compiler of course. g++ or clang++, both are good.
+ - GNU toolchain:
+    * bison & flex
+    * autoconf and automake
+    * GNU make
+    * GNU install
+    * The `patch` tool
+ - Qt5: `apt install qt5-base-dev`
+ - Qwt library: `apt install libqwt-qt5-dev`
+
+Optional:
+
+ - libtomcrypt-dev
+ - libsmi2-dev
 
 
 ### Windows build ###
