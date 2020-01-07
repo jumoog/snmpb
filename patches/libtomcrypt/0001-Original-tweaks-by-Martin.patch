@@ -1,0 +1,81 @@
+From c0745c956933c8c8d2b33914b6219c79eadd1806 Mon Sep 17 00:00:00 2001
+From: Martin Jolicoeur <martsjoli@gmail.com>
+Date: Thu, 21 Nov 2019 18:09:55 +0200
+Subject: [PATCH] Original tweaks by Martin
+
+makefile
+src/headers/tomcrypt_pk.h "Added defined(BSD) around wchar_t definition to fix broken build on *BSD"
+src/headers/tomcrypt_custom.h "Defined LTC_NO_ROLC for MacOSX using LLVM"
+src/headers/tomcrypt_macros.h "Disabled ROL64/ROR64 assembly routines on Windows 64 bits"
+---
+ makefile                      | 4 ++--
+ src/headers/tomcrypt_custom.h | 4 ++++
+ src/headers/tomcrypt_macros.h | 2 +-
+ src/headers/tomcrypt_pk.h     | 4 +++-
+ 4 files changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/makefile b/makefile
+index f650ea15..9f6eebe4 100644
+--- a/makefile
++++ b/makefile
+@@ -9,8 +9,8 @@ VERSION=1.17
+ PLATFORM := $(shell uname | sed -e 's/_.*//')
+ 
+ # Compiler and Linker Names
+-#CC=gcc
+-#LD=ld
++CC=gcc
++LD=ld
+ 
+ # Archiver [makes .a files]
+ #AR=ar
+diff --git a/src/headers/tomcrypt_custom.h b/src/headers/tomcrypt_custom.h
+index 0243c6ce..925cbcd6 100644
+--- a/src/headers/tomcrypt_custom.h
++++ b/src/headers/tomcrypt_custom.h
+@@ -1,6 +1,10 @@
+ #ifndef TOMCRYPT_CUSTOM_H_
+ #define TOMCRYPT_CUSTOM_H_
+ 
++#ifdef __APPLE__
++#define LTC_NO_ROLC
++#endif
++
+ /* macros for various libc functions you can change for embedded targets */
+ #ifndef XMALLOC
+    #ifdef malloc 
+diff --git a/src/headers/tomcrypt_macros.h b/src/headers/tomcrypt_macros.h
+index 6e4d757a..0e66b0e3 100644
+--- a/src/headers/tomcrypt_macros.h
++++ b/src/headers/tomcrypt_macros.h
+@@ -341,7 +341,7 @@ static inline unsigned RORc(unsigned word, const int i)
+ 
+ 
+ /* 64-bit Rotates */
+-#if !defined(__STRICT_ANSI__) && defined(__GNUC__) && defined(__x86_64__) && !defined(LTC_NO_ASM)
++#if !defined(__STRICT_ANSI__) && defined(__GNUC__) && defined(__x86_64__) && !defined(_WIN64) && !defined(LTC_NO_ASM)
+ 
+ static inline unsigned long ROL64(unsigned long word, int i)
+ {
+diff --git a/src/headers/tomcrypt_pk.h b/src/headers/tomcrypt_pk.h
+index cc05f6cb..96f5b673 100644
+--- a/src/headers/tomcrypt_pk.h
++++ b/src/headers/tomcrypt_pk.h
+@@ -1,3 +1,5 @@
++#include <sys/param.h>
++
+ /* ---- NUMBER THEORY ---- */
+ 
+ enum {
+@@ -504,7 +506,7 @@ int der_printable_char_encode(int c);
+ int der_printable_value_decode(int v);
+ 
+ /* UTF-8 */
+-#if (defined(SIZE_MAX) || __STDC_VERSION__ >= 199901L || defined(WCHAR_MAX) || defined(_WCHAR_T) || defined(_WCHAR_T_DEFINED) || defined (__WCHAR_TYPE__)) && !defined(LTC_NO_WCHAR) 
++#if (defined(SIZE_MAX) || __STDC_VERSION__ >= 199901L || defined(WCHAR_MAX) || defined(_WCHAR_T) || defined(BSD) || defined(_WCHAR_T_DEFINED) || defined (__WCHAR_TYPE__)) && !defined(LTC_NO_WCHAR)
+ #include <wchar.h>
+ #else
+ typedef ulong32 wchar_t;
+-- 
+2.17.1
+
