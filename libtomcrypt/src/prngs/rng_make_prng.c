@@ -64,6 +64,6 @@ int rng_make_prng(int bits, int wprng, prng_state *prng,
 }
 
 
-/* $Source: /cvs/libtom/libtomcrypt/src/prngs/rng_make_prng.c,v $ */
-/* $Revision: 1.5 $ */
-/* $Date: 2006/12/28 01:27:24 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

@@ -298,6 +298,6 @@ int multi2_keysize(int *keysize)
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/src/ciphers/multi2.c,v $ */
-/* $Revision: 1.1 $ */
-/* $Date: 2007/01/05 16:01:25 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

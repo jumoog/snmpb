@@ -36,7 +36,7 @@ void xts_mult_x(unsigned char *I)
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/src/modes/xts/xts_mult_x.c,v $ */
-/* $Revision: 1.4 $ */
-/* $Date: 2007/03/10 23:59:09 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */
 

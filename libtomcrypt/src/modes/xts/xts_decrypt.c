@@ -135,7 +135,7 @@ static int tweak_uncrypt(const unsigned char *C, unsigned char *P, unsigned char
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/src/modes/xts/xts_decrypt.c,v $ */
-/* $Revision: 1.5 $ */
-/* $Date: 2007/05/12 14:05:56 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */
 

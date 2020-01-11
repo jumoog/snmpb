@@ -549,6 +549,6 @@ int der_length_utctime(ltc_utctime *utctime, unsigned long *outlen);
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/src/headers/tomcrypt_pk.h,v $ */
-/* $Revision: 1.81 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

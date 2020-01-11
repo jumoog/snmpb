@@ -99,6 +99,6 @@ int base64_decode(const unsigned char *in,  unsigned long inlen,
 #endif
 
 
-/* $Source: /cvs/libtom/libtomcrypt/src/misc/base64/base64_decode.c,v $ */
-/* $Revision: 1.6 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

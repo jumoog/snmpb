@@ -143,6 +143,6 @@ unsigned long rng_get_bytes(unsigned char *out, unsigned long outlen,
    return 0;
 }
 
-/* $Source: /cvs/libtom/libtomcrypt/src/prngs/rng_get_bytes.c,v $ */
-/* $Revision: 1.7 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

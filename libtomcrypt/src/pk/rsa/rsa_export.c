@@ -64,6 +64,6 @@ int rsa_export(unsigned char *out, unsigned long *outlen, int type, rsa_key *key
 
 #endif /* LTC_MRSA */
 
-/* $Source: /cvs/libtom/libtomcrypt/src/pk/rsa/rsa_export.c,v $ */
-/* $Revision: 1.17 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

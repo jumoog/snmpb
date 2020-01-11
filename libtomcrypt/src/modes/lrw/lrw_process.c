@@ -115,6 +115,6 @@ int lrw_process(const unsigned char *pt, unsigned char *ct, unsigned long len, i
 }
       
 #endif
-/* $Source: /cvs/libtom/libtomcrypt/src/modes/lrw/lrw_process.c,v $ */
-/* $Revision: 1.11 $ */
-/* $Date: 2006/12/28 01:27:24 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

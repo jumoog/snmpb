@@ -247,6 +247,6 @@ int ecc_tests(void)
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/testprof/ecc_test.c,v $ */
-/* $Revision: 1.22 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

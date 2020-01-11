@@ -114,6 +114,6 @@ int modes_test(void)
    return 0;
 }
 
-/* $Source: /cvs/libtom/libtomcrypt/testprof/modes_test.c,v $ */
-/* $Revision: 1.15 $ */
-/* $Date: 2007/02/16 16:36:25 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

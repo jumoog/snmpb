@@ -368,6 +368,6 @@ const char *crypt_build_settings =
     ;
 
 
-/* $Source: /cvs/libtom/libtomcrypt/src/misc/crypt/crypt.c,v $ */
-/* $Revision: 1.36 $ */
-/* $Date: 2007/05/12 14:46:12 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

@@ -884,8 +884,9 @@ int register_cipher(const struct ltc_cipher_descriptor *cipher);
 int unregister_cipher(const struct ltc_cipher_descriptor *cipher);
 int cipher_is_valid(int idx);
 
+#include "tomcrypt_custom.h"
 LTC_MUTEX_PROTO(ltc_cipher_mutex)
 
-/* $Source: /cvs/libtom/libtomcrypt/src/headers/tomcrypt_cipher.h,v $ */
-/* $Revision: 1.54 $ */
-/* $Date: 2007/05/12 14:37:41 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

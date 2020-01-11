@@ -119,6 +119,6 @@ int gcm_add_aad(gcm_state *gcm,
 #endif
    
 
-/* $Source: /cvs/libtom/libtomcrypt/src/encauth/gcm/gcm_add_aad.c,v $ */
-/* $Revision: 1.18 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

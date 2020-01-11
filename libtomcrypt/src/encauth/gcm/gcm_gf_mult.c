@@ -215,7 +215,7 @@ void gcm_gf_mult(const unsigned char *a, const unsigned char *b, unsigned char *
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/src/encauth/gcm/gcm_gf_mult.c,v $ */
-/* $Revision: 1.25 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */
  

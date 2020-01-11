@@ -76,6 +76,6 @@ int base64_encode(const unsigned char *in,  unsigned long inlen,
 #endif
 
 
-/* $Source: /cvs/libtom/libtomcrypt/src/misc/base64/base64_encode.c,v $ */
-/* $Revision: 1.7 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

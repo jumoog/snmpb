@@ -715,6 +715,6 @@ int cast5_keysize(int *keysize)
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/src/ciphers/cast5.c,v $ */
-/* $Revision: 1.14 $ */
-/* $Date: 2007/05/12 14:13:00 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

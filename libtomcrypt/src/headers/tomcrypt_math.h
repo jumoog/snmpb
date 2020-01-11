@@ -495,6 +495,6 @@ extern const ltc_math_descriptor gmp_desc;
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/src/headers/tomcrypt_math.h,v $ */
-/* $Revision: 1.44 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

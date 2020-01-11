@@ -84,6 +84,6 @@ int pkcs_5_alg2(const unsigned char *password, unsigned long password_len,
 
 #endif  /* LTC_PKCS_5 */
 
-/* $Source: /cvs/libtom/libtomcrypt/src/headers/tomcrypt_pkcs.h,v $ */
-/* $Revision: 1.8 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

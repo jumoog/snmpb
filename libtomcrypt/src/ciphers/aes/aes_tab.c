@@ -1023,6 +1023,6 @@ static const ulong32 rcon[] = {
     0x1B000000UL, 0x36000000UL, /* for 128-bit blocks, Rijndael never uses more than 10 rcon values */
 };
 
-/* $Source: /cvs/libtom/libtomcrypt/src/ciphers/aes/aes_tab.c,v $ */
-/* $Revision: 1.6 $ */
-/* $Date: 2006/12/28 01:27:23 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

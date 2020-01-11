@@ -236,6 +236,6 @@ int main(int argc, char *argv[])
    return 0;
 }
 
-/* $Source: /cvs/libtom/libtomcrypt/demos/encrypt.c,v $ */
-/* $Revision: 1.8 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

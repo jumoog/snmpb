@@ -52,6 +52,6 @@ int hash_file(int hash, const char *fname, unsigned char *out, unsigned long *ou
 }
 
 
-/* $Source: /cvs/libtom/libtomcrypt/src/hashes/helper/hash_file.c,v $ */
-/* $Revision: 1.5 $ */
-/* $Date: 2006/12/28 01:27:23 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

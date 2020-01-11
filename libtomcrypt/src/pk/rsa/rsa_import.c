@@ -138,6 +138,6 @@ LBL_ERR:
 #endif /* LTC_MRSA */
 
 
-/* $Source: /cvs/libtom/libtomcrypt/src/pk/rsa/rsa_import.c,v $ */
-/* $Revision: 1.23 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

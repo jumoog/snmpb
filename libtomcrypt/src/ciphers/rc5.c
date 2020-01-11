@@ -317,6 +317,6 @@ int rc5_keysize(int *keysize)
 
 
 
-/* $Source: /cvs/libtom/libtomcrypt/src/ciphers/rc5.c,v $ */
-/* $Revision: 1.14 $ */
-/* $Date: 2007/05/12 14:13:00 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

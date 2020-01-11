@@ -132,6 +132,6 @@ int ocb_init(ocb_state *ocb, int cipher,
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/src/encauth/ocb/ocb_init.c,v $ */
-/* $Revision: 1.7 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

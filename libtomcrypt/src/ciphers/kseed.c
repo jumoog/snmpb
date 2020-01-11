@@ -371,6 +371,6 @@ int kseed_keysize(int *keysize)
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/src/ciphers/kseed.c,v $ */
-/* $Revision: 1.10 $ */
-/* $Date: 2007/05/12 14:21:44 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

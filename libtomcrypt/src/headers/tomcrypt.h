@@ -82,6 +82,6 @@ enum {
 #endif /* TOMCRYPT_H_ */
 
 
-/* $Source: /cvs/libtom/libtomcrypt/src/headers/tomcrypt.h,v $ */
-/* $Revision: 1.21 $ */
-/* $Date: 2006/12/16 19:34:05 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

@@ -76,6 +76,6 @@ LBL_ERR:
 #endif /* LTC_MRSA */
 
 
-/* $Source: /cvs/libtom/libtomcrypt/src/pk/katja/katja_import.c,v $ */
-/* $Revision: 1.5 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

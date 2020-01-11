@@ -107,6 +107,6 @@ int ctr_encrypt(const unsigned char *pt, unsigned char *ct, unsigned long len, s
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/src/modes/ctr/ctr_encrypt.c,v $ */
-/* $Revision: 1.22 $ */
-/* $Date: 2007/02/22 20:26:05 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

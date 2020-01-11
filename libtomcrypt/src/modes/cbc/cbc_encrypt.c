@@ -93,6 +93,6 @@ int cbc_encrypt(const unsigned char *pt, unsigned char *ct, unsigned long len, s
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/src/modes/cbc/cbc_encrypt.c,v $ */
-/* $Revision: 1.14 $ */
-/* $Date: 2006/12/28 01:27:24 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

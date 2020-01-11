@@ -70,6 +70,6 @@ int katja_export(unsigned char *out, unsigned long *outlen, int type, katja_key 
 
 #endif /* LTC_MRSA */
 
-/* $Source: /cvs/libtom/libtomcrypt/src/pk/katja/katja_export.c,v $ */
-/* $Revision: 1.4 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

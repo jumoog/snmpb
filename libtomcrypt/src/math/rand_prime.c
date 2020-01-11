@@ -82,6 +82,6 @@ int rand_prime(void *N, long len, prng_state *prng, int wprng)
       
 
 
-/* $Source: /cvs/libtom/libtomcrypt/src/math/rand_prime.c,v $ */
-/* $Revision: 1.7 $ */
-/* $Date: 2006/12/28 01:27:23 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

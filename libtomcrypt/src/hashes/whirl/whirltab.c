@@ -578,6 +578,6 @@ CONST64(0x6302aa71c81949d9),
 };
 
 
-/* $Source: /cvs/libtom/libtomcrypt/src/hashes/whirl/whirltab.c,v $ */
-/* $Revision: 1.3 $ */
-/* $Date: 2007/05/12 14:21:44 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

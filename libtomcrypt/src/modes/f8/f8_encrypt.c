@@ -98,6 +98,6 @@ int f8_encrypt(const unsigned char *pt, unsigned char *ct, unsigned long len, sy
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/src/modes/f8/f8_encrypt.c,v $ */
-/* $Revision: 1.7 $ */
-/* $Date: 2006/12/28 01:27:24 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

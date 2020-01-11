@@ -100,6 +100,6 @@ int rsa_decrypt_key_ex(const unsigned char *in,       unsigned long  inlen,
 
 #endif /* LTC_MRSA */
 
-/* $Source: /cvs/libtom/libtomcrypt/src/pk/rsa/rsa_decrypt_key.c,v $ */
-/* $Revision: 1.10 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

@@ -772,6 +772,6 @@ const ltc_math_descriptor tfm_desc = {
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/src/math/tfm_desc.c,v $ */
-/* $Revision: 1.28 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

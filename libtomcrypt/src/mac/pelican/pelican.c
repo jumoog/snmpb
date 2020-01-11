@@ -160,6 +160,6 @@ int pelican_done(pelican_state *pelmac, unsigned char *out)
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/src/mac/pelican/pelican.c,v $ */
-/* $Revision: 1.20 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

@@ -382,6 +382,6 @@ int rsa_test(void)
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/testprof/rsa_test.c,v $ */
-/* $Revision: 1.20 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

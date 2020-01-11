@@ -478,6 +478,6 @@ const ltc_math_descriptor ltm_desc = {
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/src/math/ltm_desc.c,v $ */
-/* $Revision: 1.31 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

@@ -554,6 +554,6 @@ int saferp_keysize(int *keysize)
 
 
 
-/* $Source: /cvs/libtom/libtomcrypt/src/ciphers/safer/saferp.c,v $ */
-/* $Revision: 1.14 $ */
-/* $Date: 2007/05/12 14:20:27 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

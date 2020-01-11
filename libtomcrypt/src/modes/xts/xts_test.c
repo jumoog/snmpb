@@ -193,7 +193,7 @@ int xts_test(void)
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/src/modes/xts/xts_test.c,v $ */
-/* $Revision: 1.4 $ */
-/* $Date: 2007/03/10 23:59:09 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */
 

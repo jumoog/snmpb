@@ -131,6 +131,6 @@ int sprng_test(void)
 
  
 
-/* $Source: /cvs/libtom/libtomcrypt/src/prngs/sprng.c,v $ */
-/* $Revision: 1.6 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

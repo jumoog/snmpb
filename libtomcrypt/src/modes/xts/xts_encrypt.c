@@ -136,7 +136,7 @@ int xts_encrypt(
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/src/modes/xts/xts_encrypt.c,v $ */
-/* $Revision: 1.5 $ */
-/* $Date: 2007/05/12 14:05:56 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */
 

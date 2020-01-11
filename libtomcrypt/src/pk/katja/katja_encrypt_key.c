@@ -82,6 +82,6 @@ int katja_encrypt_key(const unsigned char *in,     unsigned long inlen,
 
 #endif /* LTC_MRSA */
 
-/* $Source: /cvs/libtom/libtomcrypt/src/pk/katja/katja_encrypt_key.c,v $ */
-/* $Revision: 1.7 $ */
-/* $Date: 2007/05/12 14:32:35 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

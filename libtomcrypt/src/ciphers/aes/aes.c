@@ -755,6 +755,6 @@ int ECB_KS(int *keysize)
 #endif
 
 
-/* $Source: /cvs/libtom/libtomcrypt/src/ciphers/aes/aes.c,v $ */
-/* $Revision: 1.16 $ */
-/* $Date: 2007/05/12 14:13:00 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */

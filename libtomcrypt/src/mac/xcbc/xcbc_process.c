@@ -69,7 +69,7 @@ int xcbc_process(xcbc_state *xcbc, const unsigned char *in, unsigned long inlen)
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/src/mac/xcbc/xcbc_process.c,v $ */
-/* $Revision: 1.10 $ */
-/* $Date: 2006/12/28 01:27:23 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */
 

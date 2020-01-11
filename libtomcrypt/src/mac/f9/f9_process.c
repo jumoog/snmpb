@@ -72,7 +72,7 @@ int f9_process(f9_state *f9, const unsigned char *in, unsigned long inlen)
 
 #endif
 
-/* $Source: /cvs/libtom/libtomcrypt/src/mac/f9/f9_process.c,v $ */
-/* $Revision: 1.4 $ */
-/* $Date: 2006/12/28 01:27:23 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */
 

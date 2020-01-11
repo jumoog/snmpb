@@ -66,6 +66,6 @@ int hash_filehandle(int hash, FILE *in, unsigned char *out, unsigned long *outle
 }
 
 
-/* $Source: /cvs/libtom/libtomcrypt/src/hashes/helper/hash_filehandle.c,v $ */
-/* $Revision: 1.6 $ */
-/* $Date: 2006/12/28 01:27:23 $ */
+/* $Source$ */
+/* $Revision$ */
+/* $Date$ */
