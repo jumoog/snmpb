@@ -97,13 +97,13 @@ endif
 ifdef INSTALL_USER
 USER=$(INSTALL_USER)
 else
-USER=root
+USER=$(shell id -u)
 endif
 
 ifdef INSTALL_GROUP
 GROUP=$(INSTALL_GROUP)
 else
-GROUP=wheel
+GROUP=$(shell id -g)
 endif
 
 #List of objects to compile.
