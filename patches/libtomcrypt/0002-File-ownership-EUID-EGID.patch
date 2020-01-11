@@ -1,0 +1,23 @@
+From: Max <ulidtko@gmail.com>
+Subject: [PATCH] Install as the current user
+
+diff --git i/libtomcrypt/makefile w/libtomcrypt/makefile
+index 9f6eebe..8af9a70 100644
+--- i/makefile
++++ w/makefile
+@@ -97,13 +97,13 @@ endif
+ ifdef INSTALL_USER
+ USER=$(INSTALL_USER)
+ else
+-USER=root
++USER=$(shell id -u)
+ endif
+ 
+ ifdef INSTALL_GROUP
+ GROUP=$(INSTALL_GROUP)
+ else
+-GROUP=wheel
++GROUP=$(shell id -g)
+ endif
+ 
+ #List of objects to compile.

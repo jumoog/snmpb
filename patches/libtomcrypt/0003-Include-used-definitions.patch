@@ -1,0 +1,34 @@
+From: Max <ulidtko@gmail.com>
+Date: Wed Jan  8 01:57:06 EET 2020
+Subject: [PATCH] #include definitions before use
+
+This fixes a compile error during snmp++ ./configure, when it checks
+if the libtomcrypt is good by trying to link a program similar to this:
+
+    #include <tomcrypt_cipher.h>
+    int
+    main()
+    {
+        find_cipher()
+            ;
+        return 0;
+    }
+
+That fails when tomcrypt_cipher.h is included alone -- because this header
+doesn't #include tomcrypt_custom.h where LTC_MUTEX_PROTO is defined.
+
+diff --git i/libtomcrypt/src/headers/tomcrypt_cipher.h w/libtomcrypt/src/headers/tomcrypt_cipher.h
+index bd740bf..e7a4399 100644
+--- i/src/headers/tomcrypt_cipher.h
++++ w/src/headers/tomcrypt_cipher.h
+@@ -884,6 +884,7 @@ int register_cipher(const struct ltc_cipher_descriptor *cipher);
+ int unregister_cipher(const struct ltc_cipher_descriptor *cipher);
+ int cipher_is_valid(int idx);
+ 
++#include "tomcrypt_custom.h"
+ LTC_MUTEX_PROTO(ltc_cipher_mutex)
+ 
+ /* $Source: /cvs/libtom/libtomcrypt/src/headers/tomcrypt_cipher.h,v $ */
+--
+2.17.1
+
