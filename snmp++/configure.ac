@@ -576,9 +576,7 @@ AX_CXX_HAVE_STD
 AX_CXX_TEMPLATES
 AX_CXX_HEADER_STDCXX_98
 AX_CXX_HEADER_STDCXX_TR1
-# Check for C++0x features
-AC_CXX_COMPILE_STDCXX_0X
-AX_CXX_HEADER_STDCXX_0X
+AX_CXX_COMPILE_STDCXX([11], [noext], [mandatory])
 
 if test "$ax_cv_cxx_have_std_namespace" = "yes"; then
 	CNF_HAVE_NAMESPACE_STD=1
@@ -672,7 +670,7 @@ ACX_CHECK_LIB_FLAGS([ssl], [crypto,dl,crypto dl], [SSL_library_init()], [AC_LANG
 
 WITH_LIBTOMCRYPT=0
 dnl --with-tomcrypt: check if it's no
-ACX_CHECK_LIB_FLAGS([tomcrypt], [], [find_cipher()], [AC_LANG_SOURCE([
+ACX_CHECK_LIB_FLAGS([tomcrypt], [], [find_cipher("doesnt_matter")], [AC_LANG_SOURCE([
 #include <tomcrypt_cipher.h>
   ])], ,
   [
