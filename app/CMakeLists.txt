@@ -54,5 +54,20 @@ set_target_properties(snmpb PROPERTIES
     AUTOMOC ON
     AUTOUIC ON
     AUTORCC ON
-    INCLUDE_DIRECTORIES ${SnmpB_SOURCE_DIR}/app
     )
+include_directories(snmpb
+    ${SnmpB_SOURCE_DIR}/app
+    ${SnmpB_SOURCE_DIR}/snmp++/include
+    )
+
+#-- FIXME
+if(USE_BUNDLED_TOMCRYPT)
+    include_directories(snmpb ${SnmpB_BINARY_DIR}/libtomcrypt-prefix/usr/include)
+else()
+    target_link_libraries(snmpb libtomcrypt)
+endif()
+
+if(USE_BUNDLED_LIBSMI)
+    include_directories(snmpb ${SnmpB_BINARY_DIR}/libsmi-prefix/include)
+else()
+endif()

@@ -72,6 +72,7 @@ if(NOT USE_BUNDLED_TOMCRYPT)
 
     if (STATIC_LINK_TOMCRYPT)
         add_library(libtomcrypt STATIC IMPORTED)
+        set_property(TARGET libtomcrypt PROPERTY POSITION_INDEPENDENT_CODE ON)
     else()
         add_library(libtomcrypt SHARED IMPORTED)
     endif()
