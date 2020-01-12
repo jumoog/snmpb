@@ -89,7 +89,10 @@ else() # USE_BUNDLED_LIBTOMCRYPT
 
         CONFIGURE_COMMAND ""
 
-        BUILD_COMMAND make library
+        BUILD_COMMAND
+            make
+                "CFLAGS=-fpic\ -I${SnmpB_SOURCE_DIR}/libtomcrypt/src/headers"
+            library
         BUILD_IN_SOURCE TRUE
 
         #TEST_COMMAND
@@ -104,6 +107,22 @@ endif()
 
 #-- ===== SNMP++ lib ===== --#
 
+if (USE_BUNDLED_TOMCRYPT)
+    set(SNMPXX_TOMCRYPT_OPT
+        --with-tomcrypt
+        --with-libtomcrypt-prefix=${SnmpB_BINARY_DIR}/libtomcrypt-prefix/usr
+        --enable-shared=OFF
+        )
+else () # use system libtomcrypt.
+    set(SNMPXX_TOMCRYPT_OPT
+        --with-tomcrypt
+        #--with-libtomcrypt-prefix=${TOMCRYPT_PREFIX}
+        --enable-static=OFF
+        LINKFLAGS=-ltomcrypt
+        )
+endif()
+
+
 externalproject_add(snmpxx
     SOURCE_DIR ${SnmpB_SOURCE_DIR}/snmp++
 
@@ -113,8 +132,7 @@ externalproject_add(snmpxx
     CONFIGURE_COMMAND
         ${SnmpB_SOURCE_DIR}/snmp++/configure
             --enable-silent-rules
-            --with-tomcrypt
-            --with-libtomcrypt-prefix=${SnmpB_BINARY_DIR}/libtomcrypt-prefix/usr
+            ${SNMPXX_TOMCRYPT_OPT}
             #--with-libssl
             #--with-libssl-prefix=
 
