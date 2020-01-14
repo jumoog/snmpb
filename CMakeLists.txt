@@ -12,9 +12,6 @@ option(STATIC_LINK_TOMCRYPT "Link in libtomcrypt statically into SnmpB" ${USE_BU
 
 #-- Prerequisite checking
 
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTORCC ON)
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 find_package(PkgConfig REQUIRED)
@@ -41,8 +38,9 @@ if(NOT USE_BUNDLED_LIBSMI)
 
 else() # USE_BUNDLED_LIBSMI
 
-    externalproject_add(libsmi
+    externalproject_add(libsmi-bundled
         SOURCE_DIR ${SnmpB_SOURCE_DIR}/libsmi
+        PREFIX libsmi-prefix
 
         URL https://www.ibr.cs.tu-bs.de/projects/libsmi/download/libsmi-0.5.0.tar.gz
         URL_HASH SHA224=5448d442c761e776905fb60f064a2ec3b1e26c0df145ee76cfed0e00
@@ -63,6 +61,16 @@ else() # USE_BUNDLED_LIBSMI
         #-- the FLEX/BISON calls in libsmi/lib/Makefile.am need some tweaking
         BUILD_IN_SOURCE TRUE
         )
+    add_library(libsmi STATIC IMPORTED)
+    add_dependencies(libsmi libsmi-bundled)
+    set_target_properties(libsmi PROPERTIES
+        IMPORTED_LOCATION
+            ${SnmpB_BINARY_DIR}/libsmi-prefix/lib/libsmi.a
+        INTERFACE_INCLUDE_DIRECTORIES
+            ${SnmpB_SOURCE_DIR}/libsmi/lib
+            #${SnmpB_BINARY_DIR}/libsmi-prefix/include # FIXME builds OK, but...
+        )
+
 endif()
 
 #-- ===== libtomcrypt ===== --#
@@ -72,15 +80,15 @@ if(NOT USE_BUNDLED_TOMCRYPT)
 
     if (STATIC_LINK_TOMCRYPT)
         add_library(libtomcrypt STATIC IMPORTED)
-        set_property(TARGET libtomcrypt PROPERTY POSITION_INDEPENDENT_CODE ON)
     else()
         add_library(libtomcrypt SHARED IMPORTED)
     endif()
 
 else() # USE_BUNDLED_LIBTOMCRYPT
 
-    externalproject_add(libtomcrypt
+    externalproject_add(libtomcrypt-bundled
         SOURCE_DIR ${SnmpB_SOURCE_DIR}/libtomcrypt
+        PREFIX libtomcrypt-prefix
         URL https://github.com/libtom/libtomcrypt/archive/1.17.tar.gz
         URL_HASH SHA224=03d8eadde5d0959679a22fdf9f98777b9d92197041a211ad49cc94cd
 
@@ -88,21 +96,32 @@ else() # USE_BUNDLED_LIBTOMCRYPT
         COMMAND       ${PATCH} -p1 < "${PATCH_DIR}/libtomcrypt/0002-File-ownership-EUID-EGID.patch"
         COMMAND       ${PATCH} -p1 < "${PATCH_DIR}/libtomcrypt/0003-Include-used-definitions.patch"
 
-        CONFIGURE_COMMAND ""
+        CONFIGURE_COMMAND "" # uses plain Makefiles
 
         BUILD_COMMAND
             make
-                "CFLAGS=-fpic\ -I${SnmpB_SOURCE_DIR}/libtomcrypt/src/headers"
+                "CFLAGS=-fpic\ -DLTC_NO_ROLC\ -Isrc/headers"
             library
         BUILD_IN_SOURCE TRUE
 
-        #TEST_COMMAND
+        #TEST_COMMAND # TODO it has a test suite
 
         INSTALL_COMMAND
             make
                 DESTDIR=${SnmpB_BINARY_DIR}/libtomcrypt-prefix
+                LIBPATH=/lib
+                INCPATH=/include
+                DATAPATH=/share/doc/libtomcrypt
                 NODOCS=1
             install
+        )
+    add_library(libtomcrypt STATIC IMPORTED)
+    add_dependencies(libtomcrypt libtomcrypt-bundled)
+    set_target_properties(libtomcrypt PROPERTIES
+        IMPORTED_LOCATION
+            ${SnmpB_BINARY_DIR}/libtomcrypt-prefix/lib/libtomcrypt.a
+        INTERFACE_INCLUDE_DIRECTORIES
+            ${SnmpB_BINARY_DIR}/libtomcrypt-prefix/include
         )
 endif()
 
@@ -111,31 +130,38 @@ endif()
 if (USE_BUNDLED_TOMCRYPT)
     set(SNMPXX_TOMCRYPT_OPT
         --with-tomcrypt
-        --with-libtomcrypt-prefix=${SnmpB_BINARY_DIR}/libtomcrypt-prefix/usr
+        --with-libtomcrypt-prefix=${SnmpB_BINARY_DIR}/libtomcrypt-prefix
         --enable-shared=OFF
         )
 else () # use system libtomcrypt.
     set(SNMPXX_TOMCRYPT_OPT
         --with-tomcrypt
-        #--with-libtomcrypt-prefix=${TOMCRYPT_PREFIX}
+        --with-libtomcrypt-prefix=${TOMCRYPT_PREFIX}
         --enable-static=OFF
-        LINKFLAGS=-ltomcrypt
+        LINKFLAGS=${TOMCRYPT_LDFLAGS}
         )
 endif()
 
-
-externalproject_add(snmpxx
+externalproject_add(snmpxx-bundled
     SOURCE_DIR ${SnmpB_SOURCE_DIR}/snmp++
+    PREFIX snmpxx-prefix
 
     #URL https://www.agentpp.com/download/snmp++-3.3.11a.tar.gz
     #URL_HASH SHA1=d7fff32791596e678a64c22acd5fc2a68d2cbe1e
 
     CONFIGURE_COMMAND
         ${SnmpB_SOURCE_DIR}/snmp++/configure
+            --prefix=/
             --enable-silent-rules
+            --disable-threads # FIXME
             ${SNMPXX_TOMCRYPT_OPT}
             #--with-libssl
             #--with-libssl-prefix=
+
+    INSTALL_COMMAND
+        make
+            DESTDIR=${SnmpB_BINARY_DIR}/snmpxx-prefix
+        install
 
     #PATCH_COMMAND <>
     # TODO review changes & update:
@@ -150,7 +176,27 @@ externalproject_add(snmpxx
     # - notifyqueue.cpp set_notify_callback_fd big chunk
     # - usm_v3.cpp SAFE_ULONG_CAST ??
     )
-add_dependencies(snmpxx libtomcrypt)
+add_dependencies(snmpxx-bundled libtomcrypt)
+
+add_library(snmpxx STATIC IMPORTED)
+set_target_properties(snmpxx PROPERTIES
+    IMPORTED_LOCATION
+        ${SnmpB_BINARY_DIR}/snmpxx-prefix/lib/libsnmp++.a
+    INTERFACE_INCLUDE_DIRECTORIES
+        ${SnmpB_SOURCE_DIR}/snmp++/include
+        #${SnmpB_BINARY_DIR}/snmpxx-prefix/include # FIXME builds OK, but...
+    )
+
+#-- ===== QWT widgets ===== --#
+
+# FIXME
+add_library(qwt SHARED IMPORTED)
+set_target_properties(qwt PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES /usr/include/qwt
+    IMPORTED_LOCATION /usr/lib/libqwt-qt5.so.6
+    )
+
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --#
 
 add_subdirectory(app)
 

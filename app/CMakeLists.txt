@@ -49,25 +49,16 @@ set(GUI_SOURCES
     )
 
 add_executable(snmpb ${GUI_SOURCES})
-target_link_libraries(snmpb Qt5::Widgets)
+target_link_libraries(snmpb
+    Qt5::Widgets
+    qwt
+    snmpxx
+    tomcrypt
+    libsmi
+    )
 set_target_properties(snmpb PROPERTIES
     AUTOMOC ON
     AUTOUIC ON
     AUTORCC ON
     )
-include_directories(snmpb
-    ${SnmpB_SOURCE_DIR}/app
-    ${SnmpB_SOURCE_DIR}/snmp++/include
-    )
-
-#-- FIXME
-if(USE_BUNDLED_TOMCRYPT)
-    include_directories(snmpb ${SnmpB_BINARY_DIR}/libtomcrypt-prefix/usr/include)
-else()
-    target_link_libraries(snmpb libtomcrypt)
-endif()
-
-if(USE_BUNDLED_LIBSMI)
-    include_directories(snmpb ${SnmpB_BINARY_DIR}/libsmi-prefix/include)
-else()
-endif()
+target_include_directories(snmpb PRIVATE ${SnmpB_SOURCE_DIR}/app)
