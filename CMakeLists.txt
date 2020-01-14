@@ -48,6 +48,7 @@ else() # USE_BUNDLED_LIBSMI
         PATCH_COMMAND ${PATCH} -p1 < "${PATCH_DIR}/libsmi/0001-Original-fixes-by-Martin.patch"
         COMMAND       ${PATCH} -p1 < "${PATCH_DIR}/libsmi/0002-automake-1.15-regen.patch"
         COMMAND       ${PATCH} -p1 < "${PATCH_DIR}/libsmi/0003-automake-1.15.1-regen.patch"
+        COMMAND       ${PATCH} -p2 < "${PATCH_DIR}/libsmi/0004-regenerate-bison-parsers.patch"
 
         #-- NOTE: use `autoreconf` to regenerate the configure script and Makefile.in's
         CONFIGURE_COMMAND
