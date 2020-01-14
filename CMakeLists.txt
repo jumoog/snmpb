@@ -55,6 +55,10 @@ else() # USE_BUNDLED_LIBSMI
                --prefix=/libsmi-prefix
                --enable-silent-rules
 
+        BUILD_BYPRODUCTS
+            ${SnmpB_BINARY_DIR}/libsmi-prefix/lib/libsmi.a
+            ${SnmpB_BINARY_DIR}/libsmi-prefix/include/smi.h
+
         INSTALL_COMMAND make DESTDIR=${SnmpB_BINARY_DIR} install
 
         #-- FIXME proper out-of-source build doesn't work here;
@@ -158,6 +162,10 @@ externalproject_add(snmpxx-bundled
             #--with-libssl
             #--with-libssl-prefix=
 
+    BUILD_BYPRODUCTS
+        ${SnmpB_BINARY_DIR}/snmpxx-prefix/lib/libsnmp++.a
+        ${SnmpB_BINARY_DIR}/snmpxx-prefix/include/snmp_pp/snmp_pp.h
+
     INSTALL_COMMAND
         make
             DESTDIR=${SnmpB_BINARY_DIR}/snmpxx-prefix
@@ -179,6 +187,7 @@ externalproject_add(snmpxx-bundled
 add_dependencies(snmpxx-bundled libtomcrypt)
 
 add_library(snmpxx STATIC IMPORTED)
+add_dependencies(snmpxx snmpxx-bundled)
 set_target_properties(snmpxx PROPERTIES
     IMPORTED_LOCATION
         ${SnmpB_BINARY_DIR}/snmpxx-prefix/lib/libsnmp++.a

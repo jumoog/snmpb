@@ -53,3 +53,5 @@ libsmi/test/parser-yang-ct.test
 **/.qmake.stash
 **/*.pro.user
 build-*
+BUILD-*
+CMakeLists.txt.user
