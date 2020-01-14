@@ -26,9 +26,8 @@
   ##########################################################################*
 AM_CPPFLAGS = -I$(abs_top_srcdir) -I$(abs_top_srcdir)/include $(PTHREAD_CFLAGS) @CLIBFLAGS@
 
-bin_PROGRAMS =  snmpGet snmpSet snmpNext snmpNextAsync snmpWalk snmpBulk \
-                snmpTraps receive_trap snmpInform snmpPasswd snmpWalkThreads \
-                snmpDiscover
+bin_PROGRAMS =  snmpGet snmpSet snmpNext snmpWalk snmpBulk \
+                snmpTraps snmpInform snmpPasswd snmpDiscover
 
 noinst_PROGRAMS =	test_app
 
@@ -41,9 +40,6 @@ snmpSet_LDADD =		$(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
 snmpNext_SOURCES =	snmpNext.cpp
 snmpNext_LDADD =	$(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
 
-snmpNextAsync_SOURCES =	snmpNextAsync.cpp
-snmpNextAsync_LDADD =	$(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
-
 snmpWalk_SOURCES =	snmpWalk.cpp
 snmpWalk_LDADD =	$(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
 
@@ -53,22 +49,30 @@ snmpBulk_LDADD =	$(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
 snmpTraps_SOURCES =	snmpTraps.cpp
 snmpTraps_LDADD =	$(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
 
-receive_trap_SOURCES =	receive_trap.cpp
-receive_trap_LDADD =	$(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
-
 snmpInform_SOURCES =	snmpInform.cpp
 snmpInform_LDADD =	$(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
 
 snmpPasswd_SOURCES =	snmpPasswd.cpp
 snmpPasswd_LDADD =	$(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
 
-snmpWalkThreads_SOURCES =	snmpWalkThreads.cpp
-snmpWalkThreads_LDADD =	$(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
-
 snmpDiscover_SOURCES =	snmpDiscover.cpp
 snmpDiscover_LDADD =	$(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
 
 test_app_SOURCES =	test_app.cpp
 test_app_LDADD =	$(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
+
+if ENABLE_THREADS
+bin_PROGRAMS += snmpNextAsync
+snmpNextAsync_SOURCES =	snmpNextAsync.cpp
+snmpNextAsync_LDADD =	$(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
+
+bin_PROGRAMS += receive_trap
+receive_trap_SOURCES =	receive_trap.cpp
+receive_trap_LDADD =	$(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
+
+bin_PROGRAMS += snmpWalkThreads
+snmpWalkThreads_SOURCES =	snmpWalkThreads.cpp
+snmpWalkThreads_LDADD =	$(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
+endif
 
 EXTRA_DIST = Makefile.dunix Makefile.bcc Makefile.linux Makefile.solaris common.mk

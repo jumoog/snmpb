@@ -947,7 +947,9 @@ void Snmp::init(int& status, IpAddress *addresses[2],
 //---------[ Snmp Class Destructor ]----------------------------------
 Snmp::~Snmp()
 {
+#ifdef WITH_THREADS
   stop_poll_thread();
+#endif
 
   // if we failed during construction then don't try
   // to free stuff up that was not allocated
@@ -2272,6 +2274,7 @@ int Snmp::broadcast_discovery(UdpAddressCollection &addresses,
   return 0;
 }
 
+#if WITH_THREADS
 //     Starts the working thread for the recovery of the pending events
 bool Snmp::start_poll_thread(const int timeout)
 {
@@ -2377,6 +2380,8 @@ void* Snmp::process_thread(void *arg)
 #endif
     return 0;
 }
+
+#endif // WITH_THREADS
 
 #ifdef SNMP_PP_NAMESPACE
 } // end of namespace Snmp_pp

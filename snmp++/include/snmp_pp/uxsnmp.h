@@ -528,6 +528,7 @@ class DLLOPT Snmp: public SnmpSynchronized
   const IpAddress &get_listen_address() const {return listen_address; };
   const IpAddress &get_listen_address6() const {return listen_address6; };
 
+#if WITH_THREADS
   /**
    * Start one thread listening for responses and notifications.
    * This method is used to start response and notification processing in a
@@ -553,6 +554,7 @@ class DLLOPT Snmp: public SnmpSynchronized
    *       stop_poll_thread() at any point in time.
    */
   void stop_poll_thread();
+#endif
 
   EventListHolder *get_eventListHolder() { return eventListHolder; };
 

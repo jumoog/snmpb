@@ -129,6 +129,8 @@ AC_ARG_ENABLE(ipxaddress,
   --disable-ipxaddress    disable support of class IpxAddress],
 ENABLE_IPXADDRESS=$enableval, ENABLE_IPXADDRESS=no)
 
+AM_CONDITIONAL([ENABLE_THREADS], [test x$ENABLE_THREADS = xtrue])
+
 AC_ARG_WITH([log-profile], [
   --with-log-profile[[=profile]]
                           uses a specific profile for logging
