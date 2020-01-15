@@ -26,6 +26,7 @@
 
 #include "snmpb.h"
 #include "snmp_pp/snmp_pp.h"
+using Snmp_pp::Vb;
 
 #define MIBSELECTION_NONE   0x0
 #define MIBSELECTION_SET    0x1

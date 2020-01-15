@@ -20,11 +20,15 @@
 #ifndef TRAP_H
 #define TRAP_H
 
-#include "snmpb.h"
-#include "snmp_pp/snmp_pp.h"
-
 #include <QTreeWidgetItem>
 #include <QCoreApplication>
+
+#include "snmpb.h"
+
+#include "snmp_pp/snmp_pp.h"
+using Snmp_pp::Oid;
+using Snmp_pp::Vb;
+
 
 class TrapItem : public QTreeWidgetItem
 {

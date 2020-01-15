@@ -111,20 +111,29 @@ else() # USE_BUNDLED_LIBSMI
         #-- the FLEX/BISON calls in libsmi/lib/Makefile.am need some tweaking
         BUILD_IN_SOURCE TRUE
         )
+
+    # hack to avoid gnarly configure error
+    file(MAKE_DIRECTORY ${SnmpB_BINARY_DIR}/libsmi-prefix/include)
+
     add_library(libsmi STATIC IMPORTED)
     add_dependencies(libsmi libsmi-bundled)
     set_target_properties(libsmi PROPERTIES
         IMPORTED_LOCATION
             ${SnmpB_BINARY_DIR}/libsmi-prefix/lib/libsmi.a
         INTERFACE_INCLUDE_DIRECTORIES
-            ${SnmpB_SOURCE_DIR}/libsmi/lib
-            #${SnmpB_BINARY_DIR}/libsmi-prefix/include # FIXME builds OK, but...
+            ${SnmpB_BINARY_DIR}/libsmi-prefix/include
         )
 
     set(USE_WHICH_LIBSMI "[bundled] libsmi 0.5.0 + patches")
 endif()
 
 #-- ===== libtomcrypt ===== --#
+
+pkg_check_modules(TOMCRYPT libtomcrypt)
+
+if (NOT TOMCRYPT_FOUND)
+    set(USE_BUNDLED_TOMCRYPT ON CACHE BOOL "Compile with bundled libtomcrypt" FORCE)
+endif()
 
 if(NOT USE_BUNDLED_TOMCRYPT)
     pkg_check_modules(TOMCRYPT REQUIRED libtomcrypt)
@@ -136,6 +145,8 @@ if(NOT USE_BUNDLED_TOMCRYPT)
     endif()
 
     message(FATAL_ERROR "IMPLEMENT ME")
+
+    set(USE_WHICH_TOMCRYPT "[system] libtomcrypt ${TOMCRYPT_VERSION} from ${TOMCRYPT_PREFIX}")
 
 else() # USE_BUNDLED_LIBTOMCRYPT
 
@@ -171,6 +182,10 @@ else() # USE_BUNDLED_LIBTOMCRYPT
                 NODOCS=1
             install
         )
+
+    # hack to avoid gnarly configure error
+    file(MAKE_DIRECTORY ${SnmpB_BINARY_DIR}/libtomcrypt-prefix/include)
+
     add_library(libtomcrypt STATIC IMPORTED)
     add_dependencies(libtomcrypt libtomcrypt-bundled)
     set_target_properties(libtomcrypt PROPERTIES
@@ -179,12 +194,17 @@ else() # USE_BUNDLED_LIBTOMCRYPT
         INTERFACE_INCLUDE_DIRECTORIES
             ${SnmpB_BINARY_DIR}/libtomcrypt-prefix/include
         )
+
+    set(USE_WHICH_TOMCRYPT "[bundled] libtomcrypt 1.17 + tweaks")
+
 endif()
 
 #-- ===== SNMP++ lib ===== --#
 
 if (NOT USE_BUNDLED_SNMPXX)
+
     message(FATAL_ERROR "IMPLEMENT ME")
+
 endif()
 
 if (USE_BUNDLED_TOMCRYPT)
@@ -192,8 +212,9 @@ if (USE_BUNDLED_TOMCRYPT)
         --with-tomcrypt
         --with-libtomcrypt-prefix=${SnmpB_BINARY_DIR}/libtomcrypt-prefix
         --enable-shared=OFF
+        LINKFLAGS=${TOMCRYPT_STATIC_LDFLAGS}
         )
-else () # use system libtomcrypt.
+else ()
     set(SNMPXX_TOMCRYPT_OPT
         --with-tomcrypt
         --with-libtomcrypt-prefix=${TOMCRYPT_PREFIX}
@@ -242,14 +263,16 @@ externalproject_add(snmpxx-bundled
     )
 add_dependencies(snmpxx-bundled libtomcrypt)
 
+# hack to avoid gnarly configure error
+file(MAKE_DIRECTORY ${SnmpB_BINARY_DIR}/snmpxx-prefix/include)
+
 add_library(snmpxx STATIC IMPORTED)
 add_dependencies(snmpxx snmpxx-bundled)
 set_target_properties(snmpxx PROPERTIES
     IMPORTED_LOCATION
         ${SnmpB_BINARY_DIR}/snmpxx-prefix/lib/libsnmp++.a
     INTERFACE_INCLUDE_DIRECTORIES
-        ${SnmpB_SOURCE_DIR}/snmp++/include
-        #${SnmpB_BINARY_DIR}/snmpxx-prefix/include # FIXME builds OK, but...
+        ${SnmpB_BINARY_DIR}/snmpxx-prefix/include
     )
 
 #-- ===== QWT widgets ===== --#
@@ -275,6 +298,7 @@ message(STATUS "")
 message(STATUS "SnmpB version ............. ${SnmpB_VERSION}")
 message(STATUS "Qt5Widgets version ........ ${Qt5Widgets_VERSION}")
 message(STATUS "SMI library ............... ${USE_WHICH_LIBSMI}")
+message(STATUS "TomCrypt .................. ${USE_WHICH_TOMCRYPT}")
 message("")
 message("To start the build:")
 message("    cmake --build ${CMAKE_BINARY_DIR}")

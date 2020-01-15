@@ -53,7 +53,7 @@ target_link_libraries(snmpb
     Qt5::Widgets
     qwt
     snmpxx
-    tomcrypt
+    libtomcrypt
     libsmi
     )
 set_target_properties(snmpb PROPERTIES

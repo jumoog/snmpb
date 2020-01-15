@@ -29,6 +29,7 @@
 #include "agentprofile.h"
 #include "ui_varbinds.h"
 #include "snmp_pp/snmp_pp.h"
+using namespace Snmp_pp;
 
 class Agent: public QObject
 {
