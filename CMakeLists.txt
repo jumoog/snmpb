@@ -10,6 +10,8 @@ option(STATIC_LINK_LIBSMI "Link in libsmi statically into SnmpB" ${USE_BUNDLED_L
 option(USE_BUNDLED_TOMCRYPT "Compile with bundled libtomcrypt" OFF)
 option(STATIC_LINK_TOMCRYPT "Link in libtomcrypt statically into SnmpB" ${USE_BUNDLED_TOMCRYPT})
 
+list(APPEND CMAKE_MODULE_PATH "${SnmpB_SOURCE_DIR}/cmake")
+
 #-- Prerequisite checking
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
@@ -20,9 +22,12 @@ pkg_check_modules(OPENSSL openssl) # FIXME
 
 include(ExternalProject)
 
-set(PATCH_DIR "${SnmpB_SOURCE_DIR}/patches")
-
-find_program(PATCH NAMES patch DOC "POSIX patch(1) program for applying patches")
+set(PATCH_DIR ${SnmpB_SOURCE_DIR}/patches)
+set(PATCH_APP
+    -DPATCH=${PATCH}
+    -DPATCH_DIR=${PATCH_DIR}
+    -P ${SnmpB_SOURCE_DIR}/cmake/patch-applier.cmake)
+include(patch-applier)
 
 
 #-- ===== libsmi ===== --#
@@ -45,10 +50,14 @@ else() # USE_BUNDLED_LIBSMI
         URL https://www.ibr.cs.tu-bs.de/projects/libsmi/download/libsmi-0.5.0.tar.gz
         URL_HASH SHA224=5448d442c761e776905fb60f064a2ec3b1e26c0df145ee76cfed0e00
 
-        PATCH_COMMAND ${PATCH} -p1 < "${PATCH_DIR}/libsmi/0001-Original-fixes-by-Martin.patch"
-        COMMAND       ${PATCH} -p1 < "${PATCH_DIR}/libsmi/0002-automake-1.15-regen.patch"
-        COMMAND       ${PATCH} -p1 < "${PATCH_DIR}/libsmi/0003-automake-1.15.1-regen.patch"
-        COMMAND       ${PATCH} -p2 < "${PATCH_DIR}/libsmi/0004-regenerate-bison-parsers.patch"
+        PATCH_COMMAND
+        ${CMAKE_COMMAND} -DFILE=libsmi/0001-Original-fixes-by-Martin.patch ${PATCH_APP}
+        COMMAND
+        ${CMAKE_COMMAND} -DFILE=libsmi/0002-automake-1.15-regen.patch ${PATCH_APP}
+        COMMAND
+        ${CMAKE_COMMAND} -DFILE=libsmi/0003-automake-1.15.1-regen.patch ${PATCH_APP}
+        COMMAND
+        ${CMAKE_COMMAND} -DFILE=libsmi/0004-regenerate-bison-parsers.patch -DFLAG=-p2 ${PATCH_APP}
 
         #-- NOTE: use `autoreconf` to regenerate the configure script and Makefile.in's
         CONFIGURE_COMMAND
@@ -97,9 +106,12 @@ else() # USE_BUNDLED_LIBTOMCRYPT
         URL https://github.com/libtom/libtomcrypt/archive/1.17.tar.gz
         URL_HASH SHA224=03d8eadde5d0959679a22fdf9f98777b9d92197041a211ad49cc94cd
 
-        PATCH_COMMAND ${PATCH} -p1 < "${PATCH_DIR}/libtomcrypt/0001-Original-tweaks-by-Martin.patch"
-        COMMAND       ${PATCH} -p1 < "${PATCH_DIR}/libtomcrypt/0002-File-ownership-EUID-EGID.patch"
-        COMMAND       ${PATCH} -p1 < "${PATCH_DIR}/libtomcrypt/0003-Include-used-definitions.patch"
+        PATCH_COMMAND
+        ${CMAKE_COMMAND} -DFILE=libtomcrypt/0001-Original-tweaks-by-Martin.patch ${PATCH_APP}
+        COMMAND
+        ${CMAKE_COMMAND} -DFILE=libtomcrypt/0002-File-ownership-EUID-EGID.patch ${PATCH_APP}
+        COMMAND
+        ${CMAKE_COMMAND} -DFILE=libtomcrypt/0003-Include-used-definitions.patch ${PATCH_APP}
 
         CONFIGURE_COMMAND "" # uses plain Makefiles
 

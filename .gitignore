@@ -54,4 +54,5 @@ libsmi/test/parser-yang-ct.test
 **/*.pro.user
 build-*
 BUILD-*
+BUILD
 CMakeLists.txt.user
