@@ -10,6 +10,12 @@ option(STATIC_LINK_LIBSMI "Link in libsmi statically into SnmpB" ${USE_BUNDLED_L
 option(USE_BUNDLED_TOMCRYPT "Compile with bundled libtomcrypt" OFF)
 option(STATIC_LINK_TOMCRYPT "Link in libtomcrypt statically into SnmpB" ${USE_BUNDLED_TOMCRYPT})
 
+option(USE_BUNDLED_SNMPXX "Compile with bundled snmp++ library (RECOMMENDED)" ON)
+option(STATIC_LINK_SNMPXX "Link in snmp++ statically into SnmpB" ${USE_BUNDLED_SNMPXX})
+
+option(USE_BUNDLED_QWT "Compile with bundled QWT" OFF)
+option(STATIC_LINK_QWT "Link in QWT statically into SnmpB" ${USE_BUNDLED_QWT})
+
 list(APPEND CMAKE_MODULE_PATH "${SnmpB_SOURCE_DIR}/cmake")
 
 #-- Prerequisite checking
@@ -32,14 +38,44 @@ include(patch-applier)
 
 #-- ===== libsmi ===== --#
 
-if(NOT USE_BUNDLED_LIBSMI)
-    pkg_check_modules(SMI REQUIRED libsmi)
+pkg_check_modules(LIBSMI libsmi)
+if(LIBSMI_FOUND)
+    #-- The common libsmi 0.4.8 uses C++ keyword "class" as arg name in its headers.
+    #-- Of course this doesn't roll, like so:
+    #
+    # /usr/include/smi.h:464:60: error: expected ‘,’ or ‘...’ before ‘class’
+    # extern SmiClass *smiGetClass(SmiModule *smiModulePtr,char *class);
+    #                                                           ^~~~~
+    #-- As such, libsmi 0.4.8 isn't good enough; update to 0.5.0.
+    if(LIBSMI_VERSION VERSION_LESS_EQUAL "0.4.8" AND NOT USE_BUNDLED_LIBSMI)
+        message(FATAL_ERROR "libsmi 0.4.8 is no good. Update it, or switch to \
+            bundled patched version: -DUSE_BUNDLED_LIBSMI=ON")
+    endif()
+
+    #-- Decent libsmi? Good, let's try that.
+    set(USE_BUNDLED_LIBSMI "OFF" CACHE BOOL
+        "Compile with bundled patched libsmi (RECOMMENDED)")
+endif()
+
+if (NOT USE_BUNDLED_LIBSMI)
 
     if (STATIC_LINK_LIBSMI)
         add_library(libsmi STATIC IMPORTED)
+        set_property(TARGET libsmi
+            INTERFACE_LINK_OPTIONS "${LIBSMI_STATIC_LDFLAGS}"
+            )
     else()
         add_library(libsmi SHARED IMPORTED)
+        set_property(TARGET libsmi
+            INTERFACE_LINK_OPTIONS "${LIBSMI_LDFLAGS}"
+            )
     endif()
+
+    set_target_properties(libsmi PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${LIBSMI_INCLUDE_DIRS}"
+        )
+
+    set(USE_WHICH_LIBSMI "[system] libsmi ${LIBSMI_VERSION} from ${LIBSMI_PREFIX}")
 
 else() # USE_BUNDLED_LIBSMI
 
@@ -85,6 +121,7 @@ else() # USE_BUNDLED_LIBSMI
             #${SnmpB_BINARY_DIR}/libsmi-prefix/include # FIXME builds OK, but...
         )
 
+    set(USE_WHICH_LIBSMI "[bundled] libsmi 0.5.0 + patches")
 endif()
 
 #-- ===== libtomcrypt ===== --#
@@ -97,6 +134,8 @@ if(NOT USE_BUNDLED_TOMCRYPT)
     else()
         add_library(libtomcrypt SHARED IMPORTED)
     endif()
+
+    message(FATAL_ERROR "IMPLEMENT ME")
 
 else() # USE_BUNDLED_LIBTOMCRYPT
 
@@ -143,6 +182,10 @@ else() # USE_BUNDLED_LIBTOMCRYPT
 endif()
 
 #-- ===== SNMP++ lib ===== --#
+
+if (NOT USE_BUNDLED_SNMPXX)
+    message(FATAL_ERROR "IMPLEMENT ME")
+endif()
 
 if (USE_BUNDLED_TOMCRYPT)
     set(SNMPXX_TOMCRYPT_OPT
@@ -211,12 +254,16 @@ set_target_properties(snmpxx PROPERTIES
 
 #-- ===== QWT widgets ===== --#
 
-# FIXME
-add_library(qwt SHARED IMPORTED)
-set_target_properties(qwt PROPERTIES
-    INTERFACE_INCLUDE_DIRECTORIES /usr/include/qwt
-    IMPORTED_LOCATION /usr/lib/libqwt-qt5.so.6
-    )
+if(NOT USE_BUNDLED_QWT)
+    add_library(qwt SHARED IMPORTED)
+    set_target_properties(qwt PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES /usr/include/qwt
+        IMPORTED_LOCATION /usr/lib/libqwt-qt5.so.6
+        )
+else() # USE_BUNDLED_QWT
+    # TODO
+    message(FATAL_ERROR "IMPLEMENT ME")
+endif()
 
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --#
 
@@ -227,6 +274,7 @@ message("-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --")
 message(STATUS "")
 message(STATUS "SnmpB version ............. ${SnmpB_VERSION}")
 message(STATUS "Qt5Widgets version ........ ${Qt5Widgets_VERSION}")
+message(STATUS "SMI library ............... ${USE_WHICH_LIBSMI}")
 message("")
 message("To start the build:")
 message("    cmake --build ${CMAKE_BINARY_DIR}")
