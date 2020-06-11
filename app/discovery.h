@@ -24,7 +24,6 @@
 #include "snmpb.h"
 
 #include "snmp_pp/snmp_pp.h"
-using namespace Snmp_pp;
 
 class DiscoveryThread;
 

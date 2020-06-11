@@ -25,10 +25,6 @@
 #include "snmpb.h"
 #include "snmp_pp/snmp_pp.h"
 #include "snmp_pp/log.h"
-using Snmp_pp::AgentLog;
-using Snmp_pp::DefaultLog;
-using Snmp_pp::LogEntry;
-using Snmp_pp::LogEntryImpl;
 
 class LogSnmpb: public QObject
 {

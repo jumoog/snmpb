@@ -12,7 +12,7 @@ option(STATIC_LINK_LIBSMI "Link in libsmi statically into SnmpB" ${USE_BUNDLED_L
 option(USE_BUNDLED_TOMCRYPT "Compile with bundled libtomcrypt" OFF)
 option(STATIC_LINK_TOMCRYPT "Link in libtomcrypt statically into SnmpB" ${USE_BUNDLED_TOMCRYPT})
 
-option(USE_BUNDLED_SNMPXX "Compile with bundled snmp++ library (RECOMMENDED)" ON)
+option(USE_BUNDLED_SNMPXX "Compile with bundled agentpp snmp++ library (RECOMMENDED)" ON)
 option(STATIC_LINK_SNMPXX "Link in snmp++ statically into SnmpB" ${USE_BUNDLED_SNMPXX})
 
 option(USE_BUNDLED_QWT "Compile with bundled QWT" OFF)
@@ -215,6 +215,8 @@ if (NOT USE_BUNDLED_SNMPXX)
 
     message(FATAL_ERROR "IMPLEMENT ME")
 
+    set(USE_WHICH_SNMPXX "[system] libsnmp++ ${SNMPXX_VERSION} from ${SNMPXX_PREFIX}")
+
 endif()
 
 if (USE_BUNDLED_TOMCRYPT)
@@ -245,6 +247,7 @@ externalproject_add(snmpxx-bundled
             --prefix=/
             --enable-silent-rules
             --disable-threads # FIXME
+            --disable-namespace
             ${SNMPXX_TOMCRYPT_OPT}
             #--with-libssl
             #--with-libssl-prefix=
@@ -283,7 +286,11 @@ set_target_properties(snmpxx PROPERTIES
         ${SnmpB_BINARY_DIR}/snmpxx-prefix/lib/libsnmp++.a
     INTERFACE_INCLUDE_DIRECTORIES
         ${SnmpB_BINARY_DIR}/snmpxx-prefix/include
+    #INTERFACE_COMPILE_DEFINITIONS
+    #    SNMP_PP_NAMESPACE
     )
+
+set(USE_WHICH_SNMPXX "[bundled] libsnmp++ 3.3.10 + patches")
 
 #-- ===== QWT widgets ===== --#
 
@@ -308,6 +315,7 @@ message(STATUS "")
 message(STATUS "SnmpB version ............. ${SnmpB_VERSION}")
 message(STATUS "Qt5Widgets version ........ ${Qt5Widgets_VERSION}")
 message(STATUS "SMI library ............... ${USE_WHICH_LIBSMI}")
+message(STATUS "Snmp++ .................... ${USE_WHICH_SNMPXX}")
 message(STATUS "TomCrypt .................. ${USE_WHICH_TOMCRYPT}")
 message("")
 message("To start the build:")
