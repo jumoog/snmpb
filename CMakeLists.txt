@@ -294,15 +294,27 @@ set(USE_WHICH_SNMPXX "[bundled] libsnmp++ 3.3.10 + patches")
 
 #-- ===== QWT widgets ===== --#
 
+find_package(Qwt)
+
+if(NOT QWT_FOUND)
+    message(STATUS "Using bundled qwt")
+    set(USE_BUNDLED_QWT ON CACHE BOOL "Compile with bundled QWT" FORCE)
+endif()
+
 if(NOT USE_BUNDLED_QWT)
+    find_package(Qwt REQUIRED QWT)
+
     add_library(qwt SHARED IMPORTED)
     set_target_properties(qwt PROPERTIES
-        INTERFACE_INCLUDE_DIRECTORIES /usr/include/qwt
-        IMPORTED_LOCATION /usr/lib/libqwt-qt5.so.6
+        INTERFACE_INCLUDE_DIRECTORIES ${QWT_INCLUDE_DIR}
+        IMPORTED_LOCATION ${QWT_LIBRARY}
         )
+    set(USE_WHICH_QWT "[system] qwt ${QWT_VERSION_STRING} from ${QWT_ROOT_DIR}")
+
 else() # USE_BUNDLED_QWT
     # TODO
     message(FATAL_ERROR "IMPLEMENT ME")
+    set(USE_WHICH_QWT "[bundled] qwt 6.1.2 + patches")
 endif()
 
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --#
@@ -314,6 +326,7 @@ message("-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --")
 message(STATUS "")
 message(STATUS "SnmpB version ............. ${SnmpB_VERSION}")
 message(STATUS "Qt5Widgets version ........ ${Qt5Widgets_VERSION}")
+message(STATUS "Qwt ....................... ${USE_WHICH_QWT}")
 message(STATUS "SMI library ............... ${USE_WHICH_LIBSMI}")
 message(STATUS "Snmp++ .................... ${USE_WHICH_SNMPXX}")
 message(STATUS "TomCrypt .................. ${USE_WHICH_TOMCRYPT}")
