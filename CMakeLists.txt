@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 
 project(SnmpB VERSION 1.1 LANGUAGES CXX)
 
+#-- These options can be changed via -D flags, ccmake or cmake-gui
+
 option(STATIC_LINK_QT "Link in the Qt framework statically into SnmpB" OFF)
 
 option(USE_BUNDLED_LIBSMI "Compile with bundled patched libsmi (RECOMMENDED)" ON)
@@ -18,6 +20,9 @@ option(STATIC_LINK_QWT "Link in QWT statically into SnmpB" ${USE_BUNDLED_QWT})
 
 list(APPEND CMAKE_MODULE_PATH "${SnmpB_SOURCE_DIR}/cmake")
 
+SET(CMAKE_EXPORT_COMPILE_COMMANDS ON) # Write compile_commands.json
+
+
 #-- Prerequisite checking
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
@@ -25,6 +30,7 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 find_package(PkgConfig REQUIRED)
 
 pkg_check_modules(OPENSSL openssl) # FIXME
+
 
 include(ExternalProject)
 
@@ -75,6 +81,7 @@ if (NOT USE_BUNDLED_LIBSMI)
         INTERFACE_INCLUDE_DIRECTORIES "${LIBSMI_INCLUDE_DIRS}"
         )
 
+    message(STATUS "Using system libsmi: found 0.5.0 or better")
     set(USE_WHICH_LIBSMI "[system] libsmi ${LIBSMI_VERSION} from ${LIBSMI_PREFIX}")
 
 else() # USE_BUNDLED_LIBSMI
@@ -132,6 +139,7 @@ endif()
 pkg_check_modules(TOMCRYPT libtomcrypt)
 
 if (NOT TOMCRYPT_FOUND)
+    message(STATUS "Using bundled libtomcrypt")
     set(USE_BUNDLED_TOMCRYPT ON CACHE BOOL "Compile with bundled libtomcrypt" FORCE)
 endif()
 
