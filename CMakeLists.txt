@@ -246,7 +246,7 @@ externalproject_add(snmpxx-bundled
         ${SnmpB_SOURCE_DIR}/snmp++/configure
             --prefix=/
             --enable-silent-rules
-            --disable-threads # FIXME
+            #--disable-threads # actually, enables UB
             --disable-namespace
             ${SNMPXX_TOMCRYPT_OPT}
             #--with-libssl
