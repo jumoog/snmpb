@@ -101,6 +101,8 @@ else() # USE_BUNDLED_LIBSMI
         ${CMAKE_COMMAND} -DFILE=libsmi/0003-automake-1.15.1-regen.patch ${PATCH_APP}
         COMMAND
         ${CMAKE_COMMAND} -DFILE=libsmi/0004-regenerate-bison-parsers.patch -DFLAG=-p2 ${PATCH_APP}
+        COMMAND
+        ${CMAKE_COMMAND} -DFILE=libsmi/0005-automake-1.16.2-regen.patch -DFLAG=-p2 ${PATCH_APP}
 
         #-- NOTE: use `autoreconf` to regenerate the configure script and Makefile.in's
         CONFIGURE_COMMAND
