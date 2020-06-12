@@ -42,7 +42,9 @@ set(PATCH_APP
 include(patch-applier)
 
 
-#-- ===== libsmi ===== --#
+#--                          /                    \                          --#
+#--                          | ===== libsmi ===== |                          --#
+#--                          \                    /                          --#
 
 pkg_check_modules(LIBSMI libsmi)
 if(LIBSMI_FOUND)
@@ -136,7 +138,9 @@ else() # USE_BUNDLED_LIBSMI
     set(USE_WHICH_LIBSMI "[bundled] libsmi 0.5.0 + patches")
 endif()
 
-#-- ===== libtomcrypt ===== --#
+#--                       /                         \                        --#
+#--                       | ===== libtomcrypt ===== |                        --#
+#--                       \                         /                        --#
 
 pkg_check_modules(TOMCRYPT libtomcrypt)
 
@@ -209,7 +213,9 @@ else() # USE_BUNDLED_LIBTOMCRYPT
 
 endif()
 
-#-- ===== SNMP++ lib ===== --#
+#--                        /                        \                        --#
+#--                        | ===== SNMP++ lib ===== |                        --#
+#--                        \                        /                        --#
 
 if (NOT USE_BUNDLED_SNMPXX)
 
@@ -292,7 +298,9 @@ set_target_properties(snmpxx PROPERTIES
 
 set(USE_WHICH_SNMPXX "[bundled] libsnmp++ 3.3.10 + patches")
 
-#-- ===== QWT widgets ===== --#
+#--                        /                         \                       --#
+#--                        | ===== QWT widgets ===== |                       --#
+#--                        \                         /                       --#
 
 find_package(Qwt)
 
