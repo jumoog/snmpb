@@ -111,6 +111,7 @@ else() # USE_BUNDLED_LIBSMI
             ${SnmpB_SOURCE_DIR}/libsmi/configure
                --prefix=/libsmi-prefix
                --enable-silent-rules
+               --disable-yang
 
         BUILD_BYPRODUCTS
             ${SnmpB_BINARY_DIR}/libsmi-prefix/lib/libsmi.a
