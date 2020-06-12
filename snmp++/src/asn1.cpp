@@ -46,7 +46,7 @@
 
   DESIGN + AUTHOR:  Peter E. Mellquist
 =====================================================================*/
-char asn1_cpp_version[]="#(@) SNMP++ $Id: asn1.cpp 2542 2014-01-24 13:17:19Z fock $";
+char asn1_cpp_version[]="#(@) SNMP++ $Id$";
 
 #ifdef __unix
 #include /**/ <sys/types.h>

@@ -39,7 +39,7 @@
   or implied. User hereby grants a royalty-free license to any and all
   derivatives based upon this software code base.
 */
-// $Id: msec.h 3167 2016-09-26 18:52:43Z katz $
+// $Id$
 
 #ifndef _SNMP_MSEC_H_
 #define _SNMP_MSEC_H_

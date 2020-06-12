@@ -51,7 +51,7 @@
   includes all protected and public member functions. The oid class
   may be compiled stand alone without the use of any other library.
 =====================================================================*/
-char oid_cpp_version[]="#(@) SNMP++ $Id: oid.cpp 3169 2016-09-26 20:45:41Z katz $";
+char oid_cpp_version[]="#(@) SNMP++ $Id$";
 
 #include <libsnmp.h>
 

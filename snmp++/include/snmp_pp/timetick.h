@@ -51,7 +51,7 @@
   Class definition for SMI Timeticks class.
 
 =====================================================================*/
-// $Id: timetick.h 3169 2016-09-26 20:45:41Z katz $
+// $Id$
 
 #ifndef _SNMP_TIMETICK_H_
 #define _SNMP_TIMETICK_H_

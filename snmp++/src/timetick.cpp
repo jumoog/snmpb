@@ -49,7 +49,7 @@
   DESCRIPTION:
   Class implentation for SMI Timeticks class.
 =====================================================================*/
-char timetick_cpp_version[]="#(@) SNMP++ $Id: timetick.cpp 3169 2016-09-26 20:45:41Z katz $";
+char timetick_cpp_version[]="#(@) SNMP++ $Id$";
 
 #include <libsnmp.h>
 

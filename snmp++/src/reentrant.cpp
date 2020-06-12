@@ -24,7 +24,7 @@
   _##  upon this software code base. 
   _##  
   _##########################################################################*/
-char reentrant_cpp_version[]="#(@) SNMP++ $Id: reentrant.cpp 2361 2013-05-09 22:15:06Z katz $";
+char reentrant_cpp_version[]="#(@) SNMP++ $Id$";
 
 #include <libsnmp.h>
 

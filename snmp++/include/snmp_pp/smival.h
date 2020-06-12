@@ -53,7 +53,7 @@
   only a few functions, most info is in subclass.
 
 =====================================================================*/
-// $Id: smival.h 3164 2016-09-23 21:30:38Z katz $
+// $Id$
 
 #ifndef _SNMP_SMIVAL_H_
 #define _SNMP_SMIVAL_H_

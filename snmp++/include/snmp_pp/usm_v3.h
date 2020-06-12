@@ -24,7 +24,7 @@
   _##  upon this software code base.
   _##
   _##########################################################################*/
-// $Id: usm_v3.h 3164 2016-09-23 21:30:38Z katz $
+// $Id$
 
 #ifndef _SNMP_USM_V3_H_
 #define _SNMP_USM_V3_H_

@@ -25,7 +25,7 @@
   _##  
   _##########################################################################*/
 
-char snmppasswd_cpp_version[]="@(#) SNMP++ $Id: snmpPasswd.cpp 3200 2017-04-25 19:53:16Z katz $";
+char snmppasswd_cpp_version[]="@(#) SNMP++ $Id$";
 #include <libsnmp.h>
 
 #include "snmp_pp/snmp_pp.h"

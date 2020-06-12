@@ -24,7 +24,7 @@
   _##  upon this software code base.
   _##
   _##########################################################################*/
-// $Id: uxsnmp.h 3206 2017-07-30 18:48:15Z katz $
+// $Id$
 
 #ifndef _SNMP_UXSNMP_H_
 #define _SNMP_UXSNMP_H_

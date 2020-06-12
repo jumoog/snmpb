@@ -50,7 +50,7 @@
   DESCRIPTION:        SNMP Counter64 class definition.
 
 =====================================================================*/
-// $Id: ctr64.h 3169 2016-09-26 20:45:41Z katz $
+// $Id$
 
 #ifndef _SNMP_CTR64_H_
 #define _SNMP_CTR64_H_

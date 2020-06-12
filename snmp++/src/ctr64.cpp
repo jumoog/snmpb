@@ -49,7 +49,7 @@
 
   DESCRIPTION:         Implementation for Counter64 (64 bit counter class).
 =====================================================================*/
-char counter64_cpp_version[]="@(#) SNMP++ $Id: ctr64.cpp 3169 2016-09-26 20:45:41Z katz $";
+char counter64_cpp_version[]="@(#) SNMP++ $Id$";
 
 #include <libsnmp.h>
 

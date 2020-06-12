@@ -50,7 +50,7 @@
 
   DESIGN + AUTHOR:  Jeff Meyer
 ============================================================================*/
-// $Id: snmperrs.h 3164 2016-09-23 21:30:38Z katz $
+// $Id$
 
 #ifndef _SNMP_SNMPERRS_H_
 #define _SNMP_SNMPERRS_H_

@@ -48,7 +48,7 @@
 
   DESCRIPTION:      Implementation file for Address classes.
 =====================================================================*/
-char address_cpp_version[]="@(#) SNMP++ $Id: address.cpp 3181 2016-10-24 20:38:57Z katz $";
+char address_cpp_version[]="@(#) SNMP++ $Id$";
 
 #include <stdio.h>
 #include <stdlib.h>

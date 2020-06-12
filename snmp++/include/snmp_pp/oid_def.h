@@ -49,7 +49,7 @@
 
       DESIGN + AUTHOR:        Peter E Mellquist
 =====================================================================*/
-// $Id: oid_def.h 3167 2016-09-26 18:52:43Z katz $
+// $Id$
 
 #ifndef _SNMP_OID_DEF_H_
 #define _SNMP_OID_DEF_H_

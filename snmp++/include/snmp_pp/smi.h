@@ -47,7 +47,7 @@
 
   AUTHOR:           Peter E Mellquist
 =====================================================================*/
-// $Id: smi.h 3164 2016-09-23 21:30:38Z katz $
+// $Id$
 
 #ifndef _SNMP_SMI_H_
 #define _SNMP_SMI_H_

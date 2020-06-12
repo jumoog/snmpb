@@ -33,7 +33,7 @@
 
 #if !defined(_USE_LIBTOMCRYPT) && !defined(_USE_OPENSSL)
 
-// $Id: sha.h 3179 2016-10-17 20:06:26Z katz $
+// $Id$
 /****************************************************************
  * SHS.h  -  Secure Hash Standard (draft) FIPS 180-1            *
  *                                                              *

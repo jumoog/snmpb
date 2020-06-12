@@ -24,7 +24,7 @@
   _##  upon this software code base.
   _##
   _##########################################################################*/
-// $Id: auth_priv.h 3196 2017-01-11 21:38:46Z katz $
+// $Id$
 
 #ifndef _SNMP_AUTH_PRIV_H_
 #define _SNMP_AUTH_PRIV_H_

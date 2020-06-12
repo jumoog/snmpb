@@ -43,7 +43,7 @@
 
   Peter E. Mellquist
 */
-char snmpset_cpp_version[]="@(#) SNMP++ $Id: snmpSet.cpp 3200 2017-04-25 19:53:16Z katz $";
+char snmpset_cpp_version[]="@(#) SNMP++ $Id$";
 
 #include <libsnmp.h>
 

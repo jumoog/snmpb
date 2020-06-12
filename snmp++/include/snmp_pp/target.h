@@ -51,7 +51,7 @@
   Target class defines target SNMP agents.
 
 =====================================================================*/
-// $Id: target.h 3164 2016-09-23 21:30:38Z katz $
+// $Id$
 
 #ifndef _SNMP_TARGET_H_
 #define _SNMP_TARGET_H_

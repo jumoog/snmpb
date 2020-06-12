@@ -24,7 +24,7 @@
   _##  upon this software code base. 
   _##  
   _##########################################################################*/
-// $Id: reentrant.h 3164 2016-09-23 21:30:38Z katz $
+// $Id$
 
 #ifndef _SNMP_REENTRANT_H_
 #define _SNMP_REENTRANT_H_

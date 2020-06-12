@@ -56,7 +56,7 @@
         Queue for holding all event sources (snmp messages, user
         defined input sources, user defined timeouts, etc)
 =====================================================================*/
-char event_list_version[]="@(#) SNMP++ $Id: eventlist.cpp 2361 2013-05-09 22:15:06Z katz $";
+char event_list_version[]="@(#) SNMP++ $Id$";
 
 #include <libsnmp.h>
 

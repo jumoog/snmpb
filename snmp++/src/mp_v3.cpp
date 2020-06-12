@@ -24,7 +24,7 @@
   _##  upon this software code base. 
   _##  
   _##########################################################################*/
-char mp_v3_cpp_version[]="@(#) SNMP++ $Id: mp_v3.cpp 2938 2015-12-18 20:40:33Z katz $";
+char mp_v3_cpp_version[]="@(#) SNMP++ $Id$";
 
 #include <libsnmp.h>
 

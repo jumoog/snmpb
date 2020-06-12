@@ -25,7 +25,7 @@
   _##  
   _##########################################################################*/
 
-char event_list_holder_version[]="@(#) SNMP++ $Id: eventlistholder.cpp 2535 2014-01-24 08:43:07Z fock $";
+char event_list_holder_version[]="@(#) SNMP++ $Id$";
 
 #include <libsnmp.h>
 

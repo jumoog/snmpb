@@ -24,7 +24,7 @@
   _##  upon this software code base. 
   _##  
   _##########################################################################*/
-char md5c_cpp_version[]="#(@) SNMP++ $Id: md5c.cpp 3195 2017-01-11 20:07:44Z katz $";
+char md5c_cpp_version[]="#(@) SNMP++ $Id$";
 /* MD5C.C - RSA Data Security, Inc., MD5 message-digest algorithm */
 
 /* Copyright (C) 1991, RSA Data Security, Inc. All rights reserved.

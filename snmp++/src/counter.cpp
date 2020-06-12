@@ -49,7 +49,7 @@
   DESCRIPTION:
   Class implementation for SMI Counter32 class.
 =====================================================================*/
-char counter_cpp_version[]="@(#) SNMP++ $Id: counter.cpp 3169 2016-09-26 20:45:41Z katz $";
+char counter_cpp_version[]="@(#) SNMP++ $Id$";
 
 #include <libsnmp.h>
 

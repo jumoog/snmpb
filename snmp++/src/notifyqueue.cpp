@@ -57,7 +57,7 @@
         timeouts
 
 =====================================================================*/
-char notifyqueue_version[]="#(@) SNMP++ $Id: notifyqueue.cpp 3206 2017-07-30 18:48:15Z katz $";
+char notifyqueue_version[]="#(@) SNMP++ $Id$";
 
 #include <libsnmp.h>
 

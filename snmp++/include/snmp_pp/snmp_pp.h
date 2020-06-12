@@ -46,7 +46,7 @@
 
   DESIGN + AUTHOR:   Peter E Mellquist
 =====================================================================*/
-// $Id: snmp_pp.h 2359 2013-05-09 20:07:01Z fock $
+// $Id$
 
 #ifndef _SNMP_PP_H_
 #define _SNMP_PP_H_

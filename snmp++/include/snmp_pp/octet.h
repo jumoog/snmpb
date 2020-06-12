@@ -52,7 +52,7 @@
   SNMP libraries. This class is portable across any platform
   which supports C++.
 =====================================================================*/
-// $Id: octet.h 3167 2016-09-26 18:52:43Z katz $
+// $Id$
 
 #ifndef _SNMP_OCTET_H_
 #define _SNMP_OCTET_H_

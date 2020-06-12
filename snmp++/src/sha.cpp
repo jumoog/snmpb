@@ -24,7 +24,7 @@
   _##  upon this software code base. 
   _##  
   _##########################################################################*/
-char sha_cpp_version[]="#(@) SNMP++ $Id: sha.cpp 3179 2016-10-17 20:06:26Z katz $";
+char sha_cpp_version[]="#(@) SNMP++ $Id$";
 
 #include <libsnmp.h>
 

@@ -43,7 +43,7 @@
 
   Peter E. Mellquist
 */
-char snmptraps_cpp_version[]="@(#) SNMP++ $Id: snmpTraps.cpp 3200 2017-04-25 19:53:16Z katz $";
+char snmptraps_cpp_version[]="@(#) SNMP++ $Id$";
 #include <libsnmp.h>
 
 #include "snmp_pp/snmp_pp.h"

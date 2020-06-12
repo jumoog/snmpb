@@ -43,7 +43,7 @@
 
   Peter E. Mellquist
 */
-char snmpwalkthreads_cpp_version[]="@(#) SNMP++ $Id: snmpWalkThreads.cpp 3200 2017-04-25 19:53:16Z katz $";
+
 #include <libsnmp.h>
 
 #include "snmp_pp/snmp_pp.h"

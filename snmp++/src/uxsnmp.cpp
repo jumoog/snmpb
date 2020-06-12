@@ -33,7 +33,7 @@
 
       Author:         Peter E Mellquist
 =====================================================================*/
-char snmp_cpp_version[]="#(@) SNMP++ $Id: uxsnmp.cpp 3206 2017-07-30 18:48:15Z katz $";
+char snmp_cpp_version[]="#(@) SNMP++ $Id$";
 
 /* CK Ng    added support for WIN32 in the whole file */
 

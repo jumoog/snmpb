@@ -49,7 +49,7 @@
   DESCRIPTION:
   Class implemtation for SMI Gauge32 class.
 =====================================================================*/
-char gauge_cpp_version[]="@(#) SNMP++ $Id: gauge.cpp 3169 2016-09-26 20:45:41Z katz $";
+char gauge_cpp_version[]="@(#) SNMP++ $Id$";
 
 #include <libsnmp.h>
 

@@ -55,7 +55,7 @@
    These notices must be retained in any copies of any part of this
    documentation and/or software.
  */
-// $Id: md5.h 3195 2017-01-11 20:07:44Z katz $
+// $Id$
 
 #ifdef __cplusplus
 extern "C" {

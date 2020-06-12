@@ -24,7 +24,7 @@
   _##  upon this software code base.
   _##
   _##########################################################################*/
-char auth_priv_version[]="@(#) SNMP++ $Id: auth_priv.cpp 3196 2017-01-11 21:38:46Z katz $";
+char auth_priv_version[]="@(#) SNMP++ $Id$";
 
 #include <libsnmp.h>
 

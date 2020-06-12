@@ -50,7 +50,7 @@
   DESCRIPTION:
   Class definition for SMI Gauge32 class.
 =====================================================================*/
-// $Id: gauge.h 3169 2016-09-26 20:45:41Z katz $
+// $Id$
 
 #ifndef _SNMP_GAUGE_H_
 #define _SNMP_GAUGE_H_

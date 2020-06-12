@@ -51,7 +51,7 @@
   Adapted and integrated into snmp++ by Ragavan Tetchinamourty
 
 =====================================================================*/
-// $Id: IPv6Utility.h 3164 2016-09-23 21:30:38Z katz $
+// $Id$
 
 #ifndef _SNMP_IPV6UTILITY_H_
 #define _SNMP_IPV6UTILITY_H_
