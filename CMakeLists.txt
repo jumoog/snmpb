@@ -181,7 +181,7 @@ else() # USE_BUNDLED_LIBTOMCRYPT
 
         BUILD_COMMAND
             make
-                "CFLAGS=-fpic\ -DLTC_NO_ROLC\ -Isrc/headers"
+            "CFLAGS=-fpic\ -DLTC_NO_ROLC\ -Isrc/headers\ -Wno-implicit-function-declaration"
             library
         BUILD_IN_SOURCE TRUE
 
