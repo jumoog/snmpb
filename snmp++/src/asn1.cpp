@@ -49,8 +49,8 @@
 char asn1_cpp_version[]="#(@) SNMP++ $Id$";
 
 #ifdef __unix
-#include /**/ <sys/types.h>
-#include /**/ <netinet/in.h>
+#include <sys/types.h>
+#include <netinet/in.h>
 #endif
 
 #include <libsnmp.h>
@@ -393,7 +393,6 @@ unsigned char *asn_parse_header(unsigned char *data,
                                 unsigned char *type)
 {
   unsigned char *bufp = data;
-  register int header_len;
   unsigned long asn_length;
 
   /* this only works on data types < 30, i.e. no extension octets */
@@ -405,7 +404,7 @@ unsigned char *asn_parse_header(unsigned char *data,
   bufp = asn_parse_length(bufp + 1, &asn_length);
   if (bufp == NULL)
     return NULL;
-  header_len = SAFE_INT_CAST(bufp - data);
+  int header_len = SAFE_INT_CAST(bufp - data);
   if ((unsigned long)(header_len + asn_length) > (unsigned long)*datalength) {
     ASNERROR("asn length too long");
     return NULL;

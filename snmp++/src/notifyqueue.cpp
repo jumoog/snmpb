@@ -436,7 +436,7 @@ int CNotifyEventQueue::AddEntry(Snmp *snmp,
       }
 
       debugprintf(3, "Bind to %s for notifications, fd %d.",
-		  m_notify_addr.get_printable(), m_notify_fd);
+                  m_notify_addr.get_printable(), m_notify_fd);
     }
 
     // Do ipv6
@@ -496,22 +496,22 @@ int CNotifyEventQueue::AddEntry(Snmp *snmp,
 
       if (m_notify_addr6.has_ipv6_scope())
       {
-	scope = m_notify_addr6.get_scope();
+        scope = m_notify_addr6.get_scope();
 
-	int y = addrstr.len() - 1;
-	while ((y>0) && (addrstr[y] != '%'))
-	{
-	  addrstr.set_len(addrstr.len() - 1);
-	  y--;
-	}
-	if (addrstr[y] == '%')
-	  addrstr.set_len(addrstr.len() - 1);
+        int y = addrstr.len() - 1;
+        while ((y>0) && (addrstr[y] != '%'))
+        {
+          addrstr.set_len(addrstr.len() - 1);
+          y--;
+        }
+        if (addrstr[y] == '%')
+          addrstr.set_len(addrstr.len() - 1);
       }
 
       if (inet_pton(AF_INET6, addrstr.get_printable(),
-		    &mgr_addr6.sin6_addr) < 0)
+                    &mgr_addr6.sin6_addr) < 0)
       {
-	LOG_BEGIN(loggerModuleName, ERROR_LOG | 1);
+        LOG_BEGIN(loggerModuleName, ERROR_LOG | 1);
         LOG("Notify transport: inet_pton returns (errno) (str)");
         LOG(errno);
         LOG(strerror(errno));
@@ -520,7 +520,7 @@ int CNotifyEventQueue::AddEntry(Snmp *snmp,
         return SNMP_CLASS_INVALID_ADDRESS;
       }
 
-      // If IPv4 address is enabled, bind IPv6 socket for IPv6 only 
+      // If IPv4 address is enabled, bind IPv6 socket for IPv6 only
       // (i.e. no ipv4-mapped addresses)
 #ifndef WIN32
       int on = 0;
@@ -542,7 +542,7 @@ int CNotifyEventQueue::AddEntry(Snmp *snmp,
 
       // bind the socket
       if (bind(m_notify_fd6, (struct sockaddr *) &mgr_addr6,
-	       sizeof(mgr_addr6)) < 0)
+               sizeof(mgr_addr6)) < 0)
       {
 #ifdef WIN32
         int werr = WSAGetLastError();
@@ -576,19 +576,19 @@ int CNotifyEventQueue::AddEntry(Snmp *snmp,
           status = SNMP_CLASS_INTERNAL_ERROR;
         }
 #endif
-	debugprintf(0, "Fatal: could not bind to %s",
-		    m_notify_addr6.get_printable());
-	cleanup();
-	return status;
+        debugprintf(0, "Fatal: could not bind to %s",
+                    m_notify_addr6.get_printable());
+        cleanup();
+        return status;
       }
       debugprintf(3, "Bind to %s for notifications, fd %d.",
-		  m_notify_addr6.get_printable(), m_notify_fd6);
+                  m_notify_addr6.get_printable(), m_notify_fd6);
 #else
       debugprintf(0, "User error: Enable IPv6 and recompile snmp++.");
       cleanup();
       return SNMP_CLASS_TL_UNSUPPORTED;
 #endif
-    }
+    } // not is_v4_address
   }
 
   CNotifyEvent *newEvent = new CNotifyEvent(snmp, trapids, targets);
@@ -611,6 +611,7 @@ void CNotifyEventQueue::cleanup()
     m_notify_fd = INVALID_SOCKET;
   }
   m_notify_addr.clear();
+
   if (m_notify_fd6 != INVALID_SOCKET)
   {
     close(m_notify_fd6);
@@ -656,10 +657,11 @@ void CNotifyEventQueue::DeleteEntry(Snmp *snmp)
       m_notify_fd = INVALID_SOCKET;
     }
     m_notify_addr.clear();
+
     if (m_notify_fd6 != INVALID_SOCKET)
     {
       debugprintf(3, "Closing notifications port %s, fd %d.",
-		  m_notify_addr6.get_printable(), m_notify_fd6);
+                  m_notify_addr6.get_printable(), m_notify_fd6);
       close(m_notify_fd6);
       m_notify_fd6 = INVALID_SOCKET;
     }
@@ -727,9 +729,9 @@ int CNotifyEventQueue::HandleEvents(const struct pollfd *readfds,
       continue; // not our socket
 
     status = receive_snmp_notification(
-                 (readfds[i].fd==m_notify_fd?m_notify_fd:m_notify_fd6),
+                 (readfds[i].fd == m_notify_fd ? m_notify_fd:m_notify_fd6),
                  *m_snmpSession,
-				       pdu, &target);
+                 pdu, &target);
 
     if ((SNMP_CLASS_SUCCESS == status) ||
         (SNMP_CLASS_TL_FAILED == status))
@@ -743,10 +745,10 @@ int CNotifyEventQueue::HandleEvents(const struct pollfd *readfds,
       CNotifyEventQueueElt *notifyEltPtr = m_head.GetNext();
       while (notifyEltPtr)
       {
-	notifyEltPtr->GetNotifyEvent()->Callback(*target, pdu,
-                 (readfds[i].fd==m_notify_fd?m_notify_fd:m_notify_fd6),
+        notifyEltPtr->GetNotifyEvent()->Callback(*target, pdu,
+                 (readfds[i].fd == m_notify_fd ? m_notify_fd:m_notify_fd6),
                  status);
-	notifyEltPtr = notifyEltPtr->GetNext();
+        notifyEltPtr = notifyEltPtr->GetNext();
       } // for each snmp object
     }
     if (target) // receive_snmp_notification calls new
@@ -786,7 +788,7 @@ int CNotifyEventQueue::HandleEvents(const int /*maxfds*/,
   SnmpSynchronize _synchronize(*this); // REENTRANT
   int status = SNMP_CLASS_SUCCESS;
 
-  if ((m_notify_fd == INVALID_SOCKET) && 
+  if ((m_notify_fd == INVALID_SOCKET) &&
      (m_notify_fd6 == INVALID_SOCKET)
       )
     return status;
@@ -795,20 +797,20 @@ int CNotifyEventQueue::HandleEvents(const int /*maxfds*/,
   SnmpTarget *target = NULL;
 
   // pull the notifiaction off the socket
-  if (((m_notify_fd != INVALID_SOCKET) && 
+  if (((m_notify_fd != INVALID_SOCKET) &&
         FD_ISSET(m_notify_fd, (fd_set*)&readfds))
       ||
-      ((m_notify_fd6 != INVALID_SOCKET) && 
+      ((m_notify_fd6 != INVALID_SOCKET) &&
         FD_ISSET(m_notify_fd6, (fd_set*)&readfds)))
   {
     int not_fd;
-    if ((m_notify_fd != INVALID_SOCKET) && 
+    if ((m_notify_fd != INVALID_SOCKET) &&
          (FD_ISSET(m_notify_fd, (fd_set*)&readfds)))
         not_fd = m_notify_fd;
     else
-        not_fd = m_notify_fd6; 
+        not_fd = m_notify_fd6;
     status = receive_snmp_notification(not_fd, *m_snmpSession,
-				       pdu, &target);
+                                       pdu, &target);
 
     if ((SNMP_CLASS_SUCCESS == status) ||
         (SNMP_CLASS_TL_FAILED == status))
@@ -825,9 +827,9 @@ int CNotifyEventQueue::HandleEvents(const int /*maxfds*/,
       CNotifyEventQueueElt *notifyEltPtr = m_head.GetNext();
       while (notifyEltPtr)
       {
-	notifyEltPtr->GetNotifyEvent()->Callback(*target, pdu,
-                                             not_fd, status);
-	notifyEltPtr = notifyEltPtr->GetNext();
+        notifyEltPtr->GetNotifyEvent()->Callback(*target, pdu,
+                                                 not_fd, status);
+        notifyEltPtr = notifyEltPtr->GetNext();
       } // for each snmp object
     }
     if (target) // receive_snmp_notification calls new

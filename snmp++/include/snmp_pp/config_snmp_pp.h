@@ -32,10 +32,10 @@
 #include <libsnmp.h>
 #endif
 
-#define SNMP_PP_VERSION_STRING "3.3.10"
+#define SNMP_PP_VERSION_STRING "3.3.11"
 #define SNMP_PP_VERSION 3
 #define SNMP_PP_RELEASE 3
-#define SNMP_PP_PATCHLEVEL 10
+#define SNMP_PP_PATCHLEVEL 11
 
 //! The maximum size of a message that can be sent or received.
 #define MAX_SNMP_PACKET 4096

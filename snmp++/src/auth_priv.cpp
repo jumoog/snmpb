@@ -41,8 +41,7 @@ char auth_priv_version[]="@(#) SNMP++ $Id$";
 #ifdef _USE_OPENSSL
 #include <openssl/des.h>
 #include <openssl/aes.h>
-#include <openssl/sha.h>
-#include <openssl/md5.h>
+#include <openssl/evp.h>
 #endif
 
 // Use internal functions for SHA and MD5 and libdes only
@@ -81,15 +80,67 @@ static const char *loggerModuleName = "snmp++.auth";
 #ifdef _USE_OPENSSL
 
 /* -- START: Defines for OpenSSL -- */
-typedef SHA_CTX               SHAHashStateType;
-#define SHA1_INIT(s)          SHA1_Init(s)
-#define SHA1_PROCESS(s, p, l) SHA1_Update(s, p, l)
-#define SHA1_DONE(s, k)       SHA1_Final(k, s)
 
-typedef MD5_CTX               MD5HashStateType;
-#define MD5_INIT(s)           MD5_Init(s)
-#define MD5_PROCESS(s, p, l)  MD5_Update(s, p, l)
-#define MD5_DONE(s, k)        MD5_Final(k, s)
+#if OPENSSL_VERSION_NUMBER < 0x10100000L || defined(LIBRESSL_VERSION_NUMBER)
+// OpenSSL versions up to 1.0.x and LibreSSL
+typedef EVP_MD_CTX            EVPHashStateType;
+
+int evpAllocAndInit(EVP_MD_CTX *ctx, const EVP_MD *md)
+{
+  // no Alloc needed
+  return EVP_DigestInit(ctx, md);
+}
+
+#define evpDigestUpdate(s, p, l) EVP_DigestUpdate(s, p, l)
+
+int evpDigestFinalAndFree(EVP_MD_CTX *ctx, unsigned char *digest)
+{
+  // no free needed
+  return EVP_DigestFinal(ctx, digest, NULL);
+}
+
+typedef EVP_MD_CTX            SHAHashStateType;
+#define SHA1_INIT(s)          EVP_DigestInit(s, EVP_sha1())
+#define SHA1_PROCESS(s, p, l) EVP_DigestUpdate(s, p, l)
+#define SHA1_DONE(s, k)       EVP_DigestFinal(s, k, NULL)
+
+typedef EVP_MD_CTX            MD5HashStateType;
+#define MD5_INIT(s)           EVP_DigestInit(s, EVP_md5())
+#define MD5_PROCESS(s, p, l)  EVP_DigestUpdate(s, p, l)
+#define MD5_DONE(s, k)        EVP_DigestFinal(s, k, NULL)
+
+#else
+// OpenSSL since 1.1.0
+
+typedef EVP_MD_CTX*           EVPHashStateType;
+
+int evpAllocAndInit(EVP_MD_CTX **ctx, const EVP_MD *md)
+{
+  *ctx = EVP_MD_CTX_new();
+  return EVP_DigestInit(*ctx, md);
+}
+
+#define evpDigestUpdate(s, p, l) EVP_DigestUpdate(*(s), p, l)
+
+int evpDigestFinalAndFree(EVP_MD_CTX **ctx, unsigned char *digest)
+{
+  int result = EVP_DigestFinal(*ctx, digest, NULL);
+  EVP_MD_CTX_free(*ctx);
+  return result;
+}
+
+
+typedef EVP_MD_CTX*           SHAHashStateType;
+#define SHA1_INIT(s)          evpAllocAndInit(s, EVP_sha1())
+#define SHA1_PROCESS(s, p, l) EVP_DigestUpdate(*(s), p, l)
+#define SHA1_DONE(s, k)       EVP_DigestFinal(*(s), k, NULL)
+
+typedef EVP_MD_CTX*           MD5HashStateType;
+#define MD5_INIT(s)           evpAllocAndInit(s, EVP_md5())
+#define MD5_PROCESS(s, p, l)  EVP_DigestUpdate(*(s), p, l)
+#define MD5_DONE(s, k)        EVP_DigestFinal(*(s), k, NULL)
+
+#endif // OPENSSL_VERSION_NUMBER < 0x10100000L || defined(LIBRESSL_VERSION_NUMBER)
 
 typedef DES_key_schedule      DESCBCType;
 #define DES_CBC_START_ENCRYPT(c, iv, k, kl, r, s) \
@@ -2373,24 +2424,24 @@ public:
 
   int init()
   {
-    return SHA224_Init(&ctx);
+    return evpAllocAndInit(&ctx, EVP_sha224());
   }
 
   int update(const unsigned char *data,
              const unsigned int   data_len)
   {
-    return SHA224_Update(&ctx, data, data_len);
+    return evpDigestUpdate(&ctx, data, data_len);
   }
 
   int final(unsigned char *digest)
   {
-    return SHA224_Final(digest, &ctx);
+    return evpDigestFinalAndFree(&ctx, digest);
   }
   int get_key_length() const { return 28; }
   int get_block_size() const { return 64; }
 
 private:
-  SHA256_CTX ctx;
+  EVPHashStateType ctx;
 };
 
 
@@ -2408,24 +2459,24 @@ public:
 
   int init()
   {
-    return SHA256_Init(&ctx);
+    return evpAllocAndInit(&ctx, EVP_sha256());
   }
 
   int update(const unsigned char *data,
              const unsigned int   data_len)
   {
-    return SHA256_Update(&ctx, data, data_len);
+    return evpDigestUpdate(&ctx, data, data_len);
   }
 
   int final(unsigned char *digest)
   {
-    return SHA256_Final(digest, &ctx);
+    return evpDigestFinalAndFree(&ctx, digest);
   }
   int get_key_length() const { return 32; }
   int get_block_size() const { return 64; }
 
 private:
-  SHA256_CTX ctx;
+  EVPHashStateType ctx;
 };
 
 
@@ -2444,24 +2495,24 @@ public:
 
   int init()
   {
-    return SHA384_Init(&ctx);
+    return evpAllocAndInit(&ctx, EVP_sha384());
   }
 
   int update(const unsigned char *data,
              const unsigned int   data_len)
   {
-    return SHA384_Update(&ctx, data, data_len);
+    return evpDigestUpdate(&ctx, data, data_len);
   }
 
   int final(unsigned char *digest)
   {
-    return SHA384_Final(digest, &ctx);
+    return evpDigestFinalAndFree(&ctx, digest);
   }
   int get_key_length() const { return 48; }
   int get_block_size() const { return 128; }
 
 private:
-  SHA512_CTX ctx;
+  EVPHashStateType ctx;
 };
 
 
@@ -2481,24 +2532,24 @@ public:
 
   int init()
   {
-    return SHA512_Init(&ctx);
+    return evpAllocAndInit(&ctx, EVP_sha512());
   }
 
   int update(const unsigned char *data,
              const unsigned int   data_len)
   {
-    return SHA512_Update(&ctx, data, data_len);
+    return evpDigestUpdate(&ctx, data, data_len);
   }
 
   int final(unsigned char *digest)
   {
-    return SHA512_Final(digest, &ctx);
+    return evpDigestFinalAndFree(&ctx, digest);
   }
   int get_key_length() const { return 64; }
   int get_block_size() const { return 128; }
 
 private:
-  SHA512_CTX ctx;
+  EVPHashStateType ctx;
 };
 
 AuthSHABase::Hasher *AuthHMAC384SHA512::get_hasher() const

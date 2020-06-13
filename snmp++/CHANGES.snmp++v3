@@ -1,3 +1,12 @@
+
+Changes snmp++v3.3.11a
+======================
+- OpenSSL: Switched MD5 and SHA1 to use the EVP API of OpenSSL.
+  Tested with: libressl-2.6.4, openssl-1.0.2n, openssl-1.1.0g, 
+  openssl-1.1.1-pre1
+- Fixed [APP-49]: Added option to reactivate historic threading control 
+  (recursive threads) in AGENT++.
+
 Changes snmp++v3.3.10
 =====================
 - Improved: Set the FD_CLOEXEC flag on sockets, so they are not "leaked"

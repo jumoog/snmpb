@@ -1281,7 +1281,7 @@ void IpAddress::format_output() const
                address_buffer[1], address_buffer[2], address_buffer[3]);
     else
     {
-      if (inet_ntop(AF_INET6, address_buffer, (char *)output_buffer, 
+      if (inet_ntop(AF_INET6, address_buffer, (char *)output_buffer,
                     sizeof(output_buffer)) && have_ipv6_scope)
         sprintf((char*)&output_buffer[strlen(output_buffer)], "%%%d", get_scope());
     }
