@@ -1,32 +1,32 @@
 /*_############################################################################
-  _## 
-  _##  snmpNext.cpp  
+  _##
+  _##  snmpNext.cpp
   _##
   _##  SNMP++ v3.3
   _##  -----------------------------------------------
   _##  Copyright (c) 2001-2013 Jochen Katz, Frank Fock
   _##
   _##  This software is based on SNMP++2.6 from Hewlett Packard:
-  _##  
+  _##
   _##    Copyright (c) 1996
   _##    Hewlett-Packard Company
-  _##  
+  _##
   _##  ATTENTION: USE OF THIS SOFTWARE IS SUBJECT TO THE FOLLOWING TERMS.
-  _##  Permission to use, copy, modify, distribute and/or sell this software 
-  _##  and/or its documentation is hereby granted without fee. User agrees 
-  _##  to display the above copyright notice and this license notice in all 
-  _##  copies of the software and any documentation of the software. User 
-  _##  agrees to assume all liability for the use of the software; 
-  _##  Hewlett-Packard and Jochen Katz make no representations about the 
-  _##  suitability of this software for any purpose. It is provided 
-  _##  "AS-IS" without warranty of any kind, either express or implied. User 
+  _##  Permission to use, copy, modify, distribute and/or sell this software
+  _##  and/or its documentation is hereby granted without fee. User agrees
+  _##  to display the above copyright notice and this license notice in all
+  _##  copies of the software and any documentation of the software. User
+  _##  agrees to assume all liability for the use of the software;
+  _##  Hewlett-Packard and Jochen Katz make no representations about the
+  _##  suitability of this software for any purpose. It is provided
+  _##  "AS-IS" without warranty of any kind, either express or implied. User
   _##  hereby grants a royalty-free license to any and all derivatives based
-  _##  upon this software code base. 
-  _##  
+  _##  upon this software code base.
+  _##
   _##########################################################################*/
 /*
   snmpNext.cpp
-  
+
   Copyright (c) 1996
   Hewlett-Packard Company
 
@@ -46,26 +46,24 @@
 
 #include <libsnmp.h>
 
+#include "snmp_pp/snmp_pp.h"
+
 #ifdef WIN32
 #define strcasecmp _stricmp
 #endif
-
-#include "snmp_pp/snmp_pp.h"
 
 #ifdef SNMP_PP_NAMESPACE
 using namespace Snmp_pp;
 #endif
 
-static void
-usage()
+static void usage()
 {
     std::cout << "Usage:\n";
     std::cout << "snmpNext IpAddress | DNSName [Oid] [options]\n";
     exit(1);
 }
 
-static void
-help()
+static void help()
 {
     std::cout << "Usage:\n";
     std::cout << "snmpNext IpAddress | DNSName [Oid] [options]\n";
@@ -93,11 +91,11 @@ help()
 #else
          << "original"
 #endif
-         << "'" << std::endl;
+         << "'\n";
 #endif
-    std::cout << "         -h, -? - prints this help" << std::endl;
+    std::cout << "         -h, -? - prints this help\n";
     exit(1);
-   }
+}
 
 int main(int argc, char **argv)
 {
@@ -160,15 +158,15 @@ int main(int argc, char **argv)
 
    char *ptr;
 
-   for(int x=1;x<argc;x++) {                           // parse for version
-     if (strstr(argv[x],"-v2")!= 0) {
+   for (int x=1;x<argc;x++) {
+     if (strstr(argv[x],"-v2")!= 0) {                // parse for version
        version = version2c;
        continue;
      }
      if (strstr(argv[x],"-r")!= 0) {                 // parse for retries
        ptr = argv[x]; ptr++; ptr++;
        retries = atoi(ptr);
-       if ((retries<0)|| (retries>5)) retries=1; 
+       if ((retries < 0)|| (retries > 5)) retries = 1;
        continue;
      }
      if (strstr(argv[x], "-t")!=0) {                 // parse for timeout
@@ -206,6 +204,14 @@ int main(int argc, char **argv)
          authProtocol = SNMP_AUTHPROTOCOL_HMACSHA;
        else if (strcasecmp(ptr, "MD5") == 0)
          authProtocol = SNMP_AUTHPROTOCOL_HMACMD5;
+       else if (strcasecmp(ptr, "HMAC128SHA224") == 0)
+         authProtocol = SNMP_AUTHPROTOCOL_HMAC128SHA224;
+       else if (strcasecmp(ptr, "HMAC192SHA256") == 0)
+         authProtocol = SNMP_AUTHPROTOCOL_HMAC192SHA256;
+       else if (strcasecmp(ptr, "HMAC256SHA384") == 0)
+         authProtocol = SNMP_AUTHPROTOCOL_HMAC256SHA384;
+       else if (strcasecmp(ptr, "HMAC384SHA512") == 0)
+         authProtocol = SNMP_AUTHPROTOCOL_HMAC384SHA512;
        else if (strcasecmp(ptr, "NONE") == 0)
          authProtocol = SNMP_AUTHPROTOCOL_NONE;
        else
@@ -274,7 +280,7 @@ int main(int argc, char **argv)
        continue;
      }
 #endif
-  }
+   }
 
    //----------[ create a SNMP++ session ]-----------------------------------
    int status;
@@ -411,4 +417,8 @@ int main(int argc, char **argv)
    }
 
    Snmp::socket_cleanup();  // Shut down socket subsystem
+#ifdef _SNMPv3
+   delete v3_MP;
+#endif
 }
+

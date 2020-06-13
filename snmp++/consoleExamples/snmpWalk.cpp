@@ -1,32 +1,32 @@
 /*_############################################################################
-  _## 
-  _##  snmpWalk.cpp  
+  _##
+  _##  snmpWalk.cpp
   _##
   _##  SNMP++ v3.3
   _##  -----------------------------------------------
   _##  Copyright (c) 2001-2013 Jochen Katz, Frank Fock
   _##
   _##  This software is based on SNMP++2.6 from Hewlett Packard:
-  _##  
+  _##
   _##    Copyright (c) 1996
   _##    Hewlett-Packard Company
-  _##  
+  _##
   _##  ATTENTION: USE OF THIS SOFTWARE IS SUBJECT TO THE FOLLOWING TERMS.
-  _##  Permission to use, copy, modify, distribute and/or sell this software 
-  _##  and/or its documentation is hereby granted without fee. User agrees 
-  _##  to display the above copyright notice and this license notice in all 
-  _##  copies of the software and any documentation of the software. User 
-  _##  agrees to assume all liability for the use of the software; 
-  _##  Hewlett-Packard and Jochen Katz make no representations about the 
-  _##  suitability of this software for any purpose. It is provided 
-  _##  "AS-IS" without warranty of any kind, either express or implied. User 
+  _##  Permission to use, copy, modify, distribute and/or sell this software
+  _##  and/or its documentation is hereby granted without fee. User agrees
+  _##  to display the above copyright notice and this license notice in all
+  _##  copies of the software and any documentation of the software. User
+  _##  agrees to assume all liability for the use of the software;
+  _##  Hewlett-Packard and Jochen Katz make no representations about the
+  _##  suitability of this software for any purpose. It is provided
+  _##  "AS-IS" without warranty of any kind, either express or implied. User
   _##  hereby grants a royalty-free license to any and all derivatives based
-  _##  upon this software code base. 
-  _##  
+  _##  upon this software code base.
+  _##
   _##########################################################################*/
 /*
   snmpWalk.cpp 
-  
+
   Copyright (c) 1996
   Hewlett-Packard Company
 
@@ -58,39 +58,37 @@ using namespace Snmp_pp;
 
 #define BULK_MAX 10
 
-static void
-usage()
+static void usage()
 {
     std::cout << "Usage:\n";
     std::cout << "snmpWalk IpAddress | DNSName [StartOid] [options]\n";
     exit(1);
 }
 
-static void
-help()
+static void help()
 {
-  std::cout << "Usage:\n";
-  std::cout << "snmpWalk IpAddress | DNSName [StartOid] [options]\n";
-  std::cout << "StartOid: sysDescr object is default\n";
-  std::cout << "options: -vN , use SNMP version 1, 2 or 3, default is 1\n";
-  std::cout << "         -PPort , remote port to use\n";
-  std::cout << "         -S , only walk within subtree\n";
-  std::cout << "         -CCommunity_name, specify community default is 'public' \n";
-  std::cout << "         -rN , retries default is N = 1 retry\n";
-  std::cout << "         -tN , timeout in hundredths of seconds; default is N = 100\n";
+    std::cout << "Usage:\n";
+    std::cout << "snmpWalk IpAddress | DNSName [StartOid] [options]\n";
+    std::cout << "StartOid: sysDescr object is default\n";
+    std::cout << "options: -vN , use SNMP version 1, 2 or 3, default is 1\n";
+    std::cout << "         -PPort , remote port to use\n";
+    std::cout << "         -S , only walk within subtree\n";
+    std::cout << "         -CCommunity_name, specify community default is 'public' \n";
+    std::cout << "         -rN , retries default is N = 1 retry\n";
+    std::cout << "         -tN , timeout in hundredths of seconds; default is N = 100\n";
 #ifdef _SNMPv3
-  std::cout << "         -snSecurityName,\n";
-  std::cout << "         -slN , securityLevel to use, default N = 3 = authPriv\n";
-  std::cout << "         -smN , securityModel to use, only default N = 3 = USM possible\n";
-  std::cout << "         -cnContextName, default empty string\n";
-  std::cout << "         -ceContextEngineID, as hex e.g. 800007E580, default empty string\n";
-  std::cout << "         -authPROT, use authentication protocol NONE, SHA or MD5\n";
-  std::cout << "         -privPROT, use privacy protocol NONE, DES, 3DESEDE, IDEA, AES128, AES192 or AES256\n";
-  std::cout << "         -uaAuthPassword\n";
-  std::cout << "         -upPrivPassword\n";
+    std::cout << "         -snSecurityName,\n";
+    std::cout << "         -slN , securityLevel to use, default N = 3 = authPriv\n";
+    std::cout << "         -smN , securityModel to use, only default N = 3 = USM possible\n";
+    std::cout << "         -cnContextName, default empty string\n";
+    std::cout << "         -ceContextEngineID, as hex e.g. 800007E580, default empty string\n";
+    std::cout << "         -authPROT, use authentication protocol NONE, SHA or MD5\n";
+    std::cout << "         -privPROT, use privacy protocol NONE, DES, 3DESEDE, IDEA, AES128, AES192 or AES256\n";
+    std::cout << "         -uaAuthPassword\n";
+    std::cout << "         -upPrivPassword\n";
 #endif
 #ifdef WITH_LOG_PROFILES
-  std::cout << "         -Lprofile , log profile to use, default is '"
+    std::cout << "         -Lprofile , log profile to use, default is '"
 #ifdef DEFAULT_LOG_PROFILE
          << DEFAULT_LOG_PROFILE
 #else
@@ -98,8 +96,8 @@ help()
 #endif
          << "'\n";
 #endif
-  std::cout << "         -h, -? - prints this help\n";
-  exit(1);
+    std::cout << "         -h, -? - prints this help\n";
+    exit(1);
 }
 
 int main(int argc, char **argv)
@@ -129,8 +127,8 @@ int main(int argc, char **argv)
    //---------[ make a GenAddress and Oid object to retrieve ]---------------
    UdpAddress address(argv[1]);      // make a SNMP++ Generic address
    if (!address.valid()) {           // check validity of address
-     std::cout << "Invalid Address or DNS Name, " << argv[1] << "\n";
-     usage();
+          std::cout << "Invalid Address or DNS Name, " << argv[1] << "\n";
+          usage();
    }
    Oid oid("1");                      // default is beginning of MIB 
    if (argc >= 3) {                  // if 3 args, then use the callers Oid
@@ -166,15 +164,15 @@ int main(int argc, char **argv)
 
    char *ptr;
 
-   for(int x=1;x<argc;x++) {                           // parse for version
-     if (strstr(argv[x],"-v2")!= 0) {
+   for (int x=1;x<argc;x++) {
+     if (strstr(argv[x],"-v2")!= 0) {                // parse for version
        version = version2c;
        continue;
      }
      if (strstr(argv[x],"-r")!= 0) {                 // parse for retries
        ptr = argv[x]; ptr++; ptr++;
        retries = atoi(ptr);
-       if ((retries<0)|| (retries>5)) retries=1; 
+       if ((retries < 0)|| (retries > 5)) retries = 1;
        continue;
      }
      if (strstr(argv[x], "-t")!=0) {                 // parse for timeout
@@ -216,6 +214,14 @@ int main(int argc, char **argv)
          authProtocol = SNMP_AUTHPROTOCOL_HMACSHA;
        else if (strcasecmp(ptr, "MD5") == 0)
          authProtocol = SNMP_AUTHPROTOCOL_HMACMD5;
+       else if (strcasecmp(ptr, "HMAC128SHA224") == 0)
+         authProtocol = SNMP_AUTHPROTOCOL_HMAC128SHA224;
+       else if (strcasecmp(ptr, "HMAC192SHA256") == 0)
+         authProtocol = SNMP_AUTHPROTOCOL_HMAC192SHA256;
+       else if (strcasecmp(ptr, "HMAC256SHA384") == 0)
+         authProtocol = SNMP_AUTHPROTOCOL_HMAC256SHA384;
+       else if (strcasecmp(ptr, "HMAC384SHA512") == 0)
+         authProtocol = SNMP_AUTHPROTOCOL_HMAC384SHA512;
        else if (strcasecmp(ptr, "NONE") == 0)
          authProtocol = SNMP_AUTHPROTOCOL_NONE;
        else
@@ -447,4 +453,8 @@ int main(int argc, char **argv)
    std::cout << "Total # of Objects  = " << objects  << "\n";
 
    Snmp::socket_cleanup();  // Shut down socket subsystem
+#ifdef _SNMPv3
+   delete v3_MP;
+#endif
 }
+
