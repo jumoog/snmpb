@@ -1,0 +1,209 @@
+From b0a1b84fa120d4372c0da6b7cfdb4a18de2455c4 Mon Sep 17 00:00:00 2001
+From: max ulidtko <ulidtko@gmail.com>
+Date: Sun, 14 Jun 2020 01:36:10 +0300
+Subject: [PATCH 10/11] Hashers tomcrypt impl
+
+---
+ include/snmp_pp/auth_priv.h |   2 +-
+ src/auth_priv.cpp           | 157 +++++++++++++++++++++++++++++++++++-
+ 2 files changed, 156 insertions(+), 3 deletions(-)
+
+diff --git a/include/snmp_pp/auth_priv.h b/include/snmp_pp/auth_priv.h
+index d54b460..a446cdc 100644
+--- a/include/snmp_pp/auth_priv.h
++++ b/include/snmp_pp/auth_priv.h
+@@ -938,7 +938,7 @@ protected:
+   Hasher *get_hasher() const;
+ };
+ 
+-#if defined(_USE_OPENSSL)
++#if defined(_USE_OPENSSL) || defined(_USE_LIBTOMCRYPT)
+ 
+ /**
+  * Authentication module using SHA2 (usmHMAC128SHA224AuthProtocol).
+diff --git a/src/auth_priv.cpp b/src/auth_priv.cpp
+index ed6c6f0..7f1b20c 100644
+--- a/src/auth_priv.cpp
++++ b/src/auth_priv.cpp
+@@ -180,6 +180,26 @@ typedef DES_key_schedule      DESCBCType;
+ #ifdef _USE_LIBTOMCRYPT
+ 
+ /* -- START: Defines for LibTomCrypt -- */
++typedef hash_state                SHA224HashStateType;
++#define SHA2_224_INIT(s)          sha224_init(s)
++#define SHA2_224_PROCESS(s, p, l) sha224_process(s, p, l)
++#define SHA2_224_DONE(s, k)       sha224_done(s, k)
++
++typedef hash_state                SHA256HashStateType;
++#define SHA2_256_INIT(s)          sha256_init(s)
++#define SHA2_256_PROCESS(s, p, l) sha256_process(s, p, l)
++#define SHA2_256_DONE(s, k)       sha256_done(s, k)
++
++typedef hash_state                SHA384HashStateType;
++#define SHA2_384_INIT(s)          sha384_init(s)
++#define SHA2_384_PROCESS(s, p, l) sha384_process(s, p, l)
++#define SHA2_384_DONE(s, k)       sha384_done(s, k)
++
++typedef hash_state                SHA512HashStateType;
++#define SHA2_512_INIT(s)          sha512_init(s)
++#define SHA2_512_PROCESS(s, p, l) sha512_process(s, p, l)
++#define SHA2_512_DONE(s, k)       sha512_done(s, k)
++
+ typedef hash_state            SHAHashStateType;
+ #define SHA1_INIT(s)          sha1_init(s)
+ #define SHA1_PROCESS(s, p, l) sha1_process(s, p, l)
+@@ -912,7 +932,7 @@ int AuthPriv::add_default_modules()
+     ret = SNMP_CLASS_ERROR;
+   }
+ 
+-#if defined(_USE_OPENSSL)
++#if defined(_USE_OPENSSL) || defined(_USE_LIBTOMCRYPT)
+ 
+   if (add_auth(new AuthHMAC128SHA224()) != SNMP_ERROR_SUCCESS)
+   {
+@@ -2537,8 +2557,141 @@ AuthSHABase::Hasher *AuthHMAC384SHA512::get_hasher() const
+   return new Hasher512();
+ }
+ 
+-#endif // defined(_USE_OPENSSL)
++#elif defined(_USE_LIBTOMCRYPT)
++
++class AuthHMAC128SHA224::Hasher224 : public AuthSHABase::Hasher
++{
++public:
++    Hasher224() {}
++  virtual ~Hasher224() {}
++
++  int init()
++  {
++    return SHA2_224_INIT(&sha_hash_state);
++  }
++
++  int update(const unsigned char *data,
++             const unsigned int   data_len)
++  {
++    return SHA2_224_PROCESS(&sha_hash_state, data, data_len);
++  }
++
++  int final(unsigned char *digest)
++  {
++    return SHA2_224_DONE(&sha_hash_state, digest);
++  }
++  int get_key_length() const { return 28; }
++  int get_block_size() const { return 64; }
++
++private:
++  SHA224HashStateType sha_hash_state;
++};
++
++AuthSHABase::Hasher *AuthHMAC128SHA224::get_hasher() const
++{
++  return new Hasher224();
++}
++
++class AuthHMAC192SHA256::Hasher256 : public Hasher
++{
++public:
++    Hasher256() {}
++  virtual ~Hasher256() {}
++
++  int init()
++  {
++    return SHA2_256_INIT(&sha_hash_state);
++  }
++
++  int update(const unsigned char *data,
++             const unsigned int   data_len)
++  {
++    return SHA2_256_PROCESS(&sha_hash_state, data, data_len);
++  }
++
++  int final(unsigned char *digest)
++  {
++    return SHA2_256_DONE(&sha_hash_state, digest);
++  }
++  int get_key_length() const { return 32; }
++  int get_block_size() const { return 64; }
++
++private:
++  SHA256HashStateType sha_hash_state;
++};
++
++AuthSHABase::Hasher *AuthHMAC192SHA256::get_hasher() const
++{
++  return new Hasher256();
++}
++
++class AuthHMAC256SHA384::Hasher384 : public Hasher
++{
++public:
++    Hasher384() {}
++  virtual ~Hasher384() {}
++
++  int init()
++  {
++    return SHA2_384_INIT(&sha_hash_state);
++  }
++
++  int update(const unsigned char *data,
++             const unsigned int   data_len)
++  {
++    return SHA2_384_PROCESS(&sha_hash_state, data, data_len);
++  }
++
++  int final(unsigned char *digest)
++  {
++    return SHA2_384_DONE(&sha_hash_state, digest);
++  }
++  int get_key_length() const { return 48; }
++  int get_block_size() const { return 128; }
++
++private:
++  SHA384HashStateType sha_hash_state;
++};
++
++AuthSHABase::Hasher *AuthHMAC256SHA384::get_hasher() const
++{
++  return new Hasher384();
++}
++
++class AuthHMAC384SHA512::Hasher512 : public Hasher
++{
++public:
++    Hasher512() {}
++  virtual ~Hasher512() {}
++
++  int init()
++  {
++    return SHA2_512_INIT(&sha_hash_state);
++  }
++
++  int update(const unsigned char *data,
++             const unsigned int   data_len)
++  {
++    return SHA2_512_PROCESS(&sha_hash_state, data, data_len);
++  }
++
++  int final(unsigned char *digest)
++  {
++    return SHA2_512_DONE(&sha_hash_state, digest);
++  }
++  int get_key_length() const { return 64; }
++  int get_block_size() const { return 128; }
++
++private:
++  SHA512HashStateType sha_hash_state;
++};
++
++AuthSHABase::Hasher *AuthHMAC384SHA512::get_hasher() const
++{
++  return new Hasher512();
++}
+ 
++#endif // defined(_USE_LIBTOMCRYPT)
+ 
+ #ifdef SNMP_PP_NAMESPACE
+ } // end of namespace Snmp_pp
+-- 
+2.17.1
+

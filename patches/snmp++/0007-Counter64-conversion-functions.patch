@@ -1,0 +1,97 @@
+From 6b21c8d48ae028d867ed827c60c1fe5a5313d534 Mon Sep 17 00:00:00 2001
+From: Martin Jolicoeur <snmpb1@gmail.com>
+Date: Sun, 14 Jun 2020 01:16:44 +0300
+Subject: [PATCH 07/11] Counter64 conversion functions
+
+---
+ include/snmp_pp/ctr64.h | 25 +++++++++++++++++++++++++
+ src/ctr64.cpp           | 30 ++++++++++++++++++++++++++++++
+ 2 files changed, 55 insertions(+)
+
+diff --git a/include/snmp_pp/ctr64.h b/include/snmp_pp/ctr64.h
+index 6d377c0..c37eb5a 100644
+--- a/include/snmp_pp/ctr64.h
++++ b/include/snmp_pp/ctr64.h
+@@ -130,6 +130,31 @@ class DLLOPT Counter64: public  SnmpSyntax
+     return v;
+   }
+ 
++  //-----------[ conversion from/to unsigned long long ]----------------
++
++  /**
++   * Get the value of the object as 64 bit integer.
++   *
++   * @param c64 - The Counter64 object whose value should be returned
++   * @return value as a unsigned 64 bit integer
++   */
++  static pp_uint64 c64_to_ll(const Counter64 &c64);
++
++  /**
++   * Get the value of this object as 64 bit integer.
++   *
++   * @return value as a unsigned 64 bit integer
++   */
++  pp_uint64 c64_to_ll() const;
++
++  /**
++   * Convert a 64 bit integer to a Counter64.
++   *
++   * @param ld - the value to convert
++   * @return A Counter64 object with the value of the param ld.
++   */
++  static Counter64 ll_to_c64(const pp_uint64 &ll);
++
+   //-----------[ get/set using 32 bit variables ]----------------------
+ 
+   /**
+diff --git a/src/ctr64.cpp b/src/ctr64.cpp
+index a35ac8e..d220bca 100644
+--- a/src/ctr64.cpp
++++ b/src/ctr64.cpp
+@@ -67,6 +67,8 @@ char counter64_cpp_version[]="@(#) SNMP++ $Id$";
+ namespace Snmp_pp {
+ #endif
+ 
++#define MAX32 4294967295u
++
+ //----------[ return ASCII format ]-------------------------
+ const char *Counter64::get_printable() const
+ {
+@@ -124,6 +126,34 @@ SnmpSyntax& Counter64::operator=(const SnmpSyntax &val)
+   return *this;
+ }
+ 
++//-----------[ c64_to_ll(Counter64 c64) ]-----------------------------
++// convert a Counter 64 to a 64 bit integer
++pp_uint64 Counter64::c64_to_ll(const Counter64 &c64)
++{
++  pp_uint64 ll = c64.high();
++  ll *= (pp_uint64)MAX32 + (pp_uint64)1; // gotta be MAX32 + 1 to move it to next pos
++  ll += c64.low();
++  return ll;
++}
++
++//-----------[ c64_to_ll( ) ]------------------------------------------
++pp_uint64 Counter64::c64_to_ll() const
++{
++  pp_uint64 ll = high();
++  ll *= (pp_uint64)MAX32 + (pp_uint64)1; // gotta be MAX32 + 1 to move it to next pos
++  ll += low();
++  return ll;
++}
++
++//-----------[ ll_to_c64(pp_uint64 ll) ]----------------------------
++// convert a 64 bit integer to a Counter64
++Counter64 Counter64::ll_to_c64(const pp_uint64 &ll)
++{
++  pp_uint64 high = (pp_uint64)MAX32 + (pp_uint64)1; // look above
++  unsigned long h = (unsigned long)(ll / high);
++  return Counter64(h, (unsigned long)(ll - (h * high)));
++}
++
+ // Return the space needed for serialization
+ int Counter64::get_asn1_length() const
+ {
+-- 
+2.17.1
+

@@ -246,8 +246,9 @@ externalproject_add(snmpxx-bundled
     SOURCE_DIR ${SnmpB_SOURCE_DIR}/snmp++
     PREFIX snmpxx-prefix
 
-    #URL https://www.agentpp.com/download/snmp++-3.3.11a.tar.gz
-    #URL_HASH SHA1=d7fff32791596e678a64c22acd5fc2a68d2cbe1e
+    # TODO update, 3.4.1 is available
+    URL https://www.agentpp.com/download/snmp++-3.3.11a.tar.gz
+    URL_HASH SHA1=702f9906d65ce6a276967a0247182bc2180113d6
 
     CONFIGURE_COMMAND
         ${SnmpB_SOURCE_DIR}/snmp++/configure
@@ -268,19 +269,30 @@ externalproject_add(snmpxx-bundled
             DESTDIR=${SnmpB_BINARY_DIR}/snmpxx-prefix
         install
 
-    #PATCH_COMMAND <>
-    # TODO review changes & update:
-    # + more auth algos
-    # + fixed memleak
-    # - HMAC-SHA2-* algos with OpenSSL only, not with tomcrypt
-    # ? INVALID_SOCKET redefined
-    # - IPv6Utility.cpp inet_pton
-    # + OpenSSL EVP API for md5/sha1
-    # - std::auto_ptr instead of std::unique_ptr
-    # - ctr64 MAX_INT weirdness
-    # - notifyqueue.cpp set_notify_callback_fd big chunk
-    # - usm_v3.cpp SAFE_ULONG_CAST ??
+    PATCH_COMMAND
+    ${CMAKE_COMMAND} -DFILE=snmp++/0001-automake-1.15.1-regen.patch ${PATCH_APP}
+    COMMAND
+    ${CMAKE_COMMAND} -DFILE=snmp++/0002-Fix-tomcrypt-configure-check-add-cxx11-support.patch ${PATCH_APP}
+    COMMAND
+    ${CMAKE_COMMAND} -DFILE=snmp++/0003-Fix-consoleExamples-compile-with-disable-threads.patch ${PATCH_APP}
+    COMMAND
+    ${CMAKE_COMMAND} -DFILE=snmp++/0004-asn1.cpp-needs-sa_addr-definition.patch ${PATCH_APP}
+    COMMAND
+    ${CMAKE_COMMAND} -DFILE=snmp++/0005-Use-inet_ntop-to-format-IPv6-addresses.patch ${PATCH_APP}
+    COMMAND
+    ${CMAKE_COMMAND} -DFILE=snmp++/0006-Separate-ports-for-IPv4-IPv6.patch ${PATCH_APP}
+    COMMAND
+    ${CMAKE_COMMAND} -DFILE=snmp++/0007-Counter64-conversion-functions.patch ${PATCH_APP}
+    COMMAND
+    ${CMAKE_COMMAND} -DFILE=snmp++/0008-Redefined-INVALID_SOCKET-to-get-rid-of-compiler-warn.patch ${PATCH_APP}
+    COMMAND
+    ${CMAKE_COMMAND} -DFILE=snmp++/0009-Use-SAFE_ULONG_CAST-in-time-diff-comparison.patch ${PATCH_APP}
+    COMMAND
+    ${CMAKE_COMMAND} -DFILE=snmp++/0010-Hashers-tomcrypt-impl.patch ${PATCH_APP}
+    COMMAND
+    ${CMAKE_COMMAND} -DFILE=snmp++/0011-Fix-memory-error-delete-delete-mismatch-in-auth_priv.patch ${PATCH_APP}
     )
+
 add_dependencies(snmpxx-bundled libtomcrypt)
 
 # hack to avoid gnarly configure error

@@ -1,0 +1,102 @@
+From e3bb16fe33ac5b5b5adff28dc7315a344bdaf080 Mon Sep 17 00:00:00 2001
+From: Martin Jolicoeur <snmpb1@gmail.com>
+Date: Sat, 27 Nov 2010 04:48:28 +0000
+Subject: [PATCH 05/11] Use inet_ntop to format IPv6 addresses
+
+Replaced custom get_printable for IPv6 addresses by inet_ntop()
+
+git-svn-id: https://svn.code.sf.net/p/snmpb/svn/trunk@443 d4971f4b-c5c8-4039-af2b-e5317b2b9980
+---
+ include/snmp_pp/IPv6Utility.h |  2 +-
+ src/IPv6Utility.cpp           |  6 +++---
+ src/address.cpp               | 29 +++++++++--------------------
+ 3 files changed, 13 insertions(+), 24 deletions(-)
+
+diff --git a/include/snmp_pp/IPv6Utility.h b/include/snmp_pp/IPv6Utility.h
+index 702dcb5..27f17e9 100644
+--- a/include/snmp_pp/IPv6Utility.h
++++ b/include/snmp_pp/IPv6Utility.h
+@@ -67,7 +67,7 @@
+ 
+ const char * inet_ntop(int af, const void *src, char *dst, size_t size);
+ 
+-//int inet_pton(int af, PCTSTR src, void *dst);
++int inet_pton(int af, const char *src, void *dst);
+ 
+ #endif // defined(WIN32) && defined(SNMP_PP_IPv6)
+ 
+diff --git a/src/IPv6Utility.cpp b/src/IPv6Utility.cpp
+index 61afa36..b96360c 100644
+--- a/src/IPv6Utility.cpp
++++ b/src/IPv6Utility.cpp
+@@ -262,7 +262,7 @@ static int inet_pton6(const char *src, unsigned char *dst);
+  * author:
+  *	Paul Vixie, 1996.
+  */
+-/* Not needed with Winsock 2 
++/* Not needed with Winsock 2 */
+ int
+ inet_pton(int af,
+ 	  const char *src,
+@@ -279,9 +279,9 @@ inet_pton(int af,
+ 		errno = EAFNOSUPPORT;
+ 		return (-1);
+ 	}
+-	/ * NOTREACHED * /
++	/* NOTREACHED */
+ }
+-*/
++/**/
+ 
+ /* int
+  * inet_pton4(src, dst)
+diff --git a/src/address.cpp b/src/address.cpp
+index 6b837e5..980fb22 100644
+--- a/src/address.cpp
++++ b/src/address.cpp
+@@ -50,6 +50,10 @@
+ =====================================================================*/
+ char address_cpp_version[]="@(#) SNMP++ $Id$";
+ 
++#include <stdio.h>
++#include <stdlib.h>
++#include <ctype.h>
++
+ #include <libsnmp.h>
+ 
+ #include "snmp_pp/address.h"
+@@ -1276,26 +1280,11 @@ void IpAddress::format_output() const
+       sprintf((char *) output_buffer,"%d.%d.%d.%d",address_buffer[0],
+                address_buffer[1], address_buffer[2], address_buffer[3]);
+     else
+-      if (have_ipv6_scope)
+-        sprintf((char *) output_buffer,
+-                "%02x%02x:%02x%02x:%02x%02x:%02x%02x:"
+-                "%02x%02x:%02x%02x:%02x%02x:%02x%02x%%%d",
+-                address_buffer[ 0], address_buffer[ 1], address_buffer[ 2],
+-                address_buffer[ 3], address_buffer[ 4], address_buffer[ 5],
+-                address_buffer[ 6], address_buffer[ 7], address_buffer[ 8],
+-                address_buffer[ 9], address_buffer[10], address_buffer[11],
+-                address_buffer[12], address_buffer[13], address_buffer[14],
+-                address_buffer[15], get_scope());
+-      else
+-        sprintf((char *) output_buffer,
+-                "%02x%02x:%02x%02x:%02x%02x:%02x%02x:"
+-                "%02x%02x:%02x%02x:%02x%02x:%02x%02x",
+-                address_buffer[ 0], address_buffer[ 1], address_buffer[ 2],
+-                address_buffer[ 3], address_buffer[ 4], address_buffer[ 5],
+-                address_buffer[ 6], address_buffer[ 7], address_buffer[ 8],
+-                address_buffer[ 9], address_buffer[10], address_buffer[11],
+-                address_buffer[12], address_buffer[13], address_buffer[14],
+-                address_buffer[15]);
++    {
++      if (inet_ntop(AF_INET6, address_buffer, (char *)output_buffer,
++                    sizeof(output_buffer)) && have_ipv6_scope)
++        sprintf((char*)&output_buffer[strlen(output_buffer)], "%%%d", get_scope());
++    }
+   }
+   else
+     *(char *)output_buffer = 0;
+-- 
+2.17.1
+

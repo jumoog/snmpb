@@ -1,0 +1,25 @@
+From dfa76772fca61ed59957e78f042e8ba1f3510b60 Mon Sep 17 00:00:00 2001
+From: Martin Jolicoeur <snmpb1@gmail.com>
+Date: Sun, 14 Jun 2020 01:27:58 +0300
+Subject: [PATCH 09/11] Use SAFE_ULONG_CAST in time diff comparison
+
+---
+ src/usm_v3.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/usm_v3.cpp b/src/usm_v3.cpp
+index 4702826..c64d339 100644
+--- a/src/usm_v3.cpp
++++ b/src/usm_v3.cpp
+@@ -3046,7 +3046,7 @@ int USMTimeTable::check_time(const OctetStr &engine_id,
+     /* Entry found, we are authoritative */
+     if ((table[0].engine_boots == 2147483647) ||
+         (table[0].engine_boots != engine_boots) ||
+-        (labs(static_cast<pp_int64>(now) + table[0].time_diff - engine_time) > 150))
++        (labs(SAFE_ULONG_CAST(now) + table[0].time_diff - engine_time) > 150))
+     {
+       LOG_BEGIN(loggerModuleName, DEBUG_LOG | 9);
+       LOG("USMTimeTable: Check time failed, authoritative (id) (boot) (time)");
+-- 
+2.17.1
+
