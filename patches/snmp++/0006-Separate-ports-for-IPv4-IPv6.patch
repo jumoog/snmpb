@@ -1,4 +1,4 @@
-From fbb59eb4bfc7d25f24e8d1ea14919d15301ff0f8 Mon Sep 17 00:00:00 2001
+From 7edd24fe74d6d2deb6a092d4a150201f0a9f7566 Mon Sep 17 00:00:00 2001
 From: Martin Jolicoeur <snmpb1@gmail.com>
 Date: Sun, 16 Jan 2011 08:35:21 +0000
 Subject: [PATCH 06/11] Separate ports for IPv4 & IPv6
@@ -8,10 +8,10 @@ Squashed commits:
 * 936190e (Added set/get_notify_callback_fd() to access fd when replying to INFORMS, 2011-01-16)
 ---
  include/snmp_pp/notifyqueue.h |   6 ++
- include/snmp_pp/uxsnmp.h      |  10 +++
+ include/snmp_pp/uxsnmp.h      |   8 ++
  src/notifyqueue.cpp           | 149 ++++++++++++++++++++++++++--------
- src/uxsnmp.cpp                |  33 ++++++--
- 4 files changed, 156 insertions(+), 42 deletions(-)
+ src/uxsnmp.cpp                |  28 +++++--
+ 4 files changed, 149 insertions(+), 42 deletions(-)
 
 diff --git a/include/snmp_pp/notifyqueue.h b/include/snmp_pp/notifyqueue.h
 index 5c93e2b..753e2f1 100644
@@ -39,7 +39,7 @@ index 5c93e2b..753e2f1 100644
      Snmp *m_snmpSession;
      UdpAddress m_notify_addr;
 diff --git a/include/snmp_pp/uxsnmp.h b/include/snmp_pp/uxsnmp.h
-index 188d53e..b396260 100644
+index 677c0a1..b396260 100644
 --- a/include/snmp_pp/uxsnmp.h
 +++ b/include/snmp_pp/uxsnmp.h
 @@ -445,11 +445,13 @@ class DLLOPT Snmp: public SnmpSynchronized
@@ -66,25 +66,15 @@ index 188d53e..b396260 100644
    //@}
  
    /**
-@@ -522,7 +527,9 @@ class DLLOPT Snmp: public SnmpSynchronized
+@@ -522,6 +527,7 @@ class DLLOPT Snmp: public SnmpSynchronized
                              SnmpSocket fd = INVALID_SOCKET);
  
    const IpAddress &get_listen_address() const {return listen_address; };
 +  const IpAddress &get_listen_address6() const {return listen_address6; };
  
-+#if WITH_THREADS
+ #if WITH_THREADS
    /**
-    * Start one thread listening for responses and notifications.
-    * This method is used to start response and notification processing in a
-@@ -548,6 +555,7 @@ class DLLOPT Snmp: public SnmpSynchronized
-    *       stop_poll_thread() at any point in time.
-    */
-   void stop_poll_thread();
-+#endif
- 
-   EventListHolder *get_eventListHolder() { return eventListHolder; };
- 
-@@ -644,11 +652,13 @@ protected:
+@@ -646,11 +652,13 @@ protected:
  #endif
  
    IpAddress listen_address;
@@ -430,7 +420,7 @@ index 9c3b46b..3294c44 100644
        } // for each snmp object
      }
 diff --git a/src/uxsnmp.cpp b/src/uxsnmp.cpp
-index 7cc6f50..a28ba34 100644
+index 8579d95..a28ba34 100644
 --- a/src/uxsnmp.cpp
 +++ b/src/uxsnmp.cpp
 @@ -631,10 +631,10 @@ Snmp::Snmp(int &status, const unsigned short port, const bool bind_ipv6)
@@ -481,17 +471,7 @@ index 7cc6f50..a28ba34 100644
  
    init(status, addresses, addr_v4.get_port(), addr_v6.get_port());
  }
-@@ -947,7 +947,9 @@ void Snmp::init(int& status, IpAddress *addresses[2],
- //---------[ Snmp Class Destructor ]----------------------------------
- Snmp::~Snmp()
- {
-+#ifdef WITH_THREADS
-   stop_poll_thread();
-+#endif
- 
-   // if we failed during construction then don't try
-   // to free stuff up that was not allocated
-@@ -1482,6 +1484,18 @@ int Snmp::notify_get_listen_port()
+@@ -1484,6 +1484,18 @@ int Snmp::notify_get_listen_port()
    return eventListHolder->notifyEventList()->get_listen_port();
  }
  
@@ -510,23 +490,6 @@ index 7cc6f50..a28ba34 100644
  //-----------------------[ register to get traps]-------------------------
  int Snmp::notify_register(const OidCollection     &trapids,
                            const TargetCollection  &targets,
-@@ -2260,6 +2274,7 @@ int Snmp::broadcast_discovery(UdpAddressCollection &addresses,
-   return 0;
- }
- 
-+#if WITH_THREADS
- //     Starts the working thread for the recovery of the pending events
- bool Snmp::start_poll_thread(const int timeout)
- {
-@@ -2366,6 +2381,8 @@ void* Snmp::process_thread(void *arg)
-     return 0;
- }
- 
-+#endif // WITH_THREADS
-+
- #ifdef SNMP_PP_NAMESPACE
- } // end of namespace Snmp_pp
- #endif
 -- 
 2.17.1
 

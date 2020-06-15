@@ -1,12 +1,70 @@
-From 19e4c93e1b1f7e064e92ed2d59497df8537a54a0 Mon Sep 17 00:00:00 2001
+From 271198f400ef4db964adc65098b8f7fe0345690f Mon Sep 17 00:00:00 2001
 From: max ulidtko <ulidtko@gmail.com>
-Date: Fri, 12 Jun 2020 13:39:18 +0300
+Date: Tue, 14 Jan 2020 11:46:57 +0200
 Subject: [PATCH 03/11] Fix consoleExamples compile with --disable-threads
 
 ---
- consoleExamples/Makefile.am | 30 +++++++++++++++++-------------
- 1 file changed, 17 insertions(+), 13 deletions(-)
+ configure                   | 15 +++++++++++
+ configure.ac                |  2 ++
+ consoleExamples/Makefile.am | 30 ++++++++++++----------
+ consoleExamples/Makefile.in | 50 +++++++++++++++++++++++--------------
+ include/snmp_pp/uxsnmp.h    |  2 ++
+ src/uxsnmp.cpp              |  5 ++++
+ 6 files changed, 72 insertions(+), 32 deletions(-)
 
+diff --git a/configure b/configure
+index 3642d9b..814df07 100755
+--- a/configure
++++ b/configure
+@@ -726,6 +726,8 @@ PTHREAD_LIBS
+ PTHREAD_CXX
+ PTHREAD_CC
+ acx_pthread_config
++ENABLE_THREADS_FALSE
++ENABLE_THREADS_TRUE
+ EGREP
+ PKG_CONFIG_LIBDIR
+ PKG_CONFIG_PATH
+@@ -6709,6 +6711,15 @@ else
+ fi
+ 
+ 
++ if test x$ENABLE_THREADS = xtrue; then
++  ENABLE_THREADS_TRUE=
++  ENABLE_THREADS_FALSE='#'
++else
++  ENABLE_THREADS_TRUE='#'
++  ENABLE_THREADS_FALSE=
++fi
++
++
+ 
+ # Check whether --with-log-profile was given.
+ if test "${with_log_profile+set}" = set; then :
+@@ -23597,6 +23608,10 @@ if test -z "${am__fastdepCXX_TRUE}" && test -z "${am__fastdepCXX_FALSE}"; then
+   as_fn_error $? "conditional \"am__fastdepCXX\" was never defined.
+ Usually this means the macro was only invoked conditionally." "$LINENO" 5
+ fi
++if test -z "${ENABLE_THREADS_TRUE}" && test -z "${ENABLE_THREADS_FALSE}"; then
++  as_fn_error $? "conditional \"ENABLE_THREADS\" was never defined.
++Usually this means the macro was only invoked conditionally." "$LINENO" 5
++fi
+ 
+ : "${CONFIG_STATUS=./config.status}"
+ ac_write_fail=0
+diff --git a/configure.ac b/configure.ac
+index eb33917..d519499 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -129,6 +129,8 @@ AC_ARG_ENABLE(ipxaddress,
+   --disable-ipxaddress    disable support of class IpxAddress],
+ ENABLE_IPXADDRESS=$enableval, ENABLE_IPXADDRESS=no)
+ 
++AM_CONDITIONAL([ENABLE_THREADS], [test x$ENABLE_THREADS = xtrue])
++
+ AC_ARG_WITH([log-profile], [
+   --with-log-profile[[=profile]]
+                           uses a specific profile for logging
 diff --git a/consoleExamples/Makefile.am b/consoleExamples/Makefile.am
 index 43b91c6..2891a0a 100644
 --- a/consoleExamples/Makefile.am
@@ -72,6 +130,176 @@ index 43b91c6..2891a0a 100644
 +endif
 +
 +EXTRA_DIST = Makefile.dunix Makefile.bcc Makefile.linux Makefile.solaris common.mk
+diff --git a/consoleExamples/Makefile.in b/consoleExamples/Makefile.in
+index 1335ec5..8ada306 100644
+--- a/consoleExamples/Makefile.in
++++ b/consoleExamples/Makefile.in
+@@ -89,11 +89,12 @@ POST_UNINSTALL = :
+ build_triplet = @build@
+ host_triplet = @host@
+ bin_PROGRAMS = snmpGet$(EXEEXT) snmpSet$(EXEEXT) snmpNext$(EXEEXT) \
+-	snmpNextAsync$(EXEEXT) snmpWalk$(EXEEXT) snmpBulk$(EXEEXT) \
+-	snmpTraps$(EXEEXT) receive_trap$(EXEEXT) snmpInform$(EXEEXT) \
+-	snmpPasswd$(EXEEXT) snmpWalkThreads$(EXEEXT) \
+-	snmpDiscover$(EXEEXT)
++	snmpWalk$(EXEEXT) snmpBulk$(EXEEXT) snmpTraps$(EXEEXT) \
++	snmpInform$(EXEEXT) snmpPasswd$(EXEEXT) snmpDiscover$(EXEEXT) \
++	$(am__EXEEXT_1)
+ noinst_PROGRAMS = test_app$(EXEEXT)
++@ENABLE_THREADS_TRUE@am__append_1 = snmpNextAsync receive_trap \
++@ENABLE_THREADS_TRUE@	snmpWalkThreads
+ subdir = consoleExamples
+ ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
+ am__aclocal_m4_deps = $(top_srcdir)/m4/acx_cxx_have_std.m4 \
+@@ -117,11 +118,16 @@ mkinstalldirs = $(install_sh) -d
+ CONFIG_HEADER = $(top_builddir)/config.h
+ CONFIG_CLEAN_FILES =
+ CONFIG_CLEAN_VPATH_FILES =
++@ENABLE_THREADS_TRUE@am__EXEEXT_1 = snmpNextAsync$(EXEEXT) \
++@ENABLE_THREADS_TRUE@	receive_trap$(EXEEXT) \
++@ENABLE_THREADS_TRUE@	snmpWalkThreads$(EXEEXT)
+ am__installdirs = "$(DESTDIR)$(bindir)"
+ PROGRAMS = $(bin_PROGRAMS) $(noinst_PROGRAMS)
+-am_receive_trap_OBJECTS = receive_trap.$(OBJEXT)
++am__receive_trap_SOURCES_DIST = receive_trap.cpp
++@ENABLE_THREADS_TRUE@am_receive_trap_OBJECTS = receive_trap.$(OBJEXT)
+ receive_trap_OBJECTS = $(am_receive_trap_OBJECTS)
+-receive_trap_DEPENDENCIES = $(abs_top_builddir)/src/libsnmp++.la
++@ENABLE_THREADS_TRUE@receive_trap_DEPENDENCIES =  \
++@ENABLE_THREADS_TRUE@	$(abs_top_builddir)/src/libsnmp++.la
+ AM_V_lt = $(am__v_lt_@AM_V@)
+ am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
+ am__v_lt_0 = --silent
+@@ -141,9 +147,12 @@ snmpInform_DEPENDENCIES = $(abs_top_builddir)/src/libsnmp++.la
+ am_snmpNext_OBJECTS = snmpNext.$(OBJEXT)
+ snmpNext_OBJECTS = $(am_snmpNext_OBJECTS)
+ snmpNext_DEPENDENCIES = $(abs_top_builddir)/src/libsnmp++.la
+-am_snmpNextAsync_OBJECTS = snmpNextAsync.$(OBJEXT)
++am__snmpNextAsync_SOURCES_DIST = snmpNextAsync.cpp
++@ENABLE_THREADS_TRUE@am_snmpNextAsync_OBJECTS =  \
++@ENABLE_THREADS_TRUE@	snmpNextAsync.$(OBJEXT)
+ snmpNextAsync_OBJECTS = $(am_snmpNextAsync_OBJECTS)
+-snmpNextAsync_DEPENDENCIES = $(abs_top_builddir)/src/libsnmp++.la
++@ENABLE_THREADS_TRUE@snmpNextAsync_DEPENDENCIES =  \
++@ENABLE_THREADS_TRUE@	$(abs_top_builddir)/src/libsnmp++.la
+ am_snmpPasswd_OBJECTS = snmpPasswd.$(OBJEXT)
+ snmpPasswd_OBJECTS = $(am_snmpPasswd_OBJECTS)
+ snmpPasswd_DEPENDENCIES = $(abs_top_builddir)/src/libsnmp++.la
+@@ -156,9 +165,12 @@ snmpTraps_DEPENDENCIES = $(abs_top_builddir)/src/libsnmp++.la
+ am_snmpWalk_OBJECTS = snmpWalk.$(OBJEXT)
+ snmpWalk_OBJECTS = $(am_snmpWalk_OBJECTS)
+ snmpWalk_DEPENDENCIES = $(abs_top_builddir)/src/libsnmp++.la
+-am_snmpWalkThreads_OBJECTS = snmpWalkThreads.$(OBJEXT)
++am__snmpWalkThreads_SOURCES_DIST = snmpWalkThreads.cpp
++@ENABLE_THREADS_TRUE@am_snmpWalkThreads_OBJECTS =  \
++@ENABLE_THREADS_TRUE@	snmpWalkThreads.$(OBJEXT)
+ snmpWalkThreads_OBJECTS = $(am_snmpWalkThreads_OBJECTS)
+-snmpWalkThreads_DEPENDENCIES = $(abs_top_builddir)/src/libsnmp++.la
++@ENABLE_THREADS_TRUE@snmpWalkThreads_DEPENDENCIES =  \
++@ENABLE_THREADS_TRUE@	$(abs_top_builddir)/src/libsnmp++.la
+ am_test_app_OBJECTS = test_app.$(OBJEXT)
+ test_app_OBJECTS = $(am_test_app_OBJECTS)
+ test_app_DEPENDENCIES = $(abs_top_builddir)/src/libsnmp++.la
+@@ -202,12 +214,12 @@ SOURCES = $(receive_trap_SOURCES) $(snmpBulk_SOURCES) \
+ 	$(snmpNextAsync_SOURCES) $(snmpPasswd_SOURCES) \
+ 	$(snmpSet_SOURCES) $(snmpTraps_SOURCES) $(snmpWalk_SOURCES) \
+ 	$(snmpWalkThreads_SOURCES) $(test_app_SOURCES)
+-DIST_SOURCES = $(receive_trap_SOURCES) $(snmpBulk_SOURCES) \
++DIST_SOURCES = $(am__receive_trap_SOURCES_DIST) $(snmpBulk_SOURCES) \
+ 	$(snmpDiscover_SOURCES) $(snmpGet_SOURCES) \
+ 	$(snmpInform_SOURCES) $(snmpNext_SOURCES) \
+-	$(snmpNextAsync_SOURCES) $(snmpPasswd_SOURCES) \
++	$(am__snmpNextAsync_SOURCES_DIST) $(snmpPasswd_SOURCES) \
+ 	$(snmpSet_SOURCES) $(snmpTraps_SOURCES) $(snmpWalk_SOURCES) \
+-	$(snmpWalkThreads_SOURCES) $(test_app_SOURCES)
++	$(am__snmpWalkThreads_SOURCES_DIST) $(test_app_SOURCES)
+ am__can_run_installinfo = \
+   case $$AM_UPDATE_INFO_DIR in \
+     n|no|NO) false;; \
+@@ -440,26 +452,26 @@ snmpSet_SOURCES = snmpSet.cpp
+ snmpSet_LDADD = $(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
+ snmpNext_SOURCES = snmpNext.cpp
+ snmpNext_LDADD = $(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
+-snmpNextAsync_SOURCES = snmpNextAsync.cpp
+-snmpNextAsync_LDADD = $(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
+ snmpWalk_SOURCES = snmpWalk.cpp
+ snmpWalk_LDADD = $(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
+ snmpBulk_SOURCES = snmpBulk.cpp
+ snmpBulk_LDADD = $(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
+ snmpTraps_SOURCES = snmpTraps.cpp
+ snmpTraps_LDADD = $(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
+-receive_trap_SOURCES = receive_trap.cpp
+-receive_trap_LDADD = $(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
+ snmpInform_SOURCES = snmpInform.cpp
+ snmpInform_LDADD = $(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
+ snmpPasswd_SOURCES = snmpPasswd.cpp
+ snmpPasswd_LDADD = $(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
+-snmpWalkThreads_SOURCES = snmpWalkThreads.cpp
+-snmpWalkThreads_LDADD = $(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
+ snmpDiscover_SOURCES = snmpDiscover.cpp
+ snmpDiscover_LDADD = $(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
+ test_app_SOURCES = test_app.cpp
+ test_app_LDADD = $(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
++@ENABLE_THREADS_TRUE@snmpNextAsync_SOURCES = snmpNextAsync.cpp
++@ENABLE_THREADS_TRUE@snmpNextAsync_LDADD = $(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
++@ENABLE_THREADS_TRUE@receive_trap_SOURCES = receive_trap.cpp
++@ENABLE_THREADS_TRUE@receive_trap_LDADD = $(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
++@ENABLE_THREADS_TRUE@snmpWalkThreads_SOURCES = snmpWalkThreads.cpp
++@ENABLE_THREADS_TRUE@snmpWalkThreads_LDADD = $(abs_top_builddir)/src/libsnmp++.la @LINKFLAGS@
+ EXTRA_DIST = Makefile.dunix Makefile.bcc Makefile.linux Makefile.solaris common.mk
+ all: all-am
+ 
+diff --git a/include/snmp_pp/uxsnmp.h b/include/snmp_pp/uxsnmp.h
+index 188d53e..677c0a1 100644
+--- a/include/snmp_pp/uxsnmp.h
++++ b/include/snmp_pp/uxsnmp.h
+@@ -523,6 +523,7 @@ class DLLOPT Snmp: public SnmpSynchronized
+ 
+   const IpAddress &get_listen_address() const {return listen_address; };
+ 
++#if WITH_THREADS
+   /**
+    * Start one thread listening for responses and notifications.
+    * This method is used to start response and notification processing in a
+@@ -548,6 +549,7 @@ class DLLOPT Snmp: public SnmpSynchronized
+    *       stop_poll_thread() at any point in time.
+    */
+   void stop_poll_thread();
++#endif
+ 
+   EventListHolder *get_eventListHolder() { return eventListHolder; };
+ 
+diff --git a/src/uxsnmp.cpp b/src/uxsnmp.cpp
+index 7cc6f50..8579d95 100644
+--- a/src/uxsnmp.cpp
++++ b/src/uxsnmp.cpp
+@@ -947,7 +947,9 @@ void Snmp::init(int& status, IpAddress *addresses[2],
+ //---------[ Snmp Class Destructor ]----------------------------------
+ Snmp::~Snmp()
+ {
++#ifdef WITH_THREADS
+   stop_poll_thread();
++#endif
+ 
+   // if we failed during construction then don't try
+   // to free stuff up that was not allocated
+@@ -2260,6 +2262,7 @@ int Snmp::broadcast_discovery(UdpAddressCollection &addresses,
+   return 0;
+ }
+ 
++#if WITH_THREADS
+ //     Starts the working thread for the recovery of the pending events
+ bool Snmp::start_poll_thread(const int timeout)
+ {
+@@ -2366,6 +2369,8 @@ void* Snmp::process_thread(void *arg)
+     return 0;
+ }
+ 
++#endif // WITH_THREADS
++
+ #ifdef SNMP_PP_NAMESPACE
+ } // end of namespace Snmp_pp
+ #endif
 -- 
 2.17.1
 
