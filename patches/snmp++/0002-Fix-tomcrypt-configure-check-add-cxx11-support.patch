@@ -1,7 +1,7 @@
 From 21658f70e2ccbb603e651f060cf997e4aa1c5c1f Mon Sep 17 00:00:00 2001
 From: Max ulidtko <ulidtko@gmail.com>
 Date: Sun, 12 Jan 2020 14:41:34 +0200
-Subject: [PATCH 02/11] Fix tomcrypt configure check, add C++11 support
+Subject: [PATCH 02/12] Fix tomcrypt configure check, add C++11 support
 
 ---
  Makefile.in                    |   4 +-
@@ -18,7 +18,7 @@ Subject: [PATCH 02/11] Fix tomcrypt configure check, add C++11 support
  create mode 100644 m4/ax_cxx_compile_stdcxx_11.m4
 
 diff --git a/Makefile.in b/Makefile.in
-index 3b7465b..eec539f 100644
+index 18f461b..3668be7 100644
 --- a/Makefile.in
 +++ b/Makefile.in
 @@ -93,7 +93,6 @@ subdir = .
@@ -2336,5 +2336,5 @@ index 6e43122..646974b 100644
  HAVE_LIBSSL = @HAVE_LIBSSL@
  HAVE_LIBTOMCRYPT = @HAVE_LIBTOMCRYPT@
 -- 
-2.17.1
+2.27.0
 

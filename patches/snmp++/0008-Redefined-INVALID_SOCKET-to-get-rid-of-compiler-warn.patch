@@ -1,7 +1,7 @@
 From 451079d61c7c05e103bb3f1a2e7848adc25c4732 Mon Sep 17 00:00:00 2001
 From: Martin Jolicoeur <snmpb1@gmail.com>
 Date: Mon, 21 Aug 2017 22:17:39 -0400
-Subject: [PATCH 08/11] Redefined INVALID_SOCKET to get rid of compiler
+Subject: [PATCH 08/12] Redefined INVALID_SOCKET to get rid of compiler
  warnings
 
 ---
@@ -25,5 +25,5 @@ index b396260..f4797ee 100644
  //-----[ async defines for engine ]---------------------------------------
  #define sNMP_PDU_GET_ASYNC       21
 -- 
-2.17.1
+2.27.0
 

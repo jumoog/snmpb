@@ -1,7 +1,7 @@
 From 271198f400ef4db964adc65098b8f7fe0345690f Mon Sep 17 00:00:00 2001
 From: max ulidtko <ulidtko@gmail.com>
 Date: Tue, 14 Jan 2020 11:46:57 +0200
-Subject: [PATCH 03/11] Fix consoleExamples compile with --disable-threads
+Subject: [PATCH 03/12] Fix consoleExamples compile with --disable-threads
 
 ---
  configure                   | 15 +++++++++++
@@ -301,5 +301,5 @@ index 7cc6f50..8579d95 100644
  } // end of namespace Snmp_pp
  #endif
 -- 
-2.17.1
+2.27.0
 

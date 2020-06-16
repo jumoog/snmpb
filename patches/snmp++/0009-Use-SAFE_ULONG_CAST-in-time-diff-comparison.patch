@@ -1,7 +1,7 @@
 From dfa76772fca61ed59957e78f042e8ba1f3510b60 Mon Sep 17 00:00:00 2001
 From: Martin Jolicoeur <snmpb1@gmail.com>
 Date: Sun, 14 Jun 2020 01:27:58 +0300
-Subject: [PATCH 09/11] Use SAFE_ULONG_CAST in time diff comparison
+Subject: [PATCH 09/12] Use SAFE_ULONG_CAST in time diff comparison
 
 ---
  src/usm_v3.cpp | 2 +-
@@ -21,5 +21,5 @@ index 4702826..c64d339 100644
        LOG_BEGIN(loggerModuleName, DEBUG_LOG | 9);
        LOG("USMTimeTable: Check time failed, authoritative (id) (boot) (time)");
 -- 
-2.17.1
+2.27.0
 

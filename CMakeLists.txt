@@ -291,6 +291,8 @@ externalproject_add(snmpxx-bundled
     ${CMAKE_COMMAND} -DFILE=snmp++/0010-Hashers-tomcrypt-impl.patch ${PATCH_APP}
     COMMAND
     ${CMAKE_COMMAND} -DFILE=snmp++/0011-Fix-memory-error-delete-delete-mismatch-in-auth_priv.patch ${PATCH_APP}
+    COMMAND
+    ${CMAKE_COMMAND} -DFILE=snmp++/0012-Hardcode-config.h.patch ${PATCH_APP}
     )
 
 add_dependencies(snmpxx-bundled libtomcrypt)

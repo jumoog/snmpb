@@ -1,7 +1,7 @@
 From 7edd24fe74d6d2deb6a092d4a150201f0a9f7566 Mon Sep 17 00:00:00 2001
 From: Martin Jolicoeur <snmpb1@gmail.com>
 Date: Sun, 16 Jan 2011 08:35:21 +0000
-Subject: [PATCH 06/11] Separate ports for IPv4 & IPv6
+Subject: [PATCH 06/12] Separate ports for IPv4 & IPv6
 
 Squashed commits:
 * 510407e (Modified snmp++ to allow binding trap port on both ipv4 and ipv6 for all interfaces, 2011-01-14)
@@ -491,5 +491,5 @@ index 8579d95..a28ba34 100644
  int Snmp::notify_register(const OidCollection     &trapids,
                            const TargetCollection  &targets,
 -- 
-2.17.1
+2.27.0
 

@@ -1,7 +1,7 @@
 From e3bb16fe33ac5b5b5adff28dc7315a344bdaf080 Mon Sep 17 00:00:00 2001
 From: Martin Jolicoeur <snmpb1@gmail.com>
 Date: Sat, 27 Nov 2010 04:48:28 +0000
-Subject: [PATCH 05/11] Use inet_ntop to format IPv6 addresses
+Subject: [PATCH 05/12] Use inet_ntop to format IPv6 addresses
 
 Replaced custom get_printable for IPv6 addresses by inet_ntop()
 
@@ -98,5 +98,5 @@ index 6b837e5..980fb22 100644
    else
      *(char *)output_buffer = 0;
 -- 
-2.17.1
+2.27.0
 

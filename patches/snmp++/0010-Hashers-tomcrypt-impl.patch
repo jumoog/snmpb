@@ -1,7 +1,7 @@
 From b0a1b84fa120d4372c0da6b7cfdb4a18de2455c4 Mon Sep 17 00:00:00 2001
 From: max ulidtko <ulidtko@gmail.com>
 Date: Sun, 14 Jun 2020 01:36:10 +0300
-Subject: [PATCH 10/11] Hashers tomcrypt impl
+Subject: [PATCH 10/12] Hashers tomcrypt impl
 
 ---
  include/snmp_pp/auth_priv.h |   2 +-
@@ -205,5 +205,5 @@ index ed6c6f0..7f1b20c 100644
  #ifdef SNMP_PP_NAMESPACE
  } // end of namespace Snmp_pp
 -- 
-2.17.1
+2.27.0
 
