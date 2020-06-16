@@ -208,11 +208,14 @@
 #endif
 #ifdef __BCPLUSPLUS__
 typedef unsigned __int64 pp_uint64;
+typedef __int64 pp_int64;
 #else
 typedef ULONGLONG pp_uint64;
+typedef LONGLONG pp_int64;
 #endif
 #else // not WIN32
 typedef unsigned long long pp_uint64;
+typedef long long pp_int64;
 #endif
 
 // Define a type used for sockets
@@ -269,6 +272,9 @@ typedef unsigned long long pp_uint64;
 #ifndef POSIX_THREADS
 #ifdef HAVE_PTHREAD
 #define POSIX_THREADS
+// Use error checking by default since AGENT++ 4.0.8, define
+// AGENTPP_PTHREAD_RECURSIVE here to get behavior of AGENT++ 4.0.7 and before:
+// #define AGENTPP_PTHREAD_RECURSIVE
 #endif
 #endif
 
