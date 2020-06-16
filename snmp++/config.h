@@ -278,7 +278,7 @@
 #endif
 
 /* _XOPEN_SOURCE $HAVE_XOPEN_SOURCE */
-#define HAVE_XOPEN_SOURCE 
+#define HAVE_XOPEN_SOURCE
 
 /* Define to 1 if the system has the type `_Bool'. */
 #define HAVE__BOOL 1
@@ -305,7 +305,7 @@
 #define PACKAGE_NAME "snmp++"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "snmp++ 3.3.10"
+#define PACKAGE_STRING "snmp++ 3.3.11"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "snmp++"
@@ -314,7 +314,7 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "3.3.10"
+#define PACKAGE_VERSION "3.3.11"
 
 /* Define to necessary symbol if this constant uses a non-standard name on
    your system. */
@@ -347,7 +347,7 @@
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "3.3.10"
+#define VERSION "3.3.11"
 
 /* define _NO_SNMPv3 if you do not want to use SNMPv3 */
 /* #undef _NO_SNMPv3 */
@@ -372,7 +372,7 @@
 
 /* Define to `int' if <sys/types.h> doesn't define. */
 #ifdef PLATFORM_WINDOWS
-#define gid_t int 
+#define gid_t int
 #endif
 
 /* Define to `__inline__' or `__inline' if that's what the C compiler
@@ -411,7 +411,7 @@
 
 /* Define to `int' if <sys/types.h> doesn't define. */
 #ifdef PLATFORM_WINDOWS
-#define uid_t 1 
+#define uid_t 1
 #endif
 
 /* Define to the type of an unsigned integer type of width exactly 16 bits if

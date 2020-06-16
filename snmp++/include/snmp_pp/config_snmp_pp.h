@@ -71,10 +71,10 @@
 #else
 #define _NO_THREADS
 #endif
-#if 0 
+#if 0
 #define HAVE_LIBSSL 1
 #endif
-#if 1 
+#if 1
 #define HAVE_LIBTOMCRYPT 1
 #endif
 #if 0
@@ -85,7 +85,7 @@
 #endif
 
 // define SNMP_PP_NAMESPACE to enclose all library names in Snmp_pp namespace
-#if 0 
+#if 0
 #define SNMP_PP_NAMESPACE
 #else
 #undef SNMP_PP_NAMESPACE

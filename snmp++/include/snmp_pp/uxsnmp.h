@@ -506,7 +506,7 @@ class DLLOPT Snmp: public SnmpSynchronized
 
   SnmpSocket get_notify_callback_fd() { return notifycallback_fd; };
   void set_notify_callback_fd(SnmpSocket fd) { notifycallback_fd = fd; };
- 
+
   //@}
 
   /**

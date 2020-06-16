@@ -119,10 +119,10 @@
 
 #ifdef PLATFORM_WINDOWS
 # include <winsock2.h>
-# if 1 
+# if 1
 #  include <ws2tcpip.h>
 # endif
-# if 1 
+# if 1
 #  include <wspiapi.h>
 # endif
 #elif 0
@@ -151,10 +151,10 @@
 #endif
 
 #ifdef PLATFORM_WINDOWS
-# if 1 
+# if 1
 #  include <io.h>
 # endif
-# if 1 
+# if 1
 #  include <process.h>
 # endif
 # include <windows.h>
