@@ -1,5 +1,13 @@
-1.0
-TBD
+1.2 (unreleased)
+- New project maintainer: Max <ulidtko@gmail.com>
+- Build system rewritten into CMake, away from custom Makefile.
+- Bundled libraries updated:
+  snmp++ 3.4.1 [June 2020], includes security fixes.
+  libtomcrypt 1.18.2 [July 2018], includes security fixes.
+- Bundled libraries unvendored as much as possible, to streamline code review
+  and future updates. Vendor changes are now tracked as explicit patches.
+- CMake build system provides the options to use "system" libraries
+  instead of the bundled patched versions.
 
 0.9 (unreleased)
 - Library updates

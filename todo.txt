@@ -26,6 +26,8 @@
 - Add "clear" button for traps
 - Add SMIv1/SMIv2 config and severity checking level for MIB editor validation
 - Feature: Add download and extract MIB from RFC from ietf.org directly
+- Feature: Add snmplabs MIB source
+- Feature: Add PROTOS test suite
 - Feature: add packet/session sniffing tab
 - Feature: Add table mirror view
 - Feature: Add send trap/inform tool

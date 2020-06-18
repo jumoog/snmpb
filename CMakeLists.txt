@@ -168,6 +168,7 @@ else() # USE_BUNDLED_LIBTOMCRYPT
     externalproject_add(libtomcrypt-bundled
         SOURCE_DIR ${SnmpB_SOURCE_DIR}/libtomcrypt
         PREFIX libtomcrypt-prefix
+        # TODO 1.18.2 is available
         URL https://github.com/libtom/libtomcrypt/archive/1.17.tar.gz
         URL_HASH SHA224=03d8eadde5d0959679a22fdf9f98777b9d92197041a211ad49cc94cd
 
