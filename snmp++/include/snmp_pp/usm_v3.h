@@ -386,7 +386,7 @@ public:
 
 
   /**
-   * Delete all occurences of the user with the given security name
+   * Delete all occurrences of the user with the given security name
    * from the USM.
    *
    * @param security_name - the securityName of the user
@@ -619,21 +619,21 @@ public:
 
   /**
    * Prepare a key update in the USM. The following procedure is used: To
-   * prepare the key update, this function adds the neccessary variable
+   * prepare the key update, this function adds the necessary variable
    * bindings to the Pdu to do the key update on the target SNMP entity.
    * The Pdu has to be sent to the target. If the key update on the target
    * is successful, usmCommitKeyUpdate() has to be called to do the local key
    * update. On failure usmAbortKeyUpdate() has to be called to free
-   * temporary ressources.
+   * temporary resources.
    *
    * @param securityName - The name of the user
    * @param target       - A target to identify the SNMP entity on which the
    *                       key will be updated
    * @param newPassword  - The new password for the user
-   * @param pdu          - A PDU into which this funktion adds the VBs needed
+   * @param pdu          - A PDU into which this function adds the VBs needed
    *                       to change the keys on the target
-   * @param type         - Indicates how and which key should be chaned:
-   *                       possilbe values are: AUTHKEY, PRIVKEY and
+   * @param type         - Indicates how and which key should be changed:
+   *                       possible values are: AUTHKEY, PRIVKEY and
    *                       OWNAUTHKEY, OWNPRIVKEY.
    * @param status       - The return status: SNMPv3_USM_OK or one of the
    *                       error codes
@@ -1034,7 +1034,7 @@ private:
                                   int *position);
 
   /**
-   * Serialize the given values acording to the BER into the
+   * Serialize the given values according to the BER into the
    * buffer. On success, the buffer contains a valid SNMPv3 message.
    *
    * @param outBuf             - buffer for the serialized values

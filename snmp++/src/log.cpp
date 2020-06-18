@@ -304,9 +304,14 @@ const char* AgentLog::now(char* buf)
 
 	time_t t;
 	time(&t);
+#ifdef HAVE_LOCALTIME_R
+        struct tm tm_buffer;
+        struct tm *stm = localtime_r(&t, &tm_buffer);
+#else
 	struct tm *stm = localtime(&t);
+#endif
 	if (stm)
-		strftime(buf, 18, "%Y%m%d.%H:%M:%S", localtime(&t));
+		strftime(buf, 18, "%Y%m%d.%H:%M:%S", stm);
 	else
 		buf[0] = 0;
 	return buf;
@@ -315,7 +320,7 @@ const char* AgentLog::now(char* buf)
 /*static*/ const char* AgentLog::get_current_time()
 {
 	char* buf = new char[18];
-        strcpy(buf, DefaultLog::log()->now());
+        DefaultLog::log()->now(buf);
 	return buf;
 }
 

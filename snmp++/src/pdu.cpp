@@ -163,13 +163,9 @@ Pdu& Pdu::operator=(const Pdu &pdu)
   context_engine_id = pdu.context_engine_id;
   maxsize_scopedpdu = pdu.maxsize_scopedpdu;
 #endif
+  v1_trap_address_set = pdu.v1_trap_address_set;
   if (pdu.v1_trap_address_set)
-  {
     v1_trap_address = pdu.v1_trap_address;
-    v1_trap_address_set = true;
-  }
-  else
-    v1_trap_address_set = false;
 
   validity = true;
 
@@ -427,9 +423,9 @@ int Pdu::delete_vb(const int p)
 
 
 // Get the SNMPv1 trap address
-int Pdu::get_v1_trap_address(GenAddress &address) const
+bool Pdu::get_v1_trap_address(GenAddress &address) const
 {
-  if (v1_trap_address_set == false)
+  if (!v1_trap_address_set)
     return false;
 
   address = v1_trap_address;
@@ -437,7 +433,7 @@ int Pdu::get_v1_trap_address(GenAddress &address) const
 }
 
 // Set the SNMPv1 trap address
-int Pdu::set_v1_trap_address(const Address &address)
+bool Pdu::set_v1_trap_address(const Address &address)
 {
   v1_trap_address = address;
   v1_trap_address_set = (v1_trap_address.valid() == true);

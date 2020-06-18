@@ -96,7 +96,9 @@ namespace Snmp_pp {
 
 //----[ macros ]-------------------------------------------------------
 #define ADDRBUF 50     // worst case of address lens
-#define OUTBUFF 80     // worst case of output lens
+#define OUTBUFF_UDP 80     // worst case of output lens
+#define OUTBUFF_IP 55     // worst case of output lens
+#define OUTBUFF_OTHER 80     // worst case of output lens
 
 #define IPLEN      4
 #define UDPIPLEN   6
@@ -490,7 +492,7 @@ class DLLOPT IpAddress : public Address
       { return (ip_version == version_ipv6) && have_ipv6_scope; }
 
  protected:
-  SNMP_PP_MUTABLE char output_buffer[OUTBUFF];           // output buffer
+  SNMP_PP_MUTABLE char output_buffer[OUTBUFF_IP];           // output buffer
 
   // friendly name storage
   std::string iv_friendly_name;
@@ -676,7 +678,7 @@ class DLLOPT UdpAddress : public IpAddress
   virtual bool set_scope(const unsigned int scope);
 
  protected:
-  SNMP_PP_MUTABLE char output_buffer[OUTBUFF];           // output buffer
+  SNMP_PP_MUTABLE char output_buffer[OUTBUFF_UDP];           // output buffer
   char sep;                              // separator
 
   // redefined parse address
@@ -783,7 +785,7 @@ public:
     { Address::clear(); memset(output_buffer, 0, sizeof(output_buffer)); }
 
  protected:
-  SNMP_PP_MUTABLE char output_buffer[OUTBUFF];           // output buffer
+  SNMP_PP_MUTABLE char output_buffer[OUTBUFF_OTHER];           // output buffer
 
   // redefined parse address for macs
   virtual bool parse_address(const char *inaddr);
@@ -892,7 +894,7 @@ public:
  protected:
   // ipx format separator
   char separator;
-  SNMP_PP_MUTABLE char output_buffer[OUTBUFF];           // output buffer
+  SNMP_PP_MUTABLE char output_buffer[OUTBUFF_OTHER];           // output buffer
 
   // redefined parse address for ipx strings
   virtual bool parse_address(const char  *inaddr);
@@ -1001,7 +1003,7 @@ public:
     { Address::clear(); memset(output_buffer, 0, sizeof(output_buffer)); }
 
  protected:
-  SNMP_PP_MUTABLE char output_buffer[OUTBUFF];           // output buffer
+  SNMP_PP_MUTABLE char output_buffer[OUTBUFF_OTHER];           // output buffer
 
   // redefined parse address for ipx strings
   virtual bool parse_address(const char  *inaddr);

@@ -52,6 +52,7 @@ char snmpmsg_cpp_version[]="#(@) SNMP++ $Id$";
 
 #include <libsnmp.h>
 
+#include <snmp_pp/uxsnmp.h>
 #include "snmp_pp/config_snmp_pp.h"
 #include "snmp_pp/snmpmsg.h"                    // header file for SnmpMessage
 #include "snmp_pp/oid_def.h"                    // changed (Frank Fock)
@@ -76,10 +77,10 @@ const egpNeighborLossOid egpNeighborLoss;
 const snmpTrapEnterpriseOid snmpTrapEnterprise;
 
 //------------[ convert SNMP++ VB to WinSNMP smiVALUE ]----------------
-int convertVbToSmival( const Vb &tempvb, SmiVALUE *smival )
+int convertVbToSmival(const Vb &tempvb, SmiVALUE *smival)
 {
   smival->syntax = tempvb.get_syntax();
-  switch ( smival->syntax ) {
+  switch (smival->syntax) {
 
     // case sNMP_SYNTAX_NULL
   case sNMP_SYNTAX_NULL:
@@ -120,11 +121,11 @@ int convertVbToSmival( const Vb &tempvb, SmiVALUE *smival )
       tempvb.get_value(os);
       smival->value.string.ptr = NULL;
       smival->value.string.len = os.len();
-      if ( smival->value.string.len > 0 )
+      if (smival->value.string.len > 0)
       {
         smival->value.string.ptr
           = (SmiLPBYTE) new  unsigned char [smival->value.string.len];
-        if ( smival->value.string.ptr )
+        if (smival->value.string.ptr)
         {
           for (int i=0; i<(int) smival->value.string.len ; i++)
             smival->value.string.ptr[i] = os[i];
@@ -144,11 +145,11 @@ int convertVbToSmival( const Vb &tempvb, SmiVALUE *smival )
       tempvb.get_value(oid);
       smival->value.oid.ptr = NULL;
       smival->value.oid.len = oid.len();
-      if ( smival->value.oid.len > 0 )
+      if (smival->value.oid.len > 0)
       {
         smival->value.oid.ptr
           = (SmiLPUINT32) new unsigned long [ smival->value.oid.len];
-        if ( smival->value.oid.ptr )
+        if (smival->value.oid.ptr)
         {
           for (int i=0; i<(int)smival->value.oid.len ; i++)
             smival->value.oid.ptr[i] = oid[i];
@@ -169,9 +170,9 @@ int convertVbToSmival( const Vb &tempvb, SmiVALUE *smival )
 }
 
 // free a SMI value
-void freeSmivalDescriptor( SmiVALUE *smival )
+void freeSmivalDescriptor(SmiVALUE *smival)
 {
-  switch ( smival->syntax ) {
+  switch (smival->syntax) {
   case sNMP_SYNTAX_OCTETS:
   case sNMP_SYNTAX_OPAQUE:
   case sNMP_SYNTAX_IPADDR:
@@ -188,13 +189,13 @@ void freeSmivalDescriptor( SmiVALUE *smival )
 
 #ifdef _SNMPv3
 
-int SnmpMessage::unloadv3( Pdu &pdu,                // Pdu returned
-                           snmp_version &version,   // version
-                           OctetStr &engine_id,     // optional v3
-                           OctetStr &security_name, // optional v3
-                           long int &security_model,
-                           UdpAddress &from_addr,
-			   Snmp &snmp_session)
+int SnmpMessage::unloadv3(Pdu &pdu,                // Pdu returned
+                          snmp_version &version,   // version
+                          OctetStr &engine_id,     // optional v3
+                          OctetStr &security_name, // optional v3
+                          long int &security_model,
+                          UdpAddress &from_addr,
+			  Snmp &snmp_session)
 {
   OctetStr tmp;
   return unload(pdu, tmp, version, &engine_id,
@@ -203,7 +204,11 @@ int SnmpMessage::unloadv3( Pdu &pdu,                // Pdu returned
 
 #endif
 
-int SnmpMessage::load(const Pdu &cpdu,
+int SnmpMessage::load(
+#ifdef _SNMPv3
+                      v3MP* mpv3, 
+#endif
+                      const Pdu &cpdu,
                       const OctetStr &community,
                       const snmp_version version,
                       const OctetStr* engine_id,
@@ -220,7 +225,7 @@ int SnmpMessage::load(const Pdu &cpdu,
 
   // create a raw pdu
   snmp_pdu *raw_pdu;
-  raw_pdu = snmp_pdu_create( (int) pdu->get_type());
+  raw_pdu = snmp_pdu_create((int) pdu->get_type());
 
   Oid enterprise;
 
@@ -245,14 +250,14 @@ int SnmpMessage::load(const Pdu &cpdu,
     {
       /* User did set the v1 trap address */
       if ((gen_addr.get_type() != Address::type_ip) &&
-          (gen_addr.get_type() != Address::type_udp) )
+          (gen_addr.get_type() != Address::type_udp))
       {
 	LOG_BEGIN(loggerModuleName, ERROR_LOG | 4);
         LOG("SNMPMessage: Bad v1 trap address type in pdu");
         LOG(gen_addr.get_type());
         LOG_END;
 
-        snmp_free_pdu( raw_pdu);
+        snmp_free_pdu(raw_pdu);
         return SNMP_CLASS_INVALID_PDU;
       }
 
@@ -263,7 +268,7 @@ int SnmpMessage::load(const Pdu &cpdu,
         LOG("SNMPMessage: Copied v1 trap address not valid");
         LOG_END;
 
-        snmp_free_pdu( raw_pdu);
+        snmp_free_pdu(raw_pdu);
         return SNMP_CLASS_RESOURCE_UNAVAIL;
       }
       addr_set = true;
@@ -303,12 +308,12 @@ int SnmpMessage::load(const Pdu &cpdu,
     // 5 - egpneighborloss
     // 6 - enterprise specific
     Oid trapid;
-    pdu->get_notify_id( trapid);
-    if ( !trapid.valid() || trapid.len() < 2 )
-      {
+    pdu->get_notify_id(trapid);
+    if (!trapid.valid() || trapid.len() < 2)
+    {
         snmp_free_pdu( raw_pdu);
         return SNMP_CLASS_INVALID_NOTIFYID;
-      }
+    }
     raw_pdu->specific_type=0;
     if (trapid == coldStart)
       raw_pdu->trap_type = 0;  // cold start
@@ -318,7 +323,7 @@ int SnmpMessage::load(const Pdu &cpdu,
       raw_pdu->trap_type = 2;  // link down
     else if (trapid == linkUp)
       raw_pdu->trap_type = 3;  // link up
-    else if (trapid == authenticationFailure )
+    else if (trapid == authenticationFailure)
       raw_pdu->trap_type = 4;  // authentication failure
     else if (trapid == egpNeighborLoss)
       raw_pdu->trap_type = 5;  // egp neighbor loss
@@ -330,13 +335,13 @@ int SnmpMessage::load(const Pdu &cpdu,
       raw_pdu->specific_type = (int) trapid[(int) (trapid.len()-1)];
 
       trapid.trim(1);
-      if (trapid[(int)(trapid.len()-1)] == 0 )
+      if (trapid[(int)(trapid.len()-1)] == 0)
         trapid.trim(1);
       enterprise = trapid;
     }
 
     if (raw_pdu->trap_type != 6)
-      pdu->get_notify_enterprise( enterprise);
+      pdu->get_notify_enterprise(enterprise);
     if (enterprise.len() >0) {
       // note!!
       // these are hooks into an SNMP++ oid
@@ -368,20 +373,20 @@ int SnmpMessage::load(const Pdu &cpdu,
     // vb #1 is the timestamp
     TimeTicks timestamp;
     tempvb.set_oid(SNMP_MSG_OID_SYSUPTIME);   // sysuptime
-    pdu->get_notify_timestamp( timestamp);
-    tempvb.set_value ( timestamp);
+    pdu->get_notify_timestamp(timestamp);
+    tempvb.set_value(timestamp);
     temppdu += tempvb;
 
     // vb #2 is the id
     Oid trapid;
     tempvb.set_oid(SNMP_MSG_OID_TRAPID);
-    pdu->get_notify_id( trapid);
-    tempvb.set_value( trapid);
+    pdu->get_notify_id(trapid);
+    tempvb.set_value(trapid);
     temppdu += tempvb;
 
     // append the remaining vbs
     for (int z=0; z<pdu->get_vb_count(); z++) {
-      pdu->get_vb( tempvb,z);
+      pdu->get_vb(tempvb,z);
       temppdu += tempvb;
     }
 
@@ -397,8 +402,8 @@ int SnmpMessage::load(const Pdu &cpdu,
 
   vb_count = pdu->get_vb_count();
   for (int z=0;z<vb_count;z++) {
-    pdu->get_vb( tempvb,z);
-    tempvb.get_oid( tempoid);
+    pdu->get_vb(tempvb,z);
+    tempvb.get_oid(tempoid);
     smioid = tempoid.oidval();
     // clear the value portion, in case its
     // not already been done so by the app writer
@@ -407,15 +412,15 @@ int SnmpMessage::load(const Pdu &cpdu,
         (raw_pdu->command == sNMP_PDU_GETNEXT) ||
         (raw_pdu->command == sNMP_PDU_GETBULK))
       tempvb.set_null();
-    status = convertVbToSmival( tempvb, &smival );
-    if ( status != SNMP_CLASS_SUCCESS) {
-      snmp_free_pdu( raw_pdu);
+    status = convertVbToSmival(tempvb, &smival);
+    if (status != SNMP_CLASS_SUCCESS) {
+      snmp_free_pdu(raw_pdu);
       return status;
     }
     // add the vb to the raw pdu
-    snmp_add_var( raw_pdu, smioid->ptr, (int) smioid->len, &smival);
+    snmp_add_var(raw_pdu, smioid->ptr, (int) smioid->len, &smival);
 
-    freeSmivalDescriptor( &smival);
+    freeSmivalDescriptor(&smival);
   }
 
   // ASN1 encode the pdu
@@ -429,15 +434,15 @@ int SnmpMessage::load(const Pdu &cpdu,
       LOG_END;
 
       // prevention of SNMP++ Enterprise Oid death
-      if ( enterprise.len() >0) {
+      if (enterprise.len() >0) {
         raw_pdu->enterprise = 0;
         raw_pdu->enterprise_length=0;
       }
-      snmp_free_pdu( raw_pdu);
+      snmp_free_pdu(raw_pdu);
       return SNMP_CLASS_INVALID_TARGET;
     }
 
-    status = v3MP::I->snmp_build(raw_pdu, databuff, (int *)&bufflen,
+    status = mpv3->snmp_build(raw_pdu, databuff, (int *)&bufflen,
                                  *engine_id, *security_name, security_model,
                                  pdu->get_security_level(),
                                  pdu->get_context_engine_id(),
@@ -453,11 +458,11 @@ int SnmpMessage::load(const Pdu &cpdu,
         LOG_END;
 
         // prevention of SNMP++ Enterprise Oid death
-        if ( enterprise.len() >0) {
+        if (enterprise.len() >0) {
           raw_pdu->enterprise = 0;
           raw_pdu->enterprise_length=0;
         }
-        snmp_free_pdu( raw_pdu);
+        snmp_free_pdu(raw_pdu);
         return SNMP_ERROR_TOO_BIG;
       }
     }
@@ -479,11 +484,11 @@ int SnmpMessage::load(const Pdu &cpdu,
       ) {
     valid_flag = false;
     // prevention of SNMP++ Enterprise Oid death
-    if ( enterprise.len() >0) {
+    if (enterprise.len() >0) {
       raw_pdu->enterprise = 0;
       raw_pdu->enterprise_length=0;
     }
-    snmp_free_pdu( raw_pdu);
+    snmp_free_pdu(raw_pdu);
 #ifdef _SNMPv3
     if (version == version3)
       return status;
@@ -497,7 +502,7 @@ int SnmpMessage::load(const Pdu &cpdu,
   valid_flag = true;
 
   // prevention of SNMP++ Enterprise Oid death
-  if ( enterprise.len() >0) {
+  if (enterprise.len() >0) {
     raw_pdu->enterprise = 0;
     raw_pdu->enterprise_length=0;
   }
@@ -508,7 +513,7 @@ int SnmpMessage::load(const Pdu &cpdu,
 }
 
 // load up a SnmpMessage
-int SnmpMessage::load( unsigned char *data,
+int SnmpMessage::load(unsigned char *data,
                        unsigned long len)
 {
   bufflen = MAX_SNMP_PACKET;
@@ -516,7 +521,7 @@ int SnmpMessage::load( unsigned char *data,
 
   if (len <= MAX_SNMP_PACKET)
   {
-    memcpy( (unsigned char *) databuff, (unsigned char *) data,
+    memcpy((unsigned char *) databuff, (unsigned char *) data,
             (unsigned int) len);
     bufflen = len;
     valid_flag = true;
@@ -542,25 +547,24 @@ int SnmpMessage::unload(Pdu &pdu,                 // Pdu object
   if (!valid_flag)
     return SNMP_CLASS_INVALID;
 
-  snmp_pdu *raw_pdu;
-  raw_pdu = snmp_pdu_create(0); // do a "snmp_free_pdu( raw_pdu)" before return
-
+  snmp_pdu *raw_pdu = snmp_pdu_create(0); // free with snmp_free_pdu(raw_pdu)
   int status;
 
 #ifdef _SNMPv3
-  OctetStr context_engine_id;
-  OctetStr context_name;
-  long int security_level = SNMP_SECURITY_LEVEL_NOAUTH_NOPRIV;
-
-  if ((security_model) && (security_name) && (engine_id) && (snmp_session)) {
-    status = v3MP::I->snmp_parse(snmp_session, raw_pdu,
+  if ((security_model) && (security_name) && (engine_id) && (snmp_session))
+  {
+    long int security_level = SNMP_SECURITY_LEVEL_NOAUTH_NOPRIV;
+    OctetStr context_name;
+    OctetStr context_engine_id;
+    status = snmp_session->get_mpv3()->snmp_parse(snmp_session, raw_pdu,
                          databuff, (int)bufflen, *engine_id,
                          *security_name, context_engine_id, context_name,
                          security_level, *security_model, version, *from_addr);
-    if (status != SNMPv3_MP_OK) {
-      pdu.set_request_id( raw_pdu->reqid);
-      pdu.set_type( raw_pdu->command);
-      snmp_free_pdu( raw_pdu);
+    if (status != SNMPv3_MP_OK)
+    {
+      pdu.set_request_id(raw_pdu->reqid);
+      pdu.set_type(raw_pdu->command);
+      snmp_free_pdu(raw_pdu);
       return status;
     }
     pdu.set_context_engine_id(context_engine_id);
@@ -569,34 +573,34 @@ int SnmpMessage::unload(Pdu &pdu,                 // Pdu object
     pdu.set_message_id(raw_pdu->msgid);
     pdu.set_maxsize_scopedpdu(raw_pdu->maxsize_scopedpdu);
   }
-  else {
+  else
 #endif
+  {
     unsigned char community_name[MAX_LEN_COMMUNITY + 1];
     int           community_len = MAX_LEN_COMMUNITY + 1;
 
     status = snmp_parse(raw_pdu, databuff, (int) bufflen,
                         community_name, community_len, version);
-    if (status != SNMP_CLASS_SUCCESS) {
+    if (status != SNMP_CLASS_SUCCESS)
+    {
       snmp_free_pdu(raw_pdu);
       return status;
     }
-    community.set_data( community_name, community_len);
-
-#ifdef _SNMPv3
+    community.set_data(community_name, community_len);
   }
-#endif
+
   // load up the SNMP++ variables
   pdu.set_request_id(raw_pdu->reqid);
   pdu.set_error_status((int) raw_pdu->errstat);
   pdu.set_error_index((int) raw_pdu->errindex);
-  pdu.set_type( raw_pdu->command);
+  pdu.set_type(raw_pdu->command);
 
   // deal with traps a little different
-  if ( raw_pdu->command == sNMP_PDU_V1TRAP) {
+  if (raw_pdu->command == sNMP_PDU_V1TRAP) {
     // timestamp
     TimeTicks timestamp;
     timestamp = raw_pdu->time;
-    pdu.set_notify_timestamp( timestamp);
+    pdu.set_notify_timestamp(timestamp);
 
     // set the agent address
     IpAddress agent_addr(inet_ntoa(raw_pdu->agent_addr.sin_addr));
@@ -649,7 +653,7 @@ int SnmpMessage::unload(Pdu &pdu,                 // Pdu object
       Oid eOid = enterprise;
       eOid += 0ul;
       eOid += raw_pdu->specific_type;
-      pdu.set_notify_id( eOid);
+      pdu.set_notify_id(eOid);
       break;
       }
     default:
@@ -671,9 +675,9 @@ int SnmpMessage::unload(Pdu &pdu,                 // Pdu object
   for(vp = raw_pdu->variables; vp; vp = vp->next_variable, vb_nr++) {
 
     // extract the oid portion
-    tempoid.set_data( (unsigned long *)vp->name,
-                      ( unsigned int) vp->name_length);
-    tempvb.set_oid( tempoid);
+    tempoid.set_data((unsigned long *)vp->name,
+                     (unsigned int) vp->name_length);
+    tempvb.set_oid(tempoid);
 
     // extract the value portion
     switch(vp->type){
@@ -681,25 +685,25 @@ int SnmpMessage::unload(Pdu &pdu,                 // Pdu object
       // octet string
     case sNMP_SYNTAX_OCTETS:
       {
-	OctetStr octets( (unsigned char *) vp->val.string,
+	OctetStr octets((unsigned char *) vp->val.string,
 			 (unsigned long) vp->val_len);
-	tempvb.set_value( octets);
+	tempvb.set_value(octets);
       }
       break;
     case sNMP_SYNTAX_OPAQUE:
       {
-	OpaqueStr octets( (unsigned char *) vp->val.string,
-		          (unsigned long) vp->val_len);
-	tempvb.set_value( octets);
+	OpaqueStr octets((unsigned char *) vp->val.string,
+		         (unsigned long) vp->val_len);
+	tempvb.set_value(octets);
       }
       break;
 
       // object id
     case sNMP_SYNTAX_OID:
       {
-	Oid oid( (unsigned long*) vp->val.objid,
-		 (int) vp->val_len);
-	tempvb.set_value( oid);
+	Oid oid((unsigned long*) vp->val.objid,
+		(int) vp->val_len);
+	tempvb.set_value(oid);
         if ((vb_nr == 2) &&
             ((raw_pdu->command == sNMP_PDU_TRAP) ||
              (raw_pdu->command == sNMP_PDU_INFORM)) &&
@@ -715,15 +719,15 @@ int SnmpMessage::unload(Pdu &pdu,                 // Pdu object
       // timeticks
     case sNMP_SYNTAX_TIMETICKS:
       {
-	TimeTicks timeticks( (unsigned long) *(vp->val.integer));
-	tempvb.set_value( timeticks);
+	TimeTicks timeticks((unsigned long) *(vp->val.integer));
+	tempvb.set_value(timeticks);
         if ((vb_nr == 1) &&
             ((raw_pdu->command == sNMP_PDU_TRAP) ||
              (raw_pdu->command == sNMP_PDU_INFORM)) &&
             (tempoid == SNMP_MSG_OID_SYSUPTIME))
         {
           // set notify_timestamp
-          pdu.set_notify_timestamp( timeticks);
+          pdu.set_notify_timestamp(timeticks);
 	  continue; // don't add vb to pdu
         }
       }
@@ -732,16 +736,16 @@ int SnmpMessage::unload(Pdu &pdu,                 // Pdu object
       // 32 bit counter
     case sNMP_SYNTAX_CNTR32:
       {
-	Counter32 counter32( (unsigned long) *(vp->val.integer));
-	tempvb.set_value( counter32);
+	Counter32 counter32((unsigned long) *(vp->val.integer));
+	tempvb.set_value(counter32);
       }
       break;
 
       // 32 bit gauge
     case sNMP_SYNTAX_GAUGE32:
       {
-	Gauge32 gauge32( (unsigned long) *(vp->val.integer));
-	tempvb.set_value( gauge32);
+	Gauge32 gauge32((unsigned long) *(vp->val.integer));
+	tempvb.set_value(gauge32);
       }
       break;
 
@@ -752,18 +756,18 @@ int SnmpMessage::unload(Pdu &pdu,                 // Pdu object
 	buffer[0] = 0; // in case we receive an inavlid length IP
 
 	if (vp->val_len == 16)
-	  sprintf( buffer, "%02x%02x:%02x%02x:%02x%02x:%02x%02x:"
-		   "%02x%02x:%02x%02x:%02x%02x:%02x%02x",
-		   vp->val.string[ 0], vp->val.string[ 1], vp->val.string[ 2],
-		   vp->val.string[ 3], vp->val.string[ 4], vp->val.string[ 5],
-		   vp->val.string[ 6], vp->val.string[ 7], vp->val.string[ 8],
-		   vp->val.string[ 9], vp->val.string[10], vp->val.string[11],
-		   vp->val.string[12], vp->val.string[13], vp->val.string[14],
-		   vp->val.string[15]);
+	  sprintf(buffer, "%02x%02x:%02x%02x:%02x%02x:%02x%02x:"
+		  "%02x%02x:%02x%02x:%02x%02x:%02x%02x",
+		  vp->val.string[ 0], vp->val.string[ 1], vp->val.string[ 2],
+		  vp->val.string[ 3], vp->val.string[ 4], vp->val.string[ 5],
+		  vp->val.string[ 6], vp->val.string[ 7], vp->val.string[ 8],
+		  vp->val.string[ 9], vp->val.string[10], vp->val.string[11],
+		  vp->val.string[12], vp->val.string[13], vp->val.string[14],
+		  vp->val.string[15]);
 	else if (vp->val_len == 4)
-	  sprintf( buffer,"%d.%d.%d.%d",
-		   vp->val.string[0], vp->val.string[1],
-		   vp->val.string[2], vp->val.string[3]);
+	  sprintf(buffer,"%d.%d.%d.%d",
+		  vp->val.string[0], vp->val.string[1],
+		  vp->val.string[2], vp->val.string[3]);
 	IpAddress ipaddress(buffer);
 	tempvb.set_value(ipaddress);
       }
@@ -772,8 +776,8 @@ int SnmpMessage::unload(Pdu &pdu,                 // Pdu object
       // 32 bit integer
     case sNMP_SYNTAX_INT:
       {
-	SnmpInt32 int32( (long) *(vp->val.integer));
-	tempvb.set_value( int32);
+	SnmpInt32 int32((long) *(vp->val.integer));
+	tempvb.set_value(int32);
       }
       break;
 
@@ -781,8 +785,8 @@ int SnmpMessage::unload(Pdu &pdu,                 // Pdu object
 /* Not distinguishable from Gauge32
     case sNMP_SYNTAX_UINT32:
       {
-	SnmpUInt32 uint32( (unsigned long) *(vp->val.integer));
-	tempvb.set_value( uint32);
+	SnmpUInt32 uint32((unsigned long) *(vp->val.integer));
+	tempvb.set_value(uint32);
       }
       break;
 */
@@ -791,7 +795,7 @@ int SnmpMessage::unload(Pdu &pdu,                 // Pdu object
       { // Frank Fock (was empty before)
 	Counter64 c64(((counter64*)vp->val.counter64)->high,
 		      ((counter64*)vp->val.counter64)->low);
-	tempvb.set_value( c64);
+	tempvb.set_value(c64);
 	break;
       }
     case sNMP_SYNTAX_NULL:
@@ -814,7 +818,7 @@ int SnmpMessage::unload(Pdu &pdu,                 // Pdu object
     pdu += tempvb;
   }
 
-  snmp_free_pdu( raw_pdu);
+  snmp_free_pdu(raw_pdu);
 
   return SNMP_CLASS_SUCCESS;
 }

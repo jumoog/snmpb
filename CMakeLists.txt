@@ -246,9 +246,8 @@ externalproject_add(snmpxx-bundled
     SOURCE_DIR ${SnmpB_SOURCE_DIR}/snmp++
     PREFIX snmpxx-prefix
 
-    # TODO update, 3.4.1 is available
-    URL https://www.agentpp.com/download/snmp++-3.3.11a.tar.gz
-    URL_HASH SHA1=702f9906d65ce6a276967a0247182bc2180113d6
+    URL https://www.agentpp.com/download/snmp++-3.4.1.tar.gz
+    URL_HASH SHA1=597b27dc87adbef001bff1463cff3afce378e2df
 
     CONFIGURE_COMMAND
         ${SnmpB_SOURCE_DIR}/snmp++/configure
@@ -257,6 +256,7 @@ externalproject_add(snmpxx-bundled
             #--disable-threads # actually, enables UB
             --disable-namespace
             ${SNMPXX_TOMCRYPT_OPT}
+            # FIXME:
             #--with-libssl
             #--with-libssl-prefix=
 
@@ -289,8 +289,6 @@ externalproject_add(snmpxx-bundled
     ${CMAKE_COMMAND} -DFILE=snmp++/0009-Use-SAFE_ULONG_CAST-in-time-diff-comparison.patch ${PATCH_APP}
     COMMAND
     ${CMAKE_COMMAND} -DFILE=snmp++/0010-Hashers-tomcrypt-impl.patch ${PATCH_APP}
-    COMMAND
-    ${CMAKE_COMMAND} -DFILE=snmp++/0011-Fix-memory-error-delete-delete-mismatch-in-auth_priv.patch ${PATCH_APP}
     COMMAND
     ${CMAKE_COMMAND} -DFILE=snmp++/0012-Hardcode-config.h.patch ${PATCH_APP}
     )

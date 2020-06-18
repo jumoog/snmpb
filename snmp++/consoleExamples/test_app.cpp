@@ -24,7 +24,7 @@
   _##  upon this software code base. 
   _##  
   _##########################################################################*/
-char test_app_cpp_version[]="@(#) SNMP++ $Id$";
+
 #include <libsnmp.h>
 
 #include "snmp_pp/snmp_pp.h"

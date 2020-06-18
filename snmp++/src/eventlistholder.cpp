@@ -57,23 +57,21 @@ EventListHolder::EventListHolder(Snmp *snmp_session)
 int EventListHolder::SNMPBlockForResponse(const unsigned long req_id,
 					  Pdu &pdu)
 {
-  CSNMPMessage *msg;
-  int status;
-
   do {
     SNMPProcessEvents(1000);
   } while (!m_snmpMessageQueue->Done(req_id));
 
   m_snmpMessageQueue->lock();
-  msg = m_snmpMessageQueue->GetEntry(req_id);
+  CSNMPMessage *msg = m_snmpMessageQueue->GetEntry(req_id);
   if (msg) {
     // we found our response
+    int status;
     msg->GetPdu(status, pdu);
 
     // Dequeue the message
     m_snmpMessageQueue->DeleteEntry(req_id);
     m_snmpMessageQueue->unlock();
-    return  status;
+    return status;
   }
   else {
     // not in the send queue...must have timed out

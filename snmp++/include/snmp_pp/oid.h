@@ -456,7 +456,6 @@ class DLLOPT Oid : public SnmpSyntax
   /**
    * Compare two Oids from the left in direction left-to-right.
    *
-   * @param n - Subvalues to compare
    * @param o - The Oid to compare with
    *
    * @return 0 if equal / -1 if less / 1 if greater

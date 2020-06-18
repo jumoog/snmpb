@@ -57,10 +57,6 @@
  */
 // $Id$
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #ifdef SNMP_PP_NAMESPACE
 namespace Snmp_pp {
 #endif
@@ -88,10 +84,6 @@ DLLOPT void  MD5Final(unsigned char [16], MD5_CTX *);
 #ifdef SNMP_PP_NAMESPACE
 } // end of namespace Snmp_pp
 #endif 
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif // !defined(_USE_LIBTOMCRYPT) && !defined(_USE_OPENSSL)
 

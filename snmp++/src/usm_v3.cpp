@@ -47,7 +47,7 @@ namespace Snmp_pp {
 
 static const char *loggerModuleName = "snmp++.usm_v3";
 
-// Use locking on access methods in an multithreading enviroment.
+// Use locking on access methods in an multi-threading environment.
 #ifdef _THREADS
 #define BEGIN_REENTRANT_CODE_BLOCK SnmpSynchronize auto_lock(*this)
 #define BEGIN_REENTRANT_CODE_BLOCK_CONST  \
@@ -256,7 +256,7 @@ public:
 		const OctetStr& priv_pass);
 
   /**
-   * Delete all occurences of the user with the given securityName
+   * Delete all occurrences of the user with the given securityName
    * from the table.
    *
    * @param security_name - the securityName of the user
@@ -268,7 +268,7 @@ public:
   /**
    * Get the entry with the given securityName from the usmUserNameTable
    *
-   * @note Use lock() and unlock() for thread synchronizytion.
+   * @note Use lock() and unlock() for thread synchronization.
    *
    * @param security_name     -
    *
@@ -279,7 +279,7 @@ public:
   /**
    * Get a clone of the entry with the given securityName from the usmUserNameTable
    *
-   * @note call delete_cloned_entry() with the retruned pointer.
+   * @note call delete_cloned_entry() with the returned pointer.
    *
    * @param security_name     -
    *
@@ -1251,9 +1251,8 @@ struct UsmUser *USM::get_user(const OctetStr &engine_id,
               security_name.get_printable(),engine_id.get_printable());
 
   struct UsmUserNameTableEntry *name_table_entry = NULL;
-  struct UsmUserTableEntry *user_table_entry = NULL;
-
-  user_table_entry = usm_user_table->get_cloned_entry(engine_id,
+  struct UsmUserTableEntry *user_table_entry
+                   = usm_user_table->get_cloned_entry(engine_id,
 						      security_name);
   if (!user_table_entry)
   {
@@ -1676,9 +1675,8 @@ struct UsmKeyUpdate* USM::key_update_prepare(const OctetStr& securityName,
   auth_priv->get_keychange_value(user->authProtocol,
                                  oldKey, newKey, newValue);
 
-  char tmp_rand;
   for (int i = 0; i<30; i++) {
-    tmp_rand = rand();
+    char tmp_rand = rand();
     random_value += tmp_rand;
   }
 
@@ -3406,7 +3404,7 @@ int USMUserNameTable::get_user_name(unsigned char *user_name,
 
   BEGIN_REENTRANT_CODE_BLOCK;
 
-  for (int i = 0; i < entries; i++)
+  for (int i = 0; i < entries; i++) {
     if (unsignedCharCompare(table[i].usmUserSecurityName.data(),
                             table[i].usmUserSecurityName.len(),
                             security_name, security_name_len))
@@ -3433,7 +3431,7 @@ int USMUserNameTable::get_user_name(unsigned char *user_name,
 
       return SNMPv3_USM_OK;
     }
-
+  }
   if (security_name_len != 0)
   {
     LOG_BEGIN(loggerModuleName, WARNING_LOG | 5);
@@ -3447,8 +3445,6 @@ int USMUserNameTable::get_user_name(unsigned char *user_name,
 // Save all entries into a file.
 int USMUserNameTable::save_to_file(const char *name, AuthPriv *ap)
 {
-  char encoded[MAX_LINE_LEN * 2];
-  FILE *file_out;
   char tmp_file_name[MAXLENGTH_FILENAME];
   bool failed = false;
 
@@ -3475,7 +3471,7 @@ int USMUserNameTable::save_to_file(const char *name, AuthPriv *ap)
   LOG_END;
 
   sprintf(tmp_file_name, "%s.tmp", name);
-  file_out = fopen(tmp_file_name, "w");
+  FILE *file_out = fopen(tmp_file_name, "w");
   if (!file_out)
   {
     LOG_BEGIN(loggerModuleName, ERROR_LOG | 1);
@@ -3487,8 +3483,9 @@ int USMUserNameTable::save_to_file(const char *name, AuthPriv *ap)
   }
 
   {
-    // Begin reentrant code block
     BEGIN_REENTRANT_CODE_BLOCK;
+
+    char encoded[MAX_LINE_LEN * 2];
 
     for (int i=0; i < entries; ++i)
     {
@@ -3595,10 +3592,6 @@ int USMUserNameTable::save_to_file(const char *name, AuthPriv *ap)
 // Load the table from a file.
 int USMUserNameTable::load_from_file(const char *name, AuthPriv *ap)
 {
-  char decoded[MAX_LINE_LEN];
-  FILE *file_in;
-  unsigned char line[MAX_LINE_LEN * 2];
-
   if (!name || !ap)
   {
     LOG_BEGIN(loggerModuleName, ERROR_LOG | 1);
@@ -3621,7 +3614,7 @@ int USMUserNameTable::load_from_file(const char *name, AuthPriv *ap)
   LOG(name);
   LOG_END;
 
-  file_in = fopen(name, "r");
+  FILE *file_in = fopen(name, "r");
   if (!file_in)
   {
     LOG_BEGIN(loggerModuleName, ERROR_LOG | 1);
@@ -3632,12 +3625,13 @@ int USMUserNameTable::load_from_file(const char *name, AuthPriv *ap)
     return SNMPv3_USM_FILEOPEN_ERROR;
   }
 
-  int len;
+  char decoded[MAX_LINE_LEN];
+  unsigned char line[MAX_LINE_LEN * 2];
   bool failed = false;
   while (fgets((char*)line, MAX_LINE_LEN * 2, file_in))
   {
     // user_name
-    len = SAFE_INT_CAST(strlen((char*)line)) - 1;
+    int len = SAFE_INT_CAST(strlen((char*)line)) - 1;
     decodeString(line, len, decoded);
     OctetStr user_name((unsigned char*)decoded, len / 2);
 
@@ -3790,7 +3784,7 @@ int USMUserTable::get_user_name(unsigned char       *user_name,
 
   BEGIN_REENTRANT_CODE_BLOCK;
 
-  for (int i=0; i < entries; i++)
+  for (int i=0; i < entries; i++) {
     if (unsignedCharCompare(table[i].usmUserSecurityName,
 			    table[i].usmUserSecurityNameLength,
 			    sec_name, sec_name_len))
@@ -3816,7 +3810,7 @@ int USMUserTable::get_user_name(unsigned char       *user_name,
 
       return SNMPv3_USM_OK;
     }
-
+  }
   if (sec_name_len != 0)
   {
     LOG_BEGIN(loggerModuleName, WARNING_LOG | 5);
@@ -3836,7 +3830,7 @@ int USMUserTable::get_security_name(const unsigned char *user_name,
 
   BEGIN_REENTRANT_CODE_BLOCK;
 
-  for (int i=0; i < entries; i++)
+  for (int i=0; i < entries; i++) {
     if (unsignedCharCompare(table[i].usmUserName, table[i].usmUserNameLength,
 			    user_name, user_name_len))
     {
@@ -3850,7 +3844,7 @@ int USMUserTable::get_security_name(const unsigned char *user_name,
 
       return SNMPv3_USM_OK;
     }
-
+  }
   int logclass = WARNING_LOG;
   if (user_name_len == 0) logclass = INFO_LOG;
   LOG_BEGIN(loggerModuleName, logclass | 5);
@@ -4208,8 +4202,6 @@ void USMUserTable::delete_entry(const int nr)
 // Save all entries into a file.
 int USMUserTable::save_to_file(const char *name, AuthPriv *ap)
 {
-  char encoded[MAX_LINE_LEN * 2];
-  FILE *file_out;
   char tmp_file_name[MAXLENGTH_FILENAME];
   bool failed = false;
 
@@ -4236,7 +4228,7 @@ int USMUserTable::save_to_file(const char *name, AuthPriv *ap)
   LOG_END;
 
   sprintf(tmp_file_name, "%s.tmp", name);
-  file_out = fopen(tmp_file_name, "w");
+  FILE *file_out = fopen(tmp_file_name, "w");
   if (!file_out)
   {
     LOG_BEGIN(loggerModuleName, ERROR_LOG | 1);
@@ -4248,8 +4240,9 @@ int USMUserTable::save_to_file(const char *name, AuthPriv *ap)
   }
 
   {
-    // Begin reentrant code block
     BEGIN_REENTRANT_CODE_BLOCK;
+
+    char encoded[MAX_LINE_LEN * 2];
 
     for (int i=0; i < entries; ++i)
     {
@@ -4401,11 +4394,10 @@ int USMUserTable::load_from_file(const char *name, AuthPriv *ap)
   }
 
   bool failed = false;
-  int len;
   while (fgets((char*)line, MAX_LINE_LEN * 2, file_in))
   {
     // engine_id
-    len = SAFE_INT_CAST(strlen((char*)line)) - 1;
+    int len = SAFE_INT_CAST(strlen((char*)line)) - 1;
     decodeString(line, len, decoded);
     OctetStr engine_id((unsigned char*)decoded, len / 2);
 

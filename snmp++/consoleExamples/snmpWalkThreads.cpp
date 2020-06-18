@@ -64,7 +64,7 @@ static pthread_attr_t* attr = 0;
 #endif
 #endif
 
-UdpAddress address[1000];
+UdpAddress address[100];
 Snmp* snmp = 0;
 snmp_version version=version1;                       // default is v1
 int retries=1;                                       // default retries is 1
@@ -296,6 +296,10 @@ int main(int argc, char **argv)
        version = version2c;
        continue;
      }
+     if ( strstr( argv[x],"-v1")!= 0) {
+       version = version1;
+       continue;
+     }
      if (strstr(argv[x],"-r")!= 0) {                 // parse for retries
        ptr = argv[x]; ptr++; ptr++;
        retries = atoi(ptr);
@@ -323,6 +327,7 @@ int main(int argc, char **argv)
      if (strstr(argv[x], "-L") != 0) {
        ptr = argv[x]; ptr++; ptr++;
        DefaultLog::log()->set_profile(ptr);
+       continue;
      }
 #endif
 
@@ -413,6 +418,9 @@ int main(int argc, char **argv)
        continue;
      }
 #endif
+
+     std::cout << "Error: unknown parameter: " << argv[x] << "\n";
+     usage();
    }
 
    //----------[ create a SNMP++ session ]-----------------------------------

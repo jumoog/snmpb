@@ -173,17 +173,17 @@ CTarget::CTarget(const Address &address)
 
 //-----------[ CTarget:: CTarget( const CTarget &target) ]-------
 // CTarget constructor with args
-CTarget::CTarget( const CTarget &target)
-  : SnmpTarget()
+CTarget::CTarget(const CTarget &target)
+  : SnmpTarget(),
+    read_community(target.read_community),
+    write_community(target.write_community)
 {
-   read_community  = target.read_community;
-   write_community = target.write_community;
-   my_address      = target.my_address;
-   timeout         = target.timeout;
-   retries         = target.retries;
-   version         = target.version;
-   validity        = target.validity;
-   ttype           = type_ctarget;
+   my_address = target.my_address;
+   timeout    = target.timeout;
+   retries    = target.retries;
+   version    = target.version;
+   validity   = target.validity;
+   ttype = type_ctarget; // overwrite value set in SnmpTarget()
 }
 
 //----------[ CTarget::resolve_to_V1 ]---------------------------------
@@ -302,13 +302,13 @@ UTarget::UTarget(const Address &address)
 //-----------[ UTarget:: UTarget( const UTarget &target) ]-------
 // UTarget constructor with args
 UTarget::UTarget(const UTarget &target)
-  : SnmpTarget()
-{
+  : SnmpTarget(),
+    security_name(target.security_name),
+    security_model(target.security_model)
 #ifdef _SNMPv3
-  engine_id = target.engine_id;
+    , engine_id(target.engine_id)
 #endif
-  security_name = target.security_name;
-  security_model = target.security_model;
+{
   my_address = target.my_address;
   timeout = target.timeout;
   retries = target.retries;

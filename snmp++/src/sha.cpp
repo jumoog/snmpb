@@ -206,7 +206,6 @@ int SHAUpdate(SHA_CTX *ctx, const unsigned char *buf, unsigned int lenBuf)
 int SHAFinal(unsigned char *digest, SHA_CTX *ctx)
 {
   int i;
-  unsigned long int c0, c1;
   unsigned char truelen[8];
   static unsigned char padding[64] = {
     0x80, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,  /*  8 */
@@ -232,7 +231,8 @@ int SHAFinal(unsigned char *digest, SHA_CTX *ctx)
   } else
 #endif /* ~i386 */
   {
-    c0 = ctx->count[0]; c1 = ctx->count[1];
+    unsigned long c0 = ctx->count[0];
+    unsigned long c1 = ctx->count[1];
     for (i = 7; i >=0; i--) {
       truelen[i] = (unsigned char) (c0 & 0xff);
       c0 = (c0 >> 8) | (((c1 >> 8) & 0xff) << 24);

@@ -63,7 +63,7 @@ void debughexcprintf(int db_level, const char *comment,
 
     if (comment && (strlen(comment) < MAX_LOG_SIZE - 25))
     {
-	sprintf(buf, "%s (length %i): \n", comment, len);
+	sprintf(buf, "%s (length %u): \n", comment, len);
 	LOG_BEGIN(loggerModuleName, DEBUG_LOG | 3);
 	LOG(buf);
 	LOG_END;
@@ -113,24 +113,21 @@ void debugprintf(int db_level, const char *format, ...)
 {
     if (db_level > debug_level) return;
 
-    va_list  args;
-
-    va_start(args, format);
-
     char *buf = new char[MAX_LOG_SIZE];
 
-    if (NULL == buf) return; // not good!
+    if (!buf) return;
 
+    va_list  args;
+    va_start(args, format);
+      
     vsnprintf(buf, MAX_LOG_SIZE, format, args);
     buf[MAX_LOG_SIZE - 1] = 0;
-
-    va_end(args);
 
     LOG_BEGIN(loggerModuleName, DEBUG_LOG | 1);
     LOG(buf);
     LOG_END;
 
-    // and cleanup...
+    va_end(args);
     delete [] buf;
 }
 
@@ -214,11 +211,9 @@ int getBootCounter(const char *fileName,
   char line[MAX_LINE_LEN];
   char encoded[MAXLENGTH_ENGINEID * 2 + 2];
   int len = engineId.len();
+  FILE *file = fopen(fileName, "r");;
 
-  FILE *file;
-
-  boot = 0;
-  file = fopen(fileName, "r");
+  boot = 0; // set to default
 
   if (!file)
   {
@@ -300,10 +295,7 @@ int getBootCounter(const char *fileName,
 int saveBootCounter(const char *fileName,
                     const OctetStr &engineId, const unsigned int boot)
 {
-  char line[MAX_LINE_LEN];
   char tmpFileName[MAXLENGTH_FILENAME];
-  char encoded[MAXLENGTH_ENGINEID * 2 + 2];
-  bool found = false;
   int len = engineId.len();
   FILE *file_in, *file_out;
 
@@ -355,6 +347,10 @@ int saveBootCounter(const char *fileName,
 
   if ((file_in) && (file_out))
   {
+    char line[MAX_LINE_LEN];
+    char encoded[MAXLENGTH_ENGINEID * 2 + 2];
+    bool found = false;
+
     encodeString(engineId.data(), len, encoded);
     encoded[len*2] = ' ';
     encoded[len*2 + 1] = 0;
@@ -374,7 +370,7 @@ int saveBootCounter(const char *fileName,
 
           continue;
         }
-        sprintf(line,"%s%i\n", encoded, boot);
+        sprintf(line,"%s%u\n", encoded, boot);
         fputs(line, file_out);
         found = true;
         continue;
@@ -383,7 +379,7 @@ int saveBootCounter(const char *fileName,
     }
     if (!found)
     {
-      sprintf(line, "%s%i\n", encoded, boot);
+      sprintf(line, "%s%u\n", encoded, boot);
       fputs(line, file_out);
     }
     fclose(file_in);

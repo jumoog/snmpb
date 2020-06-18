@@ -130,28 +130,28 @@ public:
 	/**
 	 * Initialize a new log entry, showing timestamp, class, and level.
 	 */ 
-	virtual void init(void);
+	virtual void init();
 
 	/**
 	 * Add a numeric value to the log entry.
 	 *
 	 * @param l - A numeric value.
 	 */
-	virtual LogEntry& operator+=(const long);
+	virtual LogEntry& operator+=(const long l);
 
 	/**
 	 * Add a string value to the log entry.
 	 *
-	 * @param l - A numeric value.
+	 * @param s - A string value.
 	 */
-	virtual LogEntry& operator+=(const char*);
+	virtual LogEntry& operator+=(const char* s);
 
 	/**
 	 * Get the contents of this log entry.
          *
 	 * @return Current contents of this log entry.
 	 */ 
-	virtual const char* get_value(void) const { return ""; }
+	virtual const char* get_value() const { return ""; }
 
 	/**
 	 * Get the type of this log entry.
@@ -190,7 +190,7 @@ protected:
 	 * @return TRUE if the value has been added and FALSE if the log
 	 *         entry is full.
 	 */
-	virtual bool	add_string(const char*) = 0;
+	virtual bool	add_string(const char* s) = 0;
 
 	/**
 	 * Add an integer to the log.
@@ -199,12 +199,12 @@ protected:
 	 * @return TRUE if the value has been added and FALSE if the log
 	 *         entry is full.
 	 */
-	virtual bool	add_integer(long);
+	virtual bool	add_integer(long s);
 
 	/**
 	 * Add the current time to the log.
 	 */
-	virtual bool add_timestamp(void);
+	virtual bool add_timestamp();
 
 protected:
 	const char * const 	name;
@@ -259,7 +259,7 @@ public:
          *
 	 * @return Current contents of this log entry.
 	 */ 
-	virtual const char* get_value(void) const { return value; }
+	virtual const char* get_value() const { return value; }
 
 protected:
 	/**
@@ -277,7 +277,7 @@ protected:
 	 * @return TRUE if the value has been added and FALSE if the log
 	 *         entry is full.
 	 */
-	bool		add_string(const char*);
+	bool		add_string(const char* s);
 
 private:
         char*		value;
@@ -355,13 +355,13 @@ public:
 	 * @param log - A log entry.
 	 * @return The receiver log itself.
 	 */
-	virtual AgentLog& operator+=(const LogEntry*) = 0;
+	virtual AgentLog& operator+=(const LogEntry* log) = 0;
 
 	/**
 	 * Check whether a logging for the given type of LogEntry
 	 * has to be done or not.
 	 *
-	 * @param type
+	 * @param t
 	 *    the type of the log entry. The type is composed 
 	 *    by logical or the log entry class with a level
 	 *    of 0 up to 15.
@@ -374,7 +374,7 @@ public:
 	/**
 	 * Return the current time as a string.
 	 * 
-	 * @param
+	 * @param buf
 	 *    a buffer (of at least 18 characters, for the default method)
          *    into which to place a string containg the current time.
          *    If no buffer is supplied, a static area is used.
@@ -382,7 +382,7 @@ public:
 	 *    a string containing the current time. Either the supplied
 	 *    buffer or the static area.
 	 */
-	virtual const char*	now(char* = 0);
+	virtual const char*	now(char* buf = 0);
 
 	/**
 	 * Return the current time as a string, using the current
@@ -420,7 +420,7 @@ public:
 	 *
 	 * @param fp - An open log file.  0 implies stdout.
 	 */ 
-	AgentLogImpl(FILE* = stdout);
+	AgentLogImpl(FILE* fp = stdout);
 
 	/**
 	 * Constructor with file name of a log file. Log is directed
@@ -428,7 +428,7 @@ public:
 	 *
 	 * @param fname - The file name of a log file.
 	 */ 
-	AgentLogImpl(const char*);
+	AgentLogImpl(const char* fname);
 
 	/**
 	 * Destructor.
@@ -440,14 +440,14 @@ public:
 	 * 
 	 * @param fname - A file name. "" directs logs to stdout.
 	 */
-	void		set_dest(const char*);
+	void		set_dest(const char* fname);
 
 	/**
 	 * Set destination of logs to a given file.
 	 * 
 	 * @param fp - A pointer to an open file.  0 directs logs to stdout.
 	 */
-	void		set_dest(FILE*);
+	void		set_dest(FILE* fp);
 
 	/**
 	 * Create a new LogEntry.
@@ -456,7 +456,7 @@ public:
 	 * @param t - The type of the log entry.
 	 * @return A new instance of LogEntry (or of a derived class).
 	 */
-	virtual LogEntry* create_log_entry(const char * const name, unsigned char) const;
+	virtual LogEntry* create_log_entry(const char * const name, unsigned char t) const;
 
 	/**
 	 * Add a LogEntry to the receiver Log.
@@ -464,7 +464,7 @@ public:
 	 * @param log - A log entry.
 	 * @return The receiver log itself.
 	 */
-	virtual AgentLog& operator+=(const LogEntry*);
+	virtual AgentLog& operator+=(const LogEntry* log);
 
 protected:
 	FILE*			logfile;
@@ -543,14 +543,15 @@ public:
 	/**
 	 * Create a new log entry or reuse an existing one.
 	 *
+	 * @param name - The name of the logging module
 	 * @param type
 	 *    the type of the log entry as bitwise or of log class and level. 
 	 */
-	static void create_log_entry(const char *name, unsigned char t)
+	static void create_log_entry(const char *name, unsigned char type)
 	{
 	    if (!entry)
 	    {
-		entry = log()->create_log_entry(name,t);
+		entry = log()->create_log_entry(name, type);
 		entry->init();
 	    }
 	}

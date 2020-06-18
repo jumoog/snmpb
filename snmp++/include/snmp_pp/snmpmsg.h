@@ -87,7 +87,11 @@ class DLLOPT SnmpMessage
 	// performs ASN.1 serialization
 	// result status returned
  private:
-	int load( const Pdu &pdu,                // Pdu to serialize
+	int load( 
+#ifdef _SNMPv3
+                  v3MP* mpv3,
+#endif
+                  const Pdu &pdu,                // Pdu to serialize
                   const OctetStr &community,     // community name to use
                   const snmp_version version,    // SNMP version, v1 or v2
                   const OctetStr *engine_id,     // optional v3
@@ -97,7 +101,11 @@ class DLLOPT SnmpMessage
 	int load( const Pdu &pdu,              // Pdu to serialize
                   const OctetStr &community,   // community name to use
                   const snmp_version version)  // SNMP version, v1 or v2
-	  { return load(pdu, community, version, 0, 0, 0); };
+	  { return load(
+#ifdef _SNMPv3
+                        0,
+#endif
+                        pdu, community, version, 0, 0, 0); };
 
 	// load up message using ASN.1 data stream
 	// status is returned
@@ -123,12 +131,13 @@ class DLLOPT SnmpMessage
 
 
 #ifdef _SNMPv3
-	int loadv3( const Pdu &pdu,               // Pdu to serialize
+	int loadv3( v3MP* mpv3,                   // v3 message processing model
+                    const Pdu &pdu,               // Pdu to serialize
                     const OctetStr &engine_id,    // engine_id to use
                     const OctetStr &sec_name,     // securit_name to use
                     const int sec_model,          // security_model to use
                     const snmp_version version)   // SNMP version, v3
-	{ return load(pdu, "", version, &engine_id, &sec_name, sec_model); }
+	{ return load(mpv3, pdu, "", version, &engine_id, &sec_name, sec_model); }
 
 	int unloadv3( Pdu &pdu,                  // Pdu returned
                       snmp_version &version,     // version

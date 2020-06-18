@@ -243,7 +243,7 @@ class DLLOPT Pdu
   /**
    * Set the error index.
    *
-   * @param err - The new SNMP error index.
+   * @param index - The new SNMP error index.
    */
   void set_error_index(const int index) { error_index = index; };
 
@@ -458,18 +458,20 @@ class DLLOPT Pdu
 
   /**
    * Get the SNMPv1 trap address
+   * @return true if trap address is valid
    */
-  int get_v1_trap_address(GenAddress &address) const;
+  bool get_v1_trap_address(GenAddress &address) const;
 
   /**
    * Set the SNMPv1 trap address
+   * @return true if trap address is valid
    */
-  int set_v1_trap_address(const Address &address);
+  bool set_v1_trap_address(const Address &address);
 
   /**
    * Return the length of the encoded vbs with pdu header.
    *
-   * @note this method wll not work for v1 traps.
+   * @note this method will not work for v1 traps.
    */
   int get_asn1_length() const;
 
@@ -507,7 +509,7 @@ class DLLOPT Pdu
   Oid notify_id;                   // an id
   Oid notify_enterprise;
   GenAddress v1_trap_address;      // address object
-  int        v1_trap_address_set;
+  bool       v1_trap_address_set;
 #ifdef _SNMPv3
   // specific Objects for SNMPv3
   int security_level;            // the securityLevel with which this Pdu

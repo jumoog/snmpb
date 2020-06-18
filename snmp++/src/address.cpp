@@ -286,7 +286,7 @@ IpAddress::IpAddress(const IpAddress &ipaddr)
     if (!ipaddr.addr_changed)
     {
       memcpy(output_buffer, ipaddr.output_buffer,
-             sizeof(unsigned char) * OUTBUFF);
+             sizeof(unsigned char) * OUTBUFF_IP);
       addr_changed = false;
     }
   }
@@ -476,7 +476,7 @@ IpAddress& IpAddress::operator=(const IpAddress &ipaddr)
     else
     {
       memcpy(output_buffer, ipaddr.output_buffer,
-             sizeof(unsigned char) * OUTBUFF);
+             sizeof(unsigned char) * OUTBUFF_IP);
       addr_changed = false;
     }
   }
@@ -607,22 +607,17 @@ int IpAddress::parse_coloned_ipstring(const char *inaddr)
   bool have_scope = false;
 
   {
-      int scope_pos;
       for (int i=strlen(temp)-1; i >=0 ; i--)
       {
           if (temp[i] == '%')
           {
-              scope_pos = i;
               have_scope = true;
+              temp[i] = 0;
+              scope = atol(temp + i + 1);
               break;
           }
           if (!isdigit(temp[i]))
               break;
-      }
-      if (have_scope)
-      {
-          temp[scope_pos] = 0;
-          scope = atol(temp + scope_pos + 1);
       }
   }
 
@@ -852,7 +847,6 @@ bool IpAddress::parse_address(const char *inaddr)
 
 #ifdef HAVE_GETADDRINFO
   struct addrinfo hints, *res = 0;
-  int error;
   // XXX ensure that MAX_FRIENDLY_NAME keeps greater than INET6_ADDRSTRLEN
   char ds[MAX_FRIENDLY_NAME];
 
@@ -861,7 +855,7 @@ bool IpAddress::parse_address(const char *inaddr)
 #ifdef AI_ADDRCONFIG
   hints.ai_flags |= AI_ADDRCONFIG;
 #endif
-  error = getaddrinfo(inaddr, 0, &hints, &res);
+  int error = getaddrinfo(inaddr, 0, &hints, &res);
   if (error)
   {
     /* errx(1, "%s", gai_strerror(error)); */
@@ -1120,9 +1114,6 @@ int IpAddress::addr_to_friendly()
   hostent *lookupResult;
 #endif
   char    ds[61];
-
-  // can't look up an invalid address
-  if (!valid_flag) return -1;
 
   // lets try and get the friendly name from the DNS
   strcpy(ds, this->IpAddress::get_printable());
@@ -1421,7 +1412,7 @@ UdpAddress::UdpAddress(const UdpAddress &udpaddr)
   if (!udpaddr.addr_changed)
   {
     memcpy(output_buffer, udpaddr.output_buffer,
-           sizeof(unsigned char) * OUTBUFF);
+           sizeof(unsigned char) * OUTBUFF_UDP);
     addr_changed = false;
   }
 }
@@ -1629,7 +1620,7 @@ UdpAddress& UdpAddress::operator=(const UdpAddress &udpaddr)
   else
   {
     memcpy(output_buffer, udpaddr.output_buffer,
-           sizeof(unsigned char) * OUTBUFF);
+           sizeof(unsigned char) * OUTBUFF_UDP);
     addr_changed = false;
   }
 
@@ -1682,11 +1673,11 @@ bool UdpAddress::parse_address(const char *inaddr)
   // if neither are present then just treat it
   // like a normal IpAddress
 
-  int remove_brackets = false;
-  int found = false;
+  bool remove_brackets = false;
+  bool found = false;
   int pos = (int)strlen(buffer) - 1; // safe to cast as max is MAX_FRIENDLY_NAME
-  int do_loop = true;
-  int another_colon_found = false;
+  bool do_loop = true;
+  bool another_colon_found = false;
   bool scope_found = false;
 
   if (pos < 0)

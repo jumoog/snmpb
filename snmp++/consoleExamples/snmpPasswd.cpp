@@ -25,9 +25,7 @@
   _##  
   _##########################################################################*/
 
-char snmppasswd_cpp_version[]="@(#) SNMP++ $Id$";
 #include <libsnmp.h>
-
 #include "snmp_pp/snmp_pp.h"
 
 #ifdef WIN32
@@ -93,47 +91,45 @@ void KeyChange(Snmp* snmp, Pdu& myPdu,
        << std::endl << std::endl << std::flush;
 }
 
-static void
-usage()
+static void usage()
 {
     std::cout << "Usage:\n";
     std::cout << "snmpPasswd IpAddress | DNSName user newpassword [options]\n";
     exit(1);
 }
 
-static void
-help()
+static void help()
 {
-	  std::cout << "Usage:\n";
-	  std::cout << "snmpPasswd IpAddress | DNSName user newpassword [options]\n";
-	  std::cout << "Oid: sysDescr object is default\n";
-	  std::cout << "options: -vN , use SNMP version 1, 2 or 3, default is 1\n";
-	  std::cout << "         -PPort , remote port to use\n";
-	  std::cout << "         -CCommunity_name, specify community default is 'public' \n";
-	  std::cout << "         -rN , retries default is N = 1 retry\n";
-	  std::cout << "         -tN , timeout in hundredths of seconds; default is N = 100\n";
-          std::cout << "         -snSecurityName,\n";
-          std::cout << "         -slN , securityLevel to use, default N = 3 = authPriv\n";
-          std::cout << "         -smN , securityModel to use, only default N = 3 = USM possible\n";
-          std::cout << "         -cnContextName, default empty string\n";
-          std::cout << "         -ceContextEngineID, as hex e.g. 800007E580, default empty string\n";
-          std::cout << "         -authPROT, use authentication protocol NONE, SHA or MD5\n";
-          std::cout << "         -privPROT, use privacy protocol NONE, DES, 3DESEDE, IDEA, AES128, AES192 or AES256\n";
-          std::cout << "         -uaAuthPassword\n";
-          std::cout << "         -upPrivPassword\n";
-	  std::cout << "         -eEngineID, as hex\n";
+  std::cout << "Usage:\n";
+  std::cout << "snmpPasswd IpAddress | DNSName user newpassword [options]\n";
+  std::cout << "Oid: sysDescr object is default\n";
+  std::cout << "options: -vN , use SNMP version 1, 2 or 3, default is 1\n";
+  std::cout << "         -PPort , remote port to use\n";
+  std::cout << "         -CCommunity_name, specify community default is 'public' \n";
+  std::cout << "         -rN , retries default is N = 1 retry\n";
+  std::cout << "         -tN , timeout in hundredths of seconds; default is N = 100\n";
+  std::cout << "         -snSecurityName,\n";
+  std::cout << "         -slN , securityLevel to use, default N = 3 = authPriv\n";
+  std::cout << "         -smN , securityModel to use, only default N = 3 = USM possible\n";
+  std::cout << "         -cnContextName, default empty string\n";
+  std::cout << "         -ceContextEngineID, as hex e.g. 800007E580, default empty string\n";
+  std::cout << "         -authPROT, use authentication protocol NONE, SHA or MD5\n";
+  std::cout << "         -privPROT, use privacy protocol NONE, DES, 3DESEDE, IDEA, AES128, AES192 or AES256\n";
+  std::cout << "         -uaAuthPassword\n";
+  std::cout << "         -upPrivPassword\n";
+  std::cout << "         -eEngineID, as hex\n";
 #ifdef WITH_LOG_PROFILES
-    std::cout << "         -Lprofile , log profile to use, default is '"
+  std::cout << "         -Lprofile , log profile to use, default is '"
 #ifdef DEFAULT_LOG_PROFILE
-         << DEFAULT_LOG_PROFILE
+            << DEFAULT_LOG_PROFILE
 #else
-         << "original"
+            << "original"
 #endif
-         << "'\n";
+            << "'\n";
 #endif
-    std::cout << "         -h, -? - prints this help\n";
-    exit(1);
-   }
+  std::cout << "         -h, -? - prints this help\n";
+  exit(1);
+}
 
 int main(int argc, char **argv)
 {
@@ -163,16 +159,8 @@ int main(int argc, char **argv)
 	  usage();
    }
 
-   OctetStr newUser, newPassword;
-   if (((strstr(argv[2],"-")==0) && (strstr(argv[3],"-")==0))) {
-	newUser = argv[2];
-	newPassword = argv[3];
-   }
-   else
-   {
-     std::cout << "wrong parameters..." << std::endl;
-     return 1;
-   }
+   OctetStr newUser = argv[2];
+   OctetStr newPassword = argv[3];
 
    //---------[ determine options to use ]-----------------------------------
    snmp_version version=version1;                  // default is v1
@@ -195,9 +183,13 @@ int main(int argc, char **argv)
 
    char *ptr;
 
-   for(int x=1;x<argc;x++) {                           // parse for version
+   for(int x=4;x<argc;x++) {                           // parse for version
      if (strstr(argv[x],"-v2")!= 0) {
        version = version2c;
+       continue;
+     }
+     if ( strstr( argv[x],"-v1")!= 0) {
+       version = version1;
        continue;
      }
      if (strstr(argv[x],"-r")!= 0) {                 // parse for retries
@@ -226,6 +218,7 @@ int main(int argc, char **argv)
      if (strstr(argv[x], "-L") != 0) {
        ptr = argv[x]; ptr++; ptr++;
        DefaultLog::log()->set_profile(ptr);
+       continue;
      }
 #endif
 
@@ -311,6 +304,9 @@ int main(int argc, char **argv)
        engineID = OctetStr::from_hex_string(ptr);
        continue;
      }
+
+     std::cout << "Error: unknown parameter: " << argv[x] << "\n";
+     usage();
    }
 
    //----------[ create a SNMP++ session ]-----------------------------------

@@ -25,7 +25,6 @@
   _##  
   _##########################################################################*/
 
-char receivetrap_cpp_version[]="@(#) SNMP++ $Id$";
 #include <libsnmp.h>
 
 #include "snmp_pp/snmp_pp.h"

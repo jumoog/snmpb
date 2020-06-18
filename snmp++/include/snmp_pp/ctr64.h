@@ -73,11 +73,11 @@ namespace Snmp_pp {
  * a single entity. This type has is available in SNMPv2 but
  * may be used anywhere where needed.
  */
-class DLLOPT Counter64: public  SnmpSyntax
+class DLLOPT Counter64: public SnmpSyntax
 {
  public:
 
-  //-----------[ Constructors and Destrucotr ]----------------------
+  //-----------[ Constructors and Destructor ]----------------------
 
   /**
    * Constructs a valid Counter64 with the given values.
@@ -215,7 +215,7 @@ class DLLOPT Counter64: public  SnmpSyntax
   SnmpSyntax *clone() const { return (SnmpSyntax *) new Counter64(*this); }
 
   /**
-   * Overloaded assignement operator.
+   * Overloaded assignment operator.
    *
    * @param val - Try to map the given value to a Counter64 and assign it
    * @return Always *this with the new value.

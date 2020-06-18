@@ -394,7 +394,6 @@ snmpppinc_HEADERS = address.h \
 			integer.h \
 			IPv6Utility.h \
 			log.h \
-			Makefile.am \
 			md5.h \
 			mp_v3.h \
 			msec.h \

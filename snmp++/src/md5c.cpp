@@ -24,7 +24,7 @@
   _##  upon this software code base. 
   _##  
   _##########################################################################*/
-char md5c_cpp_version[]="#(@) SNMP++ $Id$";
+
 /* MD5C.C - RSA Data Security, Inc., MD5 message-digest algorithm */
 
 /* Copyright (C) 1991, RSA Data Security, Inc. All rights reserved.
@@ -53,10 +53,6 @@ char md5c_cpp_version[]="#(@) SNMP++ $Id$";
 #include "snmp_pp/md5.h"
 
 #if !defined(_USE_LIBTOMCRYPT) && !defined(_USE_OPENSSL)
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #ifdef SNMP_PP_NAMESPACE
 namespace Snmp_pp {
@@ -354,9 +350,5 @@ static void MD5_memset (
 #ifdef SNMP_PP_NAMESPACE
 } // end of namespace Snmp_pp
 #endif 
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif // !defined(_USE_LIBTOMCRYPT) && !defined(_USE_OPENSSL)

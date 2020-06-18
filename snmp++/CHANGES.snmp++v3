@@ -1,3 +1,40 @@
+Changes snmp++v3.4.1
+====================
+
+- Fixed compilation if SNMPv3 id disabled.
+- Fixed: possible double definition of INT8_MIN.
+- Fixed: consoleExamples dif not accept "-v1" and -L option.
+- Fixed: "make install" copied Makefile.am to <PREFIX>/include/snmp_pp folder.
+- Removed snmp++-3.3.pc.in, as snmp++-3.pc.in is used.
+
+Changes snmp++v3.4.0a
+=====================
+- Fixed in 3.4.0a incorrect packaging which did not include refactoring of
+  Snmp::get_mpv3() in distribution file.
+- Fixed [APP-63]: Removed usage of static v3MP::I instance to allow using
+  several Snmp sessions with independent v3 message processing models within
+  a single process.
+- Fixed [APP-61]: Reduced buffer size to prevent warning about possible 
+  buffer overflow ;-)
+- Fixed [APP-61]: Use unique_ptr instead of deprecated auto_ptr
+
+Changes snmp++v3.3.13
+=====================
+- Fixed [APP-60]: SECURITY: SNMP++ contains "out-of-bounds read" vulnerability 
+  in function asn_parse_objid.
+  The vulnerability was discovered by Radu Motspan, "Kaspersky".
+
+Changes snmp++v3.3.12a
+======================
+- Fixed: Compilation error in md5c.cpp caused by extern "C" declaration removal
+
+Changes snmp++v3.3.12
+=====================
+- Fixed: Memory leak for every SHA1 and MD5 digest calculation when
+  using OpenSSL >= 1.1.0 (Oleg Bt)
+- Fixed: md5.h: Removed the extern "C" declaration, as it not needed 
+  and does not allow to use namespaces.
+- Fixed: Some cppcheck warnings.
 
 Changes snmp++v3.3.11a
 ======================

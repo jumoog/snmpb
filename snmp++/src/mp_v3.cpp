@@ -657,13 +657,6 @@ v3MP::v3MP(const OctetStr& snmpEngineID,
            unsigned int engineBoots, int &construct_status)
   : own_engine_id(0), usm(0)
 {
-  if (I)
-  {
-    debugprintf(0, "v3MP: You must not create two objects of this class!");
-    construct_status = SNMPv3_MP_ERROR;
-    return;
-  }
-
   I = this;
 
   snmpUnknownSecurityModels = 0;
@@ -713,11 +706,8 @@ v3MP::~v3MP()
 // Remove all occurences of this engine id from v3MP and USM.
 int v3MP::remove_engine_id(const OctetStr &engine_id)
 {
-  int retval1, retval2;
-
-  retval1 = engine_id_table.delete_entry(engine_id);
-
-  retval2 = usm->remove_engine_id(engine_id);
+  int retval1 = engine_id_table.delete_entry(engine_id);
+  int retval2 = usm->remove_engine_id(engine_id);
 
   if ((retval1 == SNMPv3_MP_NOT_INITIALIZED) ||
       (retval2 == SNMPv3_USM_ERROR))
@@ -734,8 +724,6 @@ int v3MP::send_report(unsigned char* scopedPDU, int scopedPDULength,
 {
   debugprintf(2, "v3MP::send_report: Sending report message.");
 
-  unsigned char *data;
-  int dataLength;
   int pdu_type = 0;
   unsigned char cEngineID[MAXLENGTH_ENGINEID+1];
   unsigned char cName[MAXLENGTH_CONTEXT_NAME+1];
@@ -747,10 +735,11 @@ int v3MP::send_report(unsigned char* scopedPDU, int scopedPDULength,
   if (scopedPDULength != MAX_SNMP_PACKET)
   {
     // try to get scopedPDU and PDU
-    data = asn1_parse_scoped_pdu(scopedPDU, &scopedPDULength,
-				 cEngineID, &cEngineIDLength,
-				 cName, &cNameLength);
-    if (data == NULL) {
+    unsigned char *data = asn1_parse_scoped_pdu(scopedPDU, &scopedPDULength,
+                                                cEngineID, &cEngineIDLength,
+                                                cName, &cNameLength);
+    if (!data)
+    {
       debugprintf(1, "mp: Error while trying to parse  scopedPDU!");
       cEngineID[0] = '\0';
       cEngineIDLength = 0;
@@ -760,8 +749,9 @@ int v3MP::send_report(unsigned char* scopedPDU, int scopedPDULength,
       //if (sLevel == SNMP_SECURITY_LEVEL_AUTH_PRIV)
      //   sLevel = SNMP_SECURITY_LEVEL_AUTH_NOPRIV;
     }
-    else { // data != NULL
-      dataLength = scopedPDULength;
+    else
+    {
+      int dataLength = scopedPDULength;
 
       // parse data of scopedPDU
       snmp_parse_data_pdu(pdu, data, dataLength);
@@ -1013,14 +1003,11 @@ int v3MP::snmp_parse(Snmp *snmp_session,
                snmpInvalidMsgs++;
                // do not send back report
                return SNMPv3_MP_INVALID_MESSAGE;
-               break;
+               //break;
              }
   }
 
-  bool reportableFlag;
-
-  if (msgFlags & 0x04) reportableFlag = true;
-  else                 reportableFlag = false;
+  bool reportableFlag = ((msgFlags & 0x04) != 0);
 
   securityStateReference = usm->get_new_sec_state_reference();
   if (!securityStateReference)
@@ -1076,22 +1063,20 @@ int v3MP::snmp_parse(Snmp *snmp_session,
   int tmp_contextEngineIDLength = MAXLENGTH_ENGINEID;
   int tmp_contextNameLength     = MAXLENGTH_CONTEXT_NAME;
 
-  unsigned char *data;
-  int dataLength;
-
   debugprintf(1,"ErrorCode is %i",errorCode);
 
   if (!errorCode) {
-    data = asn1_parse_scoped_pdu(scopedPDUPtr, &scopedPDULength,
-				 tmp_contextEngineID,
-				 &tmp_contextEngineIDLength,
-				 tmp_contextName, &tmp_contextNameLength);
-    if (data == NULL) {
+    unsigned char *data = asn1_parse_scoped_pdu(scopedPDUPtr, &scopedPDULength,
+                                                tmp_contextEngineID,
+                                                &tmp_contextEngineIDLength,
+                                                tmp_contextName, &tmp_contextNameLength);
+    if (!data)
+    {
       debugprintf(0, "mp: Error Parsing scopedPDU!");
       usm->delete_sec_state_reference(securityStateReference);
       return SNMPv3_MP_PARSE_ERROR;
     }
-    dataLength = scopedPDULength;
+    int dataLength = scopedPDULength;
     contextEngineID.set_data(tmp_contextEngineID, tmp_contextEngineIDLength);
     contextName.set_data(tmp_contextName, tmp_contextNameLength);
 
@@ -1112,7 +1097,7 @@ int v3MP::snmp_parse(Snmp *snmp_session,
          (pdu->command == TRP_REQ_MSG) || (pdu->command == INFORM_REQ_MSG)  ||
          (pdu->command == TRP2_REQ_MSG)))
     {
-      //  RFC 2572 � 4.2.2.1 (2a)
+      //  RFC 2572 ch. 4.2.2.1 (2a)
       debugprintf(2, "mp: received request message with zero length"
                   " contextEngineID -> unknownPduHandlers.");
       inc_stats_unknown_pdu_handlers();
@@ -1143,7 +1128,7 @@ int v3MP::snmp_parse(Snmp *snmp_session,
   if ((pdu->command == GET_RSP_MSG) || (pdu->command == REPORT_MSG)) {
     rc = cache.get_entry(msgID, true, &centry);
     if (rc != SNMPv3_MP_OK) {
-      // RFC 2572 � 4
+      // RFC 2572 ch. 4
       debugprintf(2, "Received rspMsg without outstanding request."
                   " -> SnmpUnknownPduHandler");
       usm->delete_sec_state_reference(securityStateReference);

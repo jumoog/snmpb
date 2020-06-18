@@ -43,7 +43,7 @@
 
   Peter E. Mellquist
 */
-char snmpbulk_cpp_version[]="@(#) SNMP++ $Id$";
+
 #include <libsnmp.h>
 
 #include "snmp_pp/snmp_pp.h"
@@ -56,16 +56,14 @@ char snmpbulk_cpp_version[]="@(#) SNMP++ $Id$";
 using namespace Snmp_pp;
 #endif
 
-static void
-usage()
+static void usage()
 {
     std::cout << "Usage:\n";
     std::cout << "snmpBulk IpAddress | DNSName [Oid [Oid...]] [options]\n";
     exit(1);
 }
 
-static void
-help()
+static void help()
 {
   std::cout << "Usage:\n";
   std::cout << "snmpBulk IpAddress | DNSName [Oid [Oid...]] [options]\n";
@@ -130,6 +128,7 @@ int main(int argc, char **argv)
    }
    Pdu pdu;                              // construct a Pdu object
    Vb vb;                                // construct a Vb object
+   int oid_count = 0;
    if (argc >= 3) {                  // if 3 args, then use the callers Oid
         int i=2;
         while ((i<argc) && (strstr(argv[i],"-")==0))
@@ -141,6 +140,7 @@ int main(int argc, char **argv)
                 }
                 vb.set_oid(oid);
                 pdu += vb;
+                oid_count++;
                 i++;
         }
    }
@@ -174,9 +174,13 @@ int main(int argc, char **argv)
 
    char *ptr;
 
-   for(int x=1;x<argc;x++) {
+   for(int x=2+oid_count;x<argc;x++) {
      if (strstr(argv[x],"-v2")!= 0) {                // parse for version
        version = version2c;
+       continue;
+     }
+     if ( strstr( argv[x],"-v1")!= 0) {
+       version = version1;
        continue;
      }
      if (strstr(argv[x],"-r")!= 0) {                 // parse for retries
@@ -216,6 +220,7 @@ int main(int argc, char **argv)
      if (strstr(argv[x], "-L") != 0) {
        ptr = argv[x]; ptr++; ptr++;
        DefaultLog::log()->set_profile(ptr);
+       continue;
      }
 #endif
 
@@ -298,6 +303,9 @@ int main(int argc, char **argv)
        continue;
      }
 #endif
+
+     std::cout << "Error: unknown parameter: " << argv[x] << "\n";
+     usage();
   }
 
    //----------[ create a SNMP++ session ]-----------------------------------

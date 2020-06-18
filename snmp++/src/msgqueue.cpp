@@ -354,11 +354,11 @@ CSNMPMessage * CSNMPMessageQueue::AddEntry(unsigned long id,
 CSNMPMessage *CSNMPMessageQueue::GetEntry(const unsigned long uniqueId)
 {
   CSNMPMessageQueueElt *msgEltPtr = m_head.GetNext();
-  CSNMPMessage *returnVal = NULL;
 
   while (msgEltPtr)
   {
-    if ((returnVal = msgEltPtr->TestId(uniqueId)))
+    CSNMPMessage *returnVal = msgEltPtr->TestId(uniqueId);
+    if (returnVal)
       return returnVal;
     msgEltPtr = msgEltPtr->GetNext();
   }
@@ -620,7 +620,7 @@ int CSNMPMessageQueue::HandleEvents(const struct pollfd *readfds,
           LOG(engine_id.get_printable());
           LOG_END;
 
-          v3MP::I->add_to_engine_id_table(engine_id,
+          m_snmpSession->get_mpv3()->add_to_engine_id_table(engine_id,
                                           (char*)addr.IpAddress::get_printable(),
                                           addr.get_port());
         }
@@ -654,10 +654,10 @@ void CSNMPMessageQueue::GetFdSets(int &maxfds, fd_set &readfds,
 {
   SnmpSynchronize _synchronize(*this); // REENTRANT
   CSNMPMessageQueueElt *msgEltPtr = m_head.GetNext();
-  SnmpSocket sock;
 
-  while (msgEltPtr){
-    sock = msgEltPtr->GetMessage()->GetSocket();
+  while (msgEltPtr)
+  {
+    SnmpSocket sock = msgEltPtr->GetMessage()->GetSocket();
     FD_SET(sock, &readfds);
     if (maxfds < SAFE_INT_CAST(sock+1))
       maxfds = SAFE_INT_CAST(sock+1);
@@ -756,7 +756,7 @@ int CSNMPMessageQueue::HandleEvents(const int maxfds,
             LOG(addr.get_printable());
             LOG(engine_id.get_printable());
             LOG_END;
-            v3MP::I->add_to_engine_id_table(engine_id,
+            m_snmpSession->get_mpv3()->add_to_engine_id_table(engine_id,
                                          (char*)addr.IpAddress::get_printable(),
                                           addr.get_port());
           }
@@ -821,8 +821,8 @@ int CSNMPMessageQueue::DoRetries(const msec &now)
         DeleteEntry(req_id);
 #ifdef _SNMPv3
         // delete entry in cache
-        if (v3MP::I)
-          v3MP::I->delete_from_cache(req_id);
+        if (m_snmpSession->get_mpv3())
+          m_snmpSession->get_mpv3()->delete_from_cache(req_id);
 
         LOG_BEGIN(loggerModuleName, INFO_LOG | 6);
         LOG("MsgQueue: Message timed out, removed id from v3MP cache (rid)");

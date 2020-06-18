@@ -219,7 +219,7 @@ long Snmp::MyMakeReqId()
     rid = 0xc0de;
 #endif
 
-    if ( current_rid > PDU_MAX_RID)
+    if (current_rid > PDU_MAX_RID)
     {
       current_rid = rid = PDU_MIN_RID;
       // let other tasks proceed
@@ -551,7 +551,7 @@ int receive_snmp_notification(SnmpSocket sock, Snmp &snmp_session,
     // though.
     if (pdu.get_type() == sNMP_PDU_REPORT ||
         pdu.get_type() == sNMP_PDU_RESPONSE) {
-        v3MP::I->add_to_engine_id_table(engine_id,
+        snmp_session.get_mpv3()->add_to_engine_id_table(engine_id,
                              (char*)(fromaddress.IpAddress::get_printable()),
                              fromaddress.get_port());
     }
@@ -625,7 +625,10 @@ void Snmp::map_action( unsigned short action, unsigned short & pdu_action)
 
 Snmp::Snmp(int &status, const unsigned short port, const bool bind_ipv6)
     : SnmpSynchronized(),
-      m_bThreadRunning(false), m_iPollTimeOut(DEFAULT_TIMEOUT)
+      m_isThreadRunning(false), m_pollTimeOut(DEFAULT_TIMEOUT)
+#ifdef _SNMPv3
+    , mpv3(v3MP::I)
+#endif
 {
   IpAddress *addresses[2];
 
@@ -652,7 +655,10 @@ Snmp::Snmp(int &status, const unsigned short port, const bool bind_ipv6)
 
 Snmp::Snmp( int &status, const UdpAddress& addr)
     : SnmpSynchronized(),
-      m_bThreadRunning(false), m_iPollTimeOut(DEFAULT_TIMEOUT)
+      m_isThreadRunning(false), m_pollTimeOut(DEFAULT_TIMEOUT)
+#ifdef _SNMPv3
+    , mpv3(v3MP::I)
+#endif
 {
   IpAddress *addresses[2];
 
@@ -675,7 +681,10 @@ Snmp::Snmp( int &status, const UdpAddress& addr)
 Snmp::Snmp( int &status,  const UdpAddress& addr_v4,
             const UdpAddress& addr_v6)
     : SnmpSynchronized(),
-      m_bThreadRunning(false), m_iPollTimeOut(DEFAULT_TIMEOUT)
+      m_isThreadRunning(false), m_pollTimeOut(DEFAULT_TIMEOUT)
+#ifdef _SNMPv3
+    , mpv3(v3MP::I)
+#endif
 {
   IpAddress *addresses[2];
 
@@ -1342,7 +1351,7 @@ int Snmp::trap(Pdu &pdu,                        // pdu to send
 #ifdef _SNMPv3
   if ( version == version3) {
 
-    OctetStr engine_id = v3MP::I->get_local_engine_id();
+    OctetStr engine_id = mpv3->get_local_engine_id();
     if (!utarget) {
       debugprintf(0, "-- SNMP++, dont know how to handle SNMPv3 without UTarget!");
       return SNMP_CLASS_INVALID_TARGET;
@@ -1362,7 +1371,7 @@ int Snmp::trap(Pdu &pdu,                        // pdu to send
                 security_model, pdu.get_security_level());
     debugprintf(4," Addr/Port (%s)",udp_address.get_printable());
 
-    status = snmpmsg.loadv3( pdu, engine_id, security_name,
+    status = snmpmsg.loadv3( mpv3, pdu, engine_id, security_name,
                              security_model, (snmp_version)version);
   }
   else
@@ -1779,8 +1788,8 @@ int Snmp::snmp_engine( Pdu &pdu,              // pdu to use
       utarget->get_engine_id(engine_id);
       if (engine_id.len() == 0)
       {
-        if (v3MP::I->get_from_engine_id_table(engine_id,
-                                              udp_address.get_printable())
+        if (mpv3->get_from_engine_id_table(engine_id,
+                                           udp_address.get_printable())
             == SNMPv3_MP_OK )
         {
           // Override const here
@@ -1789,7 +1798,7 @@ int Snmp::snmp_engine( Pdu &pdu,              // pdu to use
 	else
 	{
           // check if engine id discovery is enabled
-          if ((!v3MP::I->get_usm()->is_discovery_enabled()) &&
+          if ((!mpv3->get_usm()->is_discovery_enabled()) &&
               ((pdu_action == sNMP_PDU_GET) ||
                (pdu_action == sNMP_PDU_SET) ||
                (pdu_action == sNMP_PDU_GETNEXT) ||
@@ -1819,8 +1828,8 @@ int Snmp::snmp_engine( Pdu &pdu,              // pdu to use
                   security_model, pdu.get_security_level());
       debugprintf(4," Addr/Port (%s)",udp_address.get_printable());
 
-      status = snmpmsg.loadv3( pdu, engine_id, security_name,
-                               security_model, (snmp_version)version);
+      status = snmpmsg.loadv3(mpv3, pdu, engine_id, security_name,
+                              security_model, (snmp_version)version);
     }
     else
 #endif
@@ -2044,19 +2053,11 @@ int Snmp::engine_id_discovery(OctetStr &engine_id,
   }
 
   // now wait for the responses
-  Pdu dummy_pdu;
   int nfound = 0;
   msec end_time;
   struct timeval fd_timeout;
 
   end_time += timeout_sec * 1000;
-
-#ifdef HAVE_POLL_SYSCALL
-  struct pollfd readfds;
-  int timeout;
-#else
-  fd_set readfds;
-#endif
 
   do
   {
@@ -2064,14 +2065,16 @@ int Snmp::engine_id_discovery(OctetStr &engine_id,
     end_time.GetDeltaFromNow(fd_timeout);
 
 #ifdef HAVE_POLL_SYSCALL
+    struct pollfd readfds;
     memset(&readfds, 0, sizeof(struct pollfd));
     readfds.fd = sock;
     readfds.events = POLLIN;
-    timeout = fd_timeout.tv_sec * 1000 + fd_timeout.tv_usec / 1000;
+    int timeout = fd_timeout.tv_sec * 1000 + fd_timeout.tv_usec / 1000;
     nfound = poll(&readfds, 1, timeout);
     if ((nfound > 0) && (readfds.revents & POLLIN))
 	something_to_receive = true;
 #else
+    fd_set readfds;
     FD_ZERO(&readfds);
     FD_SET(sock, &readfds);
 
@@ -2084,6 +2087,7 @@ int Snmp::engine_id_discovery(OctetStr &engine_id,
     {
       // receive message
       UdpAddress from;
+      Pdu dummy_pdu;
       int res = receive_snmp_response(sock, *this, dummy_pdu,
 				      from, engine_id, true /* process_msg */);
       if ((res == SNMP_CLASS_SUCCESS) ||
@@ -2208,20 +2212,11 @@ int Snmp::broadcast_discovery(UdpAddressCollection &addresses,
   }
 
   // now wait for the responses
-  Pdu dummy_pdu;
-  OctetStr engine_id;
   int nfound = 0;
   msec end_time;
   struct timeval fd_timeout;
 
   end_time += timeout_sec * 1000;
-
-#ifdef HAVE_POLL_SYSCALL
-  struct pollfd readfds;
-  int timeout;
-#else
-  fd_set readfds;
-#endif
 
   do
   {
@@ -2229,14 +2224,16 @@ int Snmp::broadcast_discovery(UdpAddressCollection &addresses,
     end_time.GetDeltaFromNow(fd_timeout);
 
 #ifdef HAVE_POLL_SYSCALL
+    struct pollfd readfds;
     memset(&readfds, 0, sizeof(struct pollfd));
     readfds.fd = sock;
     readfds.events = POLLIN;
-    timeout = fd_timeout.tv_sec * 1000 + fd_timeout.tv_usec / 1000;
+    int timeout = fd_timeout.tv_sec * 1000 + fd_timeout.tv_usec / 1000;
     nfound = poll(&readfds, 1, timeout);
     if ((nfound > 0) && (readfds.revents & POLLIN))
 	something_to_receive = true;
 #else
+    fd_set readfds;
     FD_ZERO(&readfds);
     FD_SET(sock, &readfds);
 
@@ -2249,6 +2246,8 @@ int Snmp::broadcast_discovery(UdpAddressCollection &addresses,
     {
       // receive message
       UdpAddress from;
+      OctetStr engine_id;
+      Pdu dummy_pdu;
       if (receive_snmp_response(sock, *this, dummy_pdu,
 				from, engine_id, false /* process_msg */)
 	  == SNMP_CLASS_SUCCESS)
@@ -2280,13 +2279,13 @@ bool Snmp::start_poll_thread(const int timeout)
 {
 #ifdef _THREADS
     // store the timeout value for later
-    m_iPollTimeOut = timeout;
+    m_pollTimeOut = timeout;
 
     // if we are already running return ok
-    if (m_bThreadRunning == true) return true;
+    if (m_isThreadRunning == true) return true;
 
     // since we are here, things must be fine so far...
-    m_bThreadRunning = true;
+    m_isThreadRunning = true;
 
     // start the ProcessThread function....
 #ifdef WIN32
@@ -2297,7 +2296,7 @@ bool Snmp::start_poll_thread(const int timeout)
     if (m_hThread == NULL)
     {
         debugprintf(0, "Could not create ProcessThread");
-	m_bThreadRunning = false;
+	m_isThreadRunning = false;
 	m_hThread = INVALID_HANDLE_VALUE;
     }
 #elif defined (CPU) && CPU == PPC603
@@ -2306,7 +2305,7 @@ bool Snmp::start_poll_thread(const int timeout)
     {
 	// Could not create thread.
         debugprintf(0, "Could not create ProcessThread");
-	m_bThreadRunning = false;
+	m_isThreadRunning = false;
     }
 #else
     int rc = pthread_create(&m_hThread, NULL, Snmp::process_thread,
@@ -2315,11 +2314,11 @@ bool Snmp::start_poll_thread(const int timeout)
     {
 	// Could not create thread.
         debugprintf(0, "Could not create ProcessThread");
-	m_bThreadRunning = false;
+	m_isThreadRunning = false;
     }
 #endif
 #endif
-    return m_bThreadRunning;
+    return m_isThreadRunning;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -2329,11 +2328,11 @@ bool Snmp::start_poll_thread(const int timeout)
 ///////////////////////////////////////////////////////////////////////////////
 void Snmp::stop_poll_thread()
 {
-    if (m_bThreadRunning == false) return;
+    if (m_isThreadRunning == false) return;
 
 #ifdef _THREADS
     // tell the thread to stop
-    m_bThreadRunning = false;
+    m_isThreadRunning = false;
 
     // Wait for the working thread to stop....
 #ifdef WIN32
@@ -2353,19 +2352,18 @@ void Snmp::stop_poll_thread()
 }
 
 #ifdef WIN32
-int Snmp::process_thread(Snmp *pSnmp)
+int Snmp::process_thread(Snmp *snmp)
 {
 #else
 void* Snmp::process_thread(void *arg)
 {
-    Snmp* pSnmp = (Snmp*) arg;
+    Snmp* snmp = (Snmp*) arg;
 #endif // !WIN32
 
     // Loop as long as we haven't stopped
-    while (pSnmp->is_running())
+    while (snmp->is_running())
     {
-	pSnmp->eventListHolder
-	     ->SNMPProcessEvents(pSnmp->m_iPollTimeOut);
+	snmp->eventListHolder->SNMPProcessEvents(snmp->m_pollTimeOut);
     }
 
 #ifdef _THREADS

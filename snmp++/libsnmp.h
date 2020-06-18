@@ -194,7 +194,7 @@ extern "C" int strcasecmp(const char *s1, const char *s2);
 # define INT64_MIN              (-int64_t(9223372036854775807)-1)
 #endif
 /* Maximum of signed integral types.  */
-#ifndef INT_MAX
+#ifndef INT8_MAX
 # define INT8_MAX               (127)
 #endif
 #ifndef INT16_MAX

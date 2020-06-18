@@ -43,10 +43,8 @@
 
   Peter E. Mellquist
 */
-char snmpset_cpp_version[]="@(#) SNMP++ $Id$";
 
 #include <libsnmp.h>
-
 #include "snmp_pp/snmp_pp.h"
 
 #ifdef WIN32
@@ -236,16 +234,14 @@ bool determine_vb(SmiUINT32 val, Vb &vb)
   }
 }
 
-static void
-usage()
+static void usage()
 {
     std::cout << "Usage:\n";
     std::cout << "snmpSet IpAddress | DNSName [Oid] [options]\n";
     exit(1);
 }
 
-static void
-help()
+static void help()
 {
     std::cout << "Usage:\n";
     std::cout << "snmpSet IpAddress | DNSName [Oid] [options]\n";
@@ -278,7 +274,7 @@ help()
 #endif
     std::cout << "         -h, -? - prints this help\n";
     exit(1);
-   }
+}
 
 
 int main(int argc, char **argv)
@@ -309,9 +305,11 @@ int main(int argc, char **argv)
           usage();
    }
    Oid oid("1.3.6.1.2.1.1.4.0");      // default is sysName
+   int oid_count = 0;
    if (argc >= 3) {                  // if 3 args, then use the callers Oid
           if (strstr(argv[2],"-")==0) {
              oid = argv[2];
+             oid_count++;
              if (!oid.valid()) {            // check validity of user oid
                     std::cout << "Invalid Oid, " << argv[2] << "\n";
                     usage();
@@ -342,9 +340,13 @@ int main(int argc, char **argv)
 
    char *ptr;
 
-   for(int x=1;x<argc;x++) {                           // parse for version
+   for(int x=2+oid_count;x<argc;x++) {                           // parse for version
      if (strstr(argv[x],"-v2")!= 0) {
        version = version2c;
+       continue;
+     }
+     if ( strstr( argv[x],"-v1")!= 0) {
+       version = version1;
        continue;
      }
      if (strstr(argv[x],"-r")!= 0) {                 // parse for retries
@@ -379,6 +381,7 @@ int main(int argc, char **argv)
      if (strstr(argv[x], "-L") != 0) {
        ptr = argv[x]; ptr++; ptr++;
        DefaultLog::log()->set_profile(ptr);
+       continue;
      }
 #endif
 
@@ -461,6 +464,9 @@ int main(int argc, char **argv)
        continue;
      }
 #endif
+
+     std::cout << "Error: unknown parameter: " << argv[x] << "\n";
+     usage();
   }
 
    if (get_community.len() == 0)

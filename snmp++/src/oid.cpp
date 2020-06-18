@@ -353,7 +353,6 @@ int Oid::OidToStr(const SmiOID *srcOid,
 {
   unsigned totLen = 0;
   char szNumber[SNMPBUFFSIZE];
-  int cur_len;
 
   str[0] = 0;   // init the string
 
@@ -365,7 +364,7 @@ int Oid::OidToStr(const SmiOID *srcOid,
   for (unsigned long index = 0; index < srcOid->len; ++index)
   {
     // convert data element to a string
-    cur_len = sprintf(szNumber, "%lu", srcOid->ptr[index]);
+    int cur_len = sprintf(szNumber, "%lu", srcOid->ptr[index]);
 
     // verify len is not over
     if (totLen + cur_len + 1 >= size)

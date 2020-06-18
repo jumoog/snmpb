@@ -47,6 +47,7 @@
 #include <libsnmp.h>
 
 #include "snmp_pp/snmp_pp.h"
+#include "snmp_pp/auth_priv.h"
 
 #ifdef WIN32
 #define strcasecmp _stricmp
@@ -59,14 +60,14 @@ using namespace Snmp_pp;
 static void usage()
 {
     std::cout << "Usage:\n";
-    std::cout << "snmpGet IpAddress | DNSName [Oid] [Oid...] [options]\n";
+    std::cout << "snmpGet IpAddress | DNSName [Oid [Oid...]] [options]\n";
     exit(1);
 }
 
 static void help()
 {
     std::cout << "Usage:\n";
-    std::cout << "snmpGet IpAddress | DNSName [Oid] [Oid...] [options]\n";
+    std::cout << "snmpGet IpAddress | DNSName [Oid [Oid...]] [options]\n";
     std::cout << "Oid: sysDescr object is default\n";
     std::cout << "options: -vN , use SNMP version 1, 2 or 3, default is 1\n";
     std::cout << "         -PPort , remote port to use\n";
@@ -148,7 +149,7 @@ int main(int argc, char **argv)
    char *ptr;
    int oid_count = -1;
 
-   for (int x=1;x<argc;x++) {
+   for (int x=2;x<argc;x++) {
      if (argv[x][0] == '-') {
 	 oid_count = x - 2;
        break;
@@ -157,9 +158,14 @@ int main(int argc, char **argv)
    if (oid_count == -1)
      oid_count = argc - 2;
 
-   for (int x=1;x<argc;x++) {
+   for (int x=2+oid_count;x<argc;x++) {
+
      if (strstr(argv[x],"-v2")!= 0) {                // parse for version
        version = version2c;
+       continue;
+     }
+     if ( strstr( argv[x],"-v1")!= 0) {
+       version = version1;
        continue;
      }
      if (strstr(argv[x],"-r")!= 0) {                 // parse for retries
@@ -189,6 +195,7 @@ int main(int argc, char **argv)
      if (strstr(argv[x], "-L") != 0) {
        ptr = argv[x]; ptr++; ptr++;
        DefaultLog::log()->set_profile(ptr);
+       continue;
      }
 #endif
 
@@ -279,7 +286,10 @@ int main(int argc, char **argv)
        continue;
      }
 #endif
-  }
+
+     std::cout << "Error: unknown parameter: " << argv[x] << "\n";
+     usage();
+   }
 
    //----------[ create a SNMP++ session ]-----------------------------------
    int status;

@@ -88,9 +88,9 @@ bool setCloseOnExecFlag(SnmpSocket fd);
 //------------[ SNMP Class Def ]---------------------------------------------
 //
 /**
- * SNMP class defintion. The Snmp class provides an object oriented
+ * SNMP class definition. The Snmp class provides an object oriented
  * approach to SNMP. The SNMP class is an encapsulation of SNMP
- * sessions, gets, sets and get nexts. The class manages all SNMP
+ * sessions, get, set and get next operations. The class manages all SNMP
  * resources and provides complete retry and timeout capability.
  *
  * This class is thread save.
@@ -118,7 +118,9 @@ class DLLOPT Snmp: public SnmpSynchronized
    *    after creation of the session this parameter will
    *    hold the creation status.
    * @param port
-   *    an UDP port to be used for the session
+   *    an UDP port to be used for the session. With the default
+   *    value "0", a random free port will be assigned by the
+   *    operating system, which is Ok for most use cases.
    * @param bind_ipv6
    *    Set this to true if IPv6 should be used. The default is
    *    IPv4.
@@ -198,6 +200,16 @@ class DLLOPT Snmp: public SnmpSynchronized
    */
   static const char* error_msg(const Oid& v3Oid)
     { return error_msg(error_code(v3Oid)); }
+  
+  v3MP* get_mpv3() { return mpv3; }
+
+  /**
+   * Sets the v3MP to be used by this Snmp session.
+   * @param v3mp 
+   *    a v3 message processing model.
+   * @since 3.4.0
+   */
+  virtual void set_mpv3(v3MP* v3mp) { mpv3 = v3mp; }
 #endif
 
   //------------------------[ Windows Sockets ]----------------------------
@@ -515,7 +527,7 @@ class DLLOPT Snmp: public SnmpSynchronized
    *
    * @param send_buf - Data buffer
    * @param send_len - Length of the data
-   * @param address  - Recepient
+   * @param address  - Recipient
    * @param fd       - socket to use, if not specified, the socket of the
    *                   object is used
    *
@@ -532,7 +544,7 @@ class DLLOPT Snmp: public SnmpSynchronized
   /**
    * Start one thread listening for responses and notifications.
    * This method is used to start response and notification processing in a
-   * multi threadded setup.
+   * multi threaded setup.
    *
    * @note start_poll_thread() itself is not thread safe. The caller must make
    *       sure that only one thread is calling start_poll_thread() or
@@ -562,24 +574,23 @@ protected:
 
   /**
    * Check for the status of the worker thread.
-   * @return BOOL - TRUE - if running, FALSE - otherwise
+   * @return true - if running, false - otherwise
    */
-  bool is_running(void) const
-      { return m_bThreadRunning; };
+  bool is_running() const
+      { return m_isThreadRunning; };
 
   /**
    * This is a working thread for the recovery of the pending events.
    *
-   * @param pSnmp [in] pointer to the whole object
+   * @param snmp [in] pointer to the whole object
    *
-   * @return int
-   *          0 - if succesful,
+   * @return  0 - if successful,
    *          1 - in the case of error
    */
 #ifdef WIN32
-  static int process_thread(Snmp *pSnmp);
+  static int process_thread(Snmp *snmp);
 #else
-  static void* process_thread(void *arg);
+  static void* process_thread(void *snmp);
 #endif
 
  protected:
@@ -642,6 +653,8 @@ protected:
   friend void v3CallBack(int reason, Snmp *snmp, Pdu &pdu,
 			 SnmpTarget &target, void *v3cd);
   friend void deleteV3Callback(struct Snmp::V3CallBackData *&cbData);
+  
+  v3MP* mpv3;
 #endif
 
   //---[ instance variables ]
@@ -664,8 +677,8 @@ protected:
 
 private:
 
-  bool m_bThreadRunning;
-  int m_iPollTimeOut;
+  bool m_isThreadRunning;
+  int m_pollTimeOut;
 
   // Keep track of the thread.
 #ifdef _THREADS

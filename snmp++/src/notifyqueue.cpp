@@ -622,10 +622,11 @@ void CNotifyEventQueue::cleanup()
 
 CNotifyEvent *CNotifyEventQueue::GetEntry(Snmp * snmp) REENTRANT ({
   CNotifyEventQueueElt *msgEltPtr = m_head.GetNext();
-  CNotifyEvent *returnVal = NULL;
 
-  while (msgEltPtr){
-    if ((returnVal = msgEltPtr->TestId(snmp)))
+  while (msgEltPtr)
+  {
+    CNotifyEvent *returnVal = msgEltPtr->TestId(snmp);
+    if (returnVal)
       return returnVal;
     msgEltPtr = msgEltPtr->GetNext();
   }

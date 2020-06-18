@@ -43,9 +43,8 @@
 
   Peter E. Mellquist
 */
-char snmptraps_cpp_version[]="@(#) SNMP++ $Id$";
-#include <libsnmp.h>
 
+#include <libsnmp.h>
 #include "snmp_pp/snmp_pp.h"
 
 #ifdef WIN32
@@ -61,46 +60,44 @@ using namespace Snmp_pp;
 #define PAYLOAD "SNMP++ Trap Send Test"
 #define ENTERPRISE "1.3.6.1.2.1.1.1.2.0.1"
 
-static void
-usage()
+static void usage()
 {
     std::cout << "Usage:\n";
     std::cout << "snmpTraps IpAddress | DNSName [Id] [options]\n";
     exit(1);
 }
 
-static void
-help()
+static void help()
 {
-	  std::cout << "Usage:\n";
-	  std::cout << "snmpTraps IpAddress | DNSName [Id] [options]\n";
-	  std::cout << "Id = default is 1.3.6.1.6.3.1.1.5.1 = ColdStart";
-	  std::cout << "options: -vN , use SNMP version 1, 2 or 3, default is 1\n";
-	  std::cout << "         -PPort , remote port to use\n";
-	  std::cout << "         -CCommunity_name, specify community default is 'public' \n";
+  std::cout << "Usage:\n";
+  std::cout << "snmpTraps IpAddress | DNSName [Id] [options]\n";
+  std::cout << "Id = default is 1.3.6.1.6.3.1.1.5.1 = ColdStart";
+  std::cout << "options: -vN , use SNMP version 1, 2 or 3, default is 1\n";
+  std::cout << "         -PPort , remote port to use\n";
+  std::cout << "         -CCommunity_name, specify community default is 'public' \n";
 #ifdef _SNMPv3
-          std::cout << "         -snSecurityName,\n";
-          std::cout << "         -slN , securityLevel to use, default N = 3 = authPriv\n";
-          std::cout << "         -smN , securityModel to use, only default N = 3 = USM possible\n";
-          std::cout << "         -cnContextName, default empty string\n";
-          std::cout << "         -ceContextEngineID, as hex e.g. 800007E580, default empty string\n";
-          std::cout << "         -authPROT, use authentication protocol NONE, SHA or MD5\n";
-          std::cout << "         -privPROT, use privacy protocol NONE, DES, 3DESEDE, IDEA, AES128, AES192 or AES256\n";
-          std::cout << "         -uaAuthPassword\n";
-          std::cout << "         -upPrivPassword\n";
+  std::cout << "         -snSecurityName,\n";
+  std::cout << "         -slN , securityLevel to use, default N = 3 = authPriv\n";
+  std::cout << "         -smN , securityModel to use, only default N = 3 = USM possible\n";
+  std::cout << "         -cnContextName, default empty string\n";
+  std::cout << "         -ceContextEngineID, as hex e.g. 800007E580, default empty string\n";
+  std::cout << "         -authPROT, use authentication protocol NONE, SHA or MD5\n";
+  std::cout << "         -privPROT, use privacy protocol NONE, DES, 3DESEDE, IDEA, AES128, AES192 or AES256\n";
+  std::cout << "         -uaAuthPassword\n";
+  std::cout << "         -upPrivPassword\n";
 #endif
 #ifdef WITH_LOG_PROFILES
-    std::cout << "         -Lprofile , log profile to use, default is '"
+  std::cout << "         -Lprofile , log profile to use, default is '"
 #ifdef DEFAULT_LOG_PROFILE
-         << DEFAULT_LOG_PROFILE
+            << DEFAULT_LOG_PROFILE
 #else
-         << "original"
+            << "original"
 #endif
-         << "'\n";
+            << "'\n";
 #endif
     std::cout << "         -h, -? - prints this help\n";
     exit(1);
-   }
+}
 
 int main(int argc, char **argv)
 {
@@ -130,9 +127,11 @@ int main(int argc, char **argv)
 	  usage();
    }
    Oid oid(COLDSTART);    // default is ColdStart 
+   int oid_count = 0;
    if (argc >= 3) {                  // if 3 args, then use the callers Oid
 	  if (strstr(argv[2],"-")==0) {
 	     oid = argv[2];
+             oid_count++;
 	     if (!oid.valid()) {            // check validity of user oid
 		    std::cout << "Invalid Oid, " << argv[2] << "\n";
 		    usage();
@@ -161,9 +160,13 @@ int main(int argc, char **argv)
 
    char *ptr;
 
-   for(int x=1;x<argc;x++) {                           // parse for version
+   for(int x=2+oid_count;x<argc;x++) {                           // parse for version
      if (strstr(argv[x],"-v2")!= 0) {
        version = version2c;
+       continue;
+     }
+     if ( strstr( argv[x],"-v1")!= 0) {
+       version = version1;
        continue;
      }
      if (strstr(argv[x],"-C")!=0) {
@@ -181,6 +184,7 @@ int main(int argc, char **argv)
      if (strstr(argv[x], "-L") != 0) {
        ptr = argv[x]; ptr++; ptr++;
        DefaultLog::log()->set_profile(ptr);
+       continue;
      }
 #endif
 
@@ -263,7 +267,10 @@ int main(int argc, char **argv)
        continue;
      }
 #endif
-  }
+
+     std::cout << "Error: unknown parameter: " << argv[x] << "\n";
+     usage();
+   }
 
    //----------[ create a SNMP++ session ]-----------------------------------
    int status;

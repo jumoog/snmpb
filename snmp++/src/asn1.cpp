@@ -620,7 +620,7 @@ unsigned char *asn_parse_objid(unsigned char *data,
     do {	/* shift and add in low order 7 bits */
       subidentifier = (subidentifier << 7) + (*(unsigned char *)bufp & ~ASN_BIT8);
       length--;
-    } while (*(unsigned char *)bufp++ & ASN_BIT8); /* last byte has high bit clear */
+    } while ((*(unsigned char *)bufp++ & ASN_BIT8) && length > 0); /* last byte has high bit clear */
     if (subidentifier > (unsigned long)MAX_SUBID) {
       ASNERROR("subidentifier too long");
       return NULL;
@@ -718,13 +718,13 @@ unsigned char *asn_build_objid(unsigned char *data,
  *    by one (character) and at most by five.
  */
 void asn_build_subid(unsigned long subid, unsigned char*& bp) {
-  unsigned long mask, testmask;
-  int bits, testbits;
   if (subid < 127) { /* off by one? */
       *bp++ = (unsigned char)subid;
   } else {
-      mask = 0x7F; /* handle subid == 0 case */
-      bits = 0;
+      unsigned long testmask;
+      int testbits;
+      unsigned long mask = 0x7F; /* handle subid == 0 case */
+      int bits = 0;
       /* testmask *MUST* !!!! be of an unsigned type */
       for(testmask = 0x7F, testbits = 0; testmask != 0;
 	  testmask <<= 7, testbits += 7) {
@@ -1033,14 +1033,12 @@ struct snmp_pdu *snmp_pdu_create(int command)
 // free content and clear pointers
 void clear_pdu(struct snmp_pdu *pdu, bool clear_all)
 {
-  struct variable_list *vp, *ovp;
-
-  vp = pdu->variables;
+  struct variable_list *vp = pdu->variables;
   while (vp)
   {
     if (vp->name) free((char *)vp->name);  // free the oid part
     if (vp->val.string) free((char *)vp->val.string);  // free deep data
-    ovp = vp;
+    struct variable_list *ovp = vp;
     vp = vp->next_variable;     // go to the next one
     free((char *)ovp);     // free up vb itself
   }

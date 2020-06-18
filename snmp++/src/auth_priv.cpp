@@ -133,12 +133,12 @@ int evpDigestFinalAndFree(EVP_MD_CTX **ctx, unsigned char *digest)
 typedef EVP_MD_CTX*           SHAHashStateType;
 #define SHA1_INIT(s)          evpAllocAndInit(s, EVP_sha1())
 #define SHA1_PROCESS(s, p, l) EVP_DigestUpdate(*(s), p, l)
-#define SHA1_DONE(s, k)       EVP_DigestFinal(*(s), k, NULL)
+#define SHA1_DONE(s, k)       evpDigestFinalAndFree(s, k)
 
 typedef EVP_MD_CTX*           MD5HashStateType;
 #define MD5_INIT(s)           evpAllocAndInit(s, EVP_md5())
 #define MD5_PROCESS(s, p, l)  EVP_DigestUpdate(*(s), p, l)
-#define MD5_DONE(s, k)        EVP_DigestFinal(*(s), k, NULL)
+#define MD5_DONE(s, k)        evpDigestFinalAndFree(s, k)
 
 #endif // OPENSSL_VERSION_NUMBER < 0x10100000L || defined(LIBRESSL_VERSION_NUMBER)
 
@@ -1143,9 +1143,9 @@ int AuthMD5::password_to_key(const unsigned char *password,
 #endif
 
   MD5HashStateType md5_hash_state;
-  unsigned char  *cp, password_buf[65];
-  unsigned long   password_index = 0;
-  unsigned long   count = 0, i;
+  unsigned char password_buf[65];
+  unsigned long password_index = 0;
+  unsigned long count = 0;
 
   MD5_INIT(&md5_hash_state);   /* initialize MD5 */
 
@@ -1153,8 +1153,8 @@ int AuthMD5::password_to_key(const unsigned char *password,
   /* Use while loop until we've done 1 Megabyte */
   /**********************************************/
   while (count < 1048576) {
-    cp = password_buf;
-    for (i = 0; i < 64; i++) {
+    unsigned char *cp = password_buf;
+    for (unsigned int i = 0; i < 64; i++) {
       /*************************************************/
       /* Take the next octet of the password, wrapping */
       /* to the beginning of the password as necessary.*/
@@ -2210,11 +2210,11 @@ int AuthSHABase::password_to_key(const unsigned char *password,
               OctetStr(engine_id, engine_id_len).get_printable());
 #endif
 
-  unsigned char *cp, password_buf[72];
-  unsigned long  password_index = 0;
-  unsigned long  count = 0, i;
+  unsigned char password_buf[72];
+  unsigned long password_index = 0;
+  unsigned long count = 0;
 
-  std::auto_ptr<Hasher> h(get_hasher());
+  std::unique_ptr<Hasher> h(get_hasher());
   h->init(); /* initialize SHA */
 
   *key_len = h->get_key_length();
@@ -2223,8 +2223,8 @@ int AuthSHABase::password_to_key(const unsigned char *password,
   /* Use while loop until we've done 1 Megabyte */
   /**********************************************/
   while (count < 1048576) {
-    cp = password_buf;
-    for (i = 0; i < 64; i++) {
+    unsigned char *cp = password_buf;
+    for (int i = 0; i < 64; i++) {
       /*************************************************/
       /* Take the next octet of the password, wrapping */
       /* to the beginning of the password as necessary.*/
@@ -2263,7 +2263,7 @@ int AuthSHABase::hash(const unsigned char *data,
                   const unsigned int   data_len,
                   unsigned char       *digest) const
 {
-  std::auto_ptr<Hasher> h(get_hasher());
+  std::unique_ptr<Hasher> h(get_hasher());
 
   h->init();
   h->update(data, data_len);
@@ -2277,14 +2277,14 @@ int AuthSHABase::auth_out_msg(const unsigned char *key,
                                const int msg_len,
                                unsigned char *auth_par_ptr)
 {
-  std::auto_ptr<Hasher> h(get_hasher());
+  std::unique_ptr<Hasher> h(get_hasher());
   int block_size = h->get_block_size();
   int key_len    = h->get_key_length();
   unsigned char digest[SNMPv3_AP_MAXLENGTH_AUTHPARAM];
-  std::unique_ptr<unsigned char[]> ipad(new unsigned char[block_size]);
-  std::unique_ptr<unsigned char[]> opad(new unsigned char[block_size]);
-  unsigned char *k_ipad = ipad.get(); /* inner padding - key XORd with ipad */
-  unsigned char *k_opad = opad.get(); /* outer padding - key XORd with opad */
+  Buffer<unsigned char> ipad(block_size);
+  Buffer<unsigned char> opad(block_size);
+  unsigned char *k_ipad = ipad.get_ptr(); /* inner padding - key XORd with ipad */
+  unsigned char *k_opad = opad.get_ptr(); /* outer padding - key XORd with opad */
 
   memset(auth_par_ptr, 0, get_auth_params_len());
 
@@ -2349,7 +2349,7 @@ int AuthSHABase::auth_inc_msg(const unsigned char *key,
   }
 
 #ifdef __DEBUG
-  std::auto_ptr<Hasher> h(get_hasher());
+  std::unique_ptr<Hasher> h(get_hasher());
   debughexcprintf(21, "digest in Message", auth_par_ptr, auth_par_len);
   debughexcprintf(21, "key", key, h->get_key_length());
 #endif
