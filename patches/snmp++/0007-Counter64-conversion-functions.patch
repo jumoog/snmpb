@@ -1,7 +1,7 @@
-From 6b21c8d48ae028d867ed827c60c1fe5a5313d534 Mon Sep 17 00:00:00 2001
+From 3a179578609b73904ff28d8222787208aa2a81b6 Mon Sep 17 00:00:00 2001
 From: Martin Jolicoeur <snmpb1@gmail.com>
 Date: Sun, 14 Jun 2020 01:16:44 +0300
-Subject: [PATCH 07/12] Counter64 conversion functions
+Subject: [PATCH 07/11] Counter64 conversion functions
 
 ---
  include/snmp_pp/ctr64.h | 25 +++++++++++++++++++++++++
@@ -9,10 +9,10 @@ Subject: [PATCH 07/12] Counter64 conversion functions
  2 files changed, 55 insertions(+)
 
 diff --git a/include/snmp_pp/ctr64.h b/include/snmp_pp/ctr64.h
-index 6d377c0..c37eb5a 100644
+index 9021e83..9041690 100644
 --- a/include/snmp_pp/ctr64.h
 +++ b/include/snmp_pp/ctr64.h
-@@ -130,6 +130,31 @@ class DLLOPT Counter64: public  SnmpSyntax
+@@ -130,6 +130,31 @@ class DLLOPT Counter64: public SnmpSyntax
      return v;
    }
  

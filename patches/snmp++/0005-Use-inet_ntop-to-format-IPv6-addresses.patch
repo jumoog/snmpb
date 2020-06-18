@@ -1,7 +1,7 @@
-From e3bb16fe33ac5b5b5adff28dc7315a344bdaf080 Mon Sep 17 00:00:00 2001
+From 19fbe5d69a283b438d607c3159c3dfb390673d03 Mon Sep 17 00:00:00 2001
 From: Martin Jolicoeur <snmpb1@gmail.com>
 Date: Sat, 27 Nov 2010 04:48:28 +0000
-Subject: [PATCH 05/12] Use inet_ntop to format IPv6 addresses
+Subject: [PATCH 05/11] Use inet_ntop to format IPv6 addresses
 
 Replaced custom get_printable for IPv6 addresses by inet_ntop()
 
@@ -51,7 +51,7 @@ index 61afa36..b96360c 100644
  /* int
   * inet_pton4(src, dst)
 diff --git a/src/address.cpp b/src/address.cpp
-index 6b837e5..980fb22 100644
+index de167cf..e42c7d1 100644
 --- a/src/address.cpp
 +++ b/src/address.cpp
 @@ -50,6 +50,10 @@
@@ -65,7 +65,7 @@ index 6b837e5..980fb22 100644
  #include <libsnmp.h>
  
  #include "snmp_pp/address.h"
-@@ -1276,26 +1280,11 @@ void IpAddress::format_output() const
+@@ -1267,26 +1271,11 @@ void IpAddress::format_output() const
        sprintf((char *) output_buffer,"%d.%d.%d.%d",address_buffer[0],
                 address_buffer[1], address_buffer[2], address_buffer[3]);
      else

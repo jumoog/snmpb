@@ -1,7 +1,7 @@
-From 451079d61c7c05e103bb3f1a2e7848adc25c4732 Mon Sep 17 00:00:00 2001
+From 7034fbc30445eb8eff6a5c9a49e07f61f6ea6e2a Mon Sep 17 00:00:00 2001
 From: Martin Jolicoeur <snmpb1@gmail.com>
 Date: Mon, 21 Aug 2017 22:17:39 -0400
-Subject: [PATCH 08/12] Redefined INVALID_SOCKET to get rid of compiler
+Subject: [PATCH 08/11] Redefined INVALID_SOCKET to get rid of compiler
  warnings
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 08/12] Redefined INVALID_SOCKET to get rid of compiler
  1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/include/snmp_pp/uxsnmp.h b/include/snmp_pp/uxsnmp.h
-index b396260..f4797ee 100644
+index e39328a..345cc86 100644
 --- a/include/snmp_pp/uxsnmp.h
 +++ b/include/snmp_pp/uxsnmp.h
 @@ -44,9 +44,8 @@ namespace Snmp_pp {

@@ -1,7 +1,7 @@
-From 21658f70e2ccbb603e651f060cf997e4aa1c5c1f Mon Sep 17 00:00:00 2001
+From 9bc17427688e452a30f3ef5438260443fade9d7b Mon Sep 17 00:00:00 2001
 From: Max ulidtko <ulidtko@gmail.com>
 Date: Sun, 12 Jan 2020 14:41:34 +0200
-Subject: [PATCH 02/12] Fix tomcrypt configure check, add C++11 support
+Subject: [PATCH 02/11] Fix tomcrypt configure check, add C++11 support
 
 ---
  Makefile.in                    |   4 +-
@@ -1092,7 +1092,7 @@ index c83277c..d3a8954 100644
  #undef STDCXX_98_HEADERS
  
 diff --git a/configure b/configure
-index 00e4cd5..3642d9b 100755
+index 9467524..e4f90c1 100755
 --- a/configure
 +++ b/configure
 @@ -720,6 +720,7 @@ LIBS_SSL
@@ -2151,7 +2151,7 @@ index 00e4cd5..3642d9b 100755
      return 0;
  }
 diff --git a/configure.ac b/configure.ac
-index db543d1..eb33917 100644
+index 3f23c50..a9c8775 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -576,9 +576,7 @@ AX_CXX_HAVE_STD
@@ -2233,7 +2233,7 @@ index 521437b..1b055c7 100644
  HAVE_LIBSSL = @HAVE_LIBSSL@
  HAVE_LIBTOMCRYPT = @HAVE_LIBTOMCRYPT@
 diff --git a/include/snmp_pp/Makefile.in b/include/snmp_pp/Makefile.in
-index 18a5895..07ec4a6 100644
+index 7a33366..40d9913 100644
 --- a/include/snmp_pp/Makefile.in
 +++ b/include/snmp_pp/Makefile.in
 @@ -92,7 +92,6 @@ subdir = include/snmp_pp

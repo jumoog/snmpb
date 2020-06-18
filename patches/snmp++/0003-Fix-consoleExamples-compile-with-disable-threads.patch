@@ -1,7 +1,7 @@
-From 271198f400ef4db964adc65098b8f7fe0345690f Mon Sep 17 00:00:00 2001
+From a552b7f13459d91260e43507a39a75fd4abe5395 Mon Sep 17 00:00:00 2001
 From: max ulidtko <ulidtko@gmail.com>
 Date: Tue, 14 Jan 2020 11:46:57 +0200
-Subject: [PATCH 03/12] Fix consoleExamples compile with --disable-threads
+Subject: [PATCH 03/11] Fix consoleExamples compile with --disable-threads
 
 ---
  configure                   | 15 +++++++++++
@@ -13,7 +13,7 @@ Subject: [PATCH 03/12] Fix consoleExamples compile with --disable-threads
  6 files changed, 72 insertions(+), 32 deletions(-)
 
 diff --git a/configure b/configure
-index 3642d9b..814df07 100755
+index e4f90c1..ee2369b 100755
 --- a/configure
 +++ b/configure
 @@ -726,6 +726,8 @@ PTHREAD_LIBS
@@ -53,7 +53,7 @@ index 3642d9b..814df07 100755
  : "${CONFIG_STATUS=./config.status}"
  ac_write_fail=0
 diff --git a/configure.ac b/configure.ac
-index eb33917..d519499 100644
+index a9c8775..86df0c3 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -129,6 +129,8 @@ AC_ARG_ENABLE(ipxaddress,
@@ -250,10 +250,10 @@ index 1335ec5..8ada306 100644
  all: all-am
  
 diff --git a/include/snmp_pp/uxsnmp.h b/include/snmp_pp/uxsnmp.h
-index 188d53e..677c0a1 100644
+index 50133af..9e57a8e 100644
 --- a/include/snmp_pp/uxsnmp.h
 +++ b/include/snmp_pp/uxsnmp.h
-@@ -523,6 +523,7 @@ class DLLOPT Snmp: public SnmpSynchronized
+@@ -535,6 +535,7 @@ class DLLOPT Snmp: public SnmpSynchronized
  
    const IpAddress &get_listen_address() const {return listen_address; };
  
@@ -261,7 +261,7 @@ index 188d53e..677c0a1 100644
    /**
     * Start one thread listening for responses and notifications.
     * This method is used to start response and notification processing in a
-@@ -548,6 +549,7 @@ class DLLOPT Snmp: public SnmpSynchronized
+@@ -560,6 +561,7 @@ class DLLOPT Snmp: public SnmpSynchronized
     *       stop_poll_thread() at any point in time.
     */
    void stop_poll_thread();
@@ -270,10 +270,10 @@ index 188d53e..677c0a1 100644
    EventListHolder *get_eventListHolder() { return eventListHolder; };
  
 diff --git a/src/uxsnmp.cpp b/src/uxsnmp.cpp
-index 7cc6f50..8579d95 100644
+index 969d5b6..0e06eb9 100644
 --- a/src/uxsnmp.cpp
 +++ b/src/uxsnmp.cpp
-@@ -947,7 +947,9 @@ void Snmp::init(int& status, IpAddress *addresses[2],
+@@ -956,7 +956,9 @@ void Snmp::init(int& status, IpAddress *addresses[2],
  //---------[ Snmp Class Destructor ]----------------------------------
  Snmp::~Snmp()
  {
@@ -283,7 +283,7 @@ index 7cc6f50..8579d95 100644
  
    // if we failed during construction then don't try
    // to free stuff up that was not allocated
-@@ -2260,6 +2262,7 @@ int Snmp::broadcast_discovery(UdpAddressCollection &addresses,
+@@ -2259,6 +2261,7 @@ int Snmp::broadcast_discovery(UdpAddressCollection &addresses,
    return 0;
  }
  
@@ -291,7 +291,7 @@ index 7cc6f50..8579d95 100644
  //     Starts the working thread for the recovery of the pending events
  bool Snmp::start_poll_thread(const int timeout)
  {
-@@ -2366,6 +2369,8 @@ void* Snmp::process_thread(void *arg)
+@@ -2364,6 +2367,8 @@ void* Snmp::process_thread(void *arg)
      return 0;
  }
  

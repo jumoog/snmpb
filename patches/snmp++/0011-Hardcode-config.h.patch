@@ -1,7 +1,10 @@
-From e1f3d58c3e41f93b0fba50e0ebbc50f23794a86e Mon Sep 17 00:00:00 2001
+From e16568bd1c5e5b344673e4fdb97cf8d5afd8949d Mon Sep 17 00:00:00 2001
 From: Martin Jolicoeur <snmpb1@gmail.com>
 Date: Sun, 20 Aug 2017 22:15:32 -0400
-Subject: [PATCH 12/12] Hardcode config.h
+Subject: [PATCH 11/11] Hardcode config.h
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
 Original commit message by Martin:
 
@@ -453,7 +456,7 @@ index 0000000..c557f54
 +   such a type exists and the standard includes do not define it. */
 +/* #undef uint8_t */
 diff --git a/include/snmp_pp/config_snmp_pp.h b/include/snmp_pp/config_snmp_pp.h
-index 92a2065..3f8b3c9 100644
+index 81513f9..7c6dcd6 100644
 --- a/include/snmp_pp/config_snmp_pp.h
 +++ b/include/snmp_pp/config_snmp_pp.h
 @@ -71,10 +71,10 @@
@@ -490,7 +493,7 @@ index 92a2065..3f8b3c9 100644
  #if defined(_SNMPv3) || !defined(_NO_SNMPv3)
  #  if defined(HAVE_LIBSSL)
 diff --git a/libsnmp.h b/libsnmp.h
-index 25fbd75..82fda26 100644
+index c882759..b6c58c7 100644
 --- a/libsnmp.h
 +++ b/libsnmp.h
 @@ -27,9 +27,20 @@

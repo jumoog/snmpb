@@ -1,14 +1,14 @@
-From ca80ff17983accf6c2eb9f5f018e50dcce7510c0 Mon Sep 17 00:00:00 2001
+From 5a86389728dcddf0d7e074ff56d752febfdd4957 Mon Sep 17 00:00:00 2001
 From: max ulidtko <ulidtko@gmail.com>
 Date: Sun, 14 Jun 2020 01:22:40 +0300
-Subject: [PATCH 04/12] asn1.cpp needs sa_addr definition
+Subject: [PATCH 04/11] asn1.cpp needs sa_addr definition
 
 ---
  src/asn1.cpp | 5 +++++
  1 file changed, 5 insertions(+)
 
 diff --git a/src/asn1.cpp b/src/asn1.cpp
-index 9eaca1d..395209f 100644
+index fceab0d..85d273a 100644
 --- a/src/asn1.cpp
 +++ b/src/asn1.cpp
 @@ -48,6 +48,11 @@

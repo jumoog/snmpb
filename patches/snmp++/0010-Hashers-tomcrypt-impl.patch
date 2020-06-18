@@ -1,7 +1,7 @@
-From b0a1b84fa120d4372c0da6b7cfdb4a18de2455c4 Mon Sep 17 00:00:00 2001
+From 0a2b79bf702fa0ef2b2f9c932d0883ada9339ed4 Mon Sep 17 00:00:00 2001
 From: max ulidtko <ulidtko@gmail.com>
 Date: Sun, 14 Jun 2020 01:36:10 +0300
-Subject: [PATCH 10/12] Hashers tomcrypt impl
+Subject: [PATCH 10/11] Hashers tomcrypt impl
 
 ---
  include/snmp_pp/auth_priv.h |   2 +-
@@ -22,7 +22,7 @@ index d54b460..a446cdc 100644
  /**
   * Authentication module using SHA2 (usmHMAC128SHA224AuthProtocol).
 diff --git a/src/auth_priv.cpp b/src/auth_priv.cpp
-index ed6c6f0..7f1b20c 100644
+index b41a538..2dccf40 100644
 --- a/src/auth_priv.cpp
 +++ b/src/auth_priv.cpp
 @@ -180,6 +180,26 @@ typedef DES_key_schedule      DESCBCType;

@@ -1,7 +1,7 @@
-From 7edd24fe74d6d2deb6a092d4a150201f0a9f7566 Mon Sep 17 00:00:00 2001
+From d7c8357feadb9039834f554983c205360b6d5e93 Mon Sep 17 00:00:00 2001
 From: Martin Jolicoeur <snmpb1@gmail.com>
 Date: Sun, 16 Jan 2011 08:35:21 +0000
-Subject: [PATCH 06/12] Separate ports for IPv4 & IPv6
+Subject: [PATCH 06/11] Separate ports for IPv4 & IPv6
 
 Squashed commits:
 * 510407e (Modified snmp++ to allow binding trap port on both ipv4 and ipv6 for all interfaces, 2011-01-14)
@@ -39,10 +39,10 @@ index 5c93e2b..753e2f1 100644
      Snmp *m_snmpSession;
      UdpAddress m_notify_addr;
 diff --git a/include/snmp_pp/uxsnmp.h b/include/snmp_pp/uxsnmp.h
-index 677c0a1..b396260 100644
+index 9e57a8e..e39328a 100644
 --- a/include/snmp_pp/uxsnmp.h
 +++ b/include/snmp_pp/uxsnmp.h
-@@ -445,11 +445,13 @@ class DLLOPT Snmp: public SnmpSynchronized
+@@ -457,11 +457,13 @@ class DLLOPT Snmp: public SnmpSynchronized
     *       otherwise the default port is used.
     */
    virtual void notify_set_listen_port(const int port);
@@ -56,7 +56,7 @@ index 677c0a1..b396260 100644
  
    /**
     * Register to get traps and informs.
-@@ -503,6 +505,9 @@ class DLLOPT Snmp: public SnmpSynchronized
+@@ -515,6 +517,9 @@ class DLLOPT Snmp: public SnmpSynchronized
     */
    void *get_notify_callback_data() { return notifycallback_data; };
  
@@ -66,7 +66,7 @@ index 677c0a1..b396260 100644
    //@}
  
    /**
-@@ -522,6 +527,7 @@ class DLLOPT Snmp: public SnmpSynchronized
+@@ -534,6 +539,7 @@ class DLLOPT Snmp: public SnmpSynchronized
                              SnmpSocket fd = INVALID_SOCKET);
  
    const IpAddress &get_listen_address() const {return listen_address; };
@@ -74,7 +74,7 @@ index 677c0a1..b396260 100644
  
  #if WITH_THREADS
    /**
-@@ -646,11 +652,13 @@ protected:
+@@ -659,11 +665,13 @@ protected:
  #endif
  
    IpAddress listen_address;
@@ -89,7 +89,7 @@ index 677c0a1..b396260 100644
    // this member var will simulate a global var
    EventListHolder *eventListHolder;
 diff --git a/src/notifyqueue.cpp b/src/notifyqueue.cpp
-index 9c3b46b..3294c44 100644
+index e3bd727..63263e6 100644
 --- a/src/notifyqueue.cpp
 +++ b/src/notifyqueue.cpp
 @@ -76,6 +76,7 @@ char notifyqueue_version[]="#(@) SNMP++ $Id$";
@@ -280,7 +280,7 @@ index 9c3b46b..3294c44 100644
  }
  
  CNotifyEvent *CNotifyEventQueue::GetEntry(Snmp * snmp) REENTRANT ({
-@@ -619,6 +657,15 @@ void CNotifyEventQueue::DeleteEntry(Snmp *snmp)
+@@ -620,6 +658,15 @@ void CNotifyEventQueue::DeleteEntry(Snmp *snmp)
        m_notify_fd = INVALID_SOCKET;
      }
      m_notify_addr.clear();
@@ -296,7 +296,7 @@ index 9c3b46b..3294c44 100644
    }
    unlock();
  }
-@@ -626,10 +673,11 @@ void CNotifyEventQueue::DeleteEntry(Snmp *snmp)
+@@ -627,10 +674,11 @@ void CNotifyEventQueue::DeleteEntry(Snmp *snmp)
  #ifdef HAVE_POLL_SYSCALL
  int CNotifyEventQueue::GetFdCount()
  {
@@ -311,7 +311,7 @@ index 9c3b46b..3294c44 100644
  }
  
  bool CNotifyEventQueue::GetFdArray(struct pollfd *readfds,
-@@ -645,6 +693,14 @@ bool CNotifyEventQueue::GetFdArray(struct pollfd *readfds,
+@@ -646,6 +694,14 @@ bool CNotifyEventQueue::GetFdArray(struct pollfd *readfds,
      readfds[0].events = POLLIN;
      remaining--;
    }
@@ -326,7 +326,7 @@ index 9c3b46b..3294c44 100644
    return true;
  }
  
-@@ -655,7 +711,9 @@ int CNotifyEventQueue::HandleEvents(const struct pollfd *readfds,
+@@ -656,7 +712,9 @@ int CNotifyEventQueue::HandleEvents(const struct pollfd *readfds,
  
    int status = SNMP_CLASS_SUCCESS;
  
@@ -337,7 +337,7 @@ index 9c3b46b..3294c44 100644
      return status;
  
    for (int i=0; i < fds; i++)
-@@ -666,11 +724,14 @@ int CNotifyEventQueue::HandleEvents(const struct pollfd *readfds,
+@@ -667,11 +725,14 @@ int CNotifyEventQueue::HandleEvents(const struct pollfd *readfds,
      if ((readfds[i].revents & POLLIN) == 0)
        continue; // nothing to receive
  
@@ -355,7 +355,7 @@ index 9c3b46b..3294c44 100644
  
      if ((SNMP_CLASS_SUCCESS == status) ||
          (SNMP_CLASS_TL_FAILED == status))
-@@ -685,7 +746,8 @@ int CNotifyEventQueue::HandleEvents(const struct pollfd *readfds,
+@@ -686,7 +747,8 @@ int CNotifyEventQueue::HandleEvents(const struct pollfd *readfds,
        while (notifyEltPtr)
        {
          notifyEltPtr->GetNotifyEvent()->Callback(*target, pdu,
@@ -365,7 +365,7 @@ index 9c3b46b..3294c44 100644
          notifyEltPtr = notifyEltPtr->GetNext();
        } // for each snmp object
      }
-@@ -709,6 +771,12 @@ void CNotifyEventQueue::GetFdSets(int &maxfds, fd_set &readfds,
+@@ -710,6 +772,12 @@ void CNotifyEventQueue::GetFdSets(int &maxfds, fd_set &readfds,
      if (maxfds < SAFE_INT_CAST(m_notify_fd + 1))
        maxfds = SAFE_INT_CAST(m_notify_fd + 1);
    }
@@ -378,7 +378,7 @@ index 9c3b46b..3294c44 100644
    return;
  }
  
-@@ -720,15 +788,28 @@ int CNotifyEventQueue::HandleEvents(const int /*maxfds*/,
+@@ -721,15 +789,28 @@ int CNotifyEventQueue::HandleEvents(const int /*maxfds*/,
    SnmpSynchronize _synchronize(*this); // REENTRANT
    int status = SNMP_CLASS_SUCCESS;
  
@@ -410,7 +410,7 @@ index 9c3b46b..3294c44 100644
                                         pdu, &target);
  
      if ((SNMP_CLASS_SUCCESS == status) ||
-@@ -747,7 +828,7 @@ int CNotifyEventQueue::HandleEvents(const int /*maxfds*/,
+@@ -748,7 +829,7 @@ int CNotifyEventQueue::HandleEvents(const int /*maxfds*/,
        while (notifyEltPtr)
        {
          notifyEltPtr->GetNotifyEvent()->Callback(*target, pdu,
@@ -420,10 +420,10 @@ index 9c3b46b..3294c44 100644
        } // for each snmp object
      }
 diff --git a/src/uxsnmp.cpp b/src/uxsnmp.cpp
-index 8579d95..a28ba34 100644
+index 0e06eb9..3820f1e 100644
 --- a/src/uxsnmp.cpp
 +++ b/src/uxsnmp.cpp
-@@ -631,10 +631,10 @@ Snmp::Snmp(int &status, const unsigned short port, const bool bind_ipv6)
+@@ -634,10 +634,10 @@ Snmp::Snmp(int &status, const unsigned short port, const bool bind_ipv6)
  
    if (bind_ipv6)
    {
@@ -436,7 +436,7 @@ index 8579d95..a28ba34 100644
  
      init(status, addresses, 0, port);
    }
-@@ -656,18 +656,18 @@ Snmp::Snmp( int &status, const UdpAddress& addr)
+@@ -662,18 +662,18 @@ Snmp::Snmp( int &status, const UdpAddress& addr)
  {
    IpAddress *addresses[2];
  
@@ -459,7 +459,7 @@ index 8579d95..a28ba34 100644
      init(status, addresses, 0, addr.get_port());
    }
  }
-@@ -680,9 +680,9 @@ Snmp::Snmp( int &status,  const UdpAddress& addr_v4,
+@@ -689,9 +689,9 @@ Snmp::Snmp( int &status,  const UdpAddress& addr_v4,
    IpAddress *addresses[2];
  
    listen_address = addr_v4;
@@ -471,7 +471,7 @@ index 8579d95..a28ba34 100644
  
    init(status, addresses, addr_v4.get_port(), addr_v6.get_port());
  }
-@@ -1484,6 +1484,18 @@ int Snmp::notify_get_listen_port()
+@@ -1493,6 +1493,18 @@ int Snmp::notify_get_listen_port()
    return eventListHolder->notifyEventList()->get_listen_port();
  }
  
