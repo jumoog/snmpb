@@ -88,7 +88,7 @@ app/makefile.snmpb:
 	cd app; ${QMAKE} -o makefile.snmpb snmpb.pro
 
 app/snmpb: app/makefile.snmpb
-	$(MAKE) -C app
+	$(MAKE) -C app -f makefile.snmpb
 
 snmpb: libtomcrypt/libtomcrypt.a \
        $(LIBSMI) \
